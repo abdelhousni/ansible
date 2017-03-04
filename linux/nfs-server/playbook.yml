@@ -1,0 +1,30 @@
+---
+- name: Setup an NFS share called /documents
+  hosts: all
+  tasks:
+
+    - name: Create the directory /documents
+      file:
+        path: /documents
+        state: directory
+
+    - name: Create the NFS export for /documents
+      copy:
+        src: documents.exportfs
+        dest: /etc/exports.d
+      notify: Restart the nfs-server
+
+    - name: Start and enable the NFS server
+      service:
+        name: nfs-server
+        state: started
+        enabled: yes
+
+  handlers:
+
+    - name: Restart the nfs-server
+      service:
+        name: nfs-server
+        state: restarted
+
+...
