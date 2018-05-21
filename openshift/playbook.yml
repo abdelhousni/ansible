@@ -27,6 +27,12 @@
       yum:
         name: '*'
 
+    - name: Make sure bash history is timestamped
+      lineinfile:
+        path: /etc/bashrc
+        state: present
+        line: HISTTIMEFORMAT="%F %T "        
+
     - name: Enable OCP repositories
       rhsm_repository:
         name: "{{ item }}"
@@ -55,10 +61,14 @@
         - atomic
         - docker
 
+    - name: Validate that docker-vg does not exist
+      shell: lvs
+      register: output_lvs
+
     - name: Create the thin LVM pool for docker
       shell:
         name: docker-storage-setup
-      
+      when: "'docker-pool' in output_lvs.output"
 
     - name: Create a regular user account for myself
       user:
@@ -76,10 +86,19 @@
         user: rgdacosta
         key: "{{ lookup('file', 'id_rsa.pub') }}"
 
-    - name: Disable firewalld
+    - name: Lockdown ssh
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        state: present
+        regexp: ^.*AllowGroups.*
+        line: AllowGroups wheel
+      notify:
+        - restart_sshd
+
+  handlers:
+    - name: restart_sshd
       service:
-        name: firewalld
-        state: stopped
-        enabled: no
+        name: sshd
+        state: restarted
 
 ...
