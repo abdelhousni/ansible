@@ -31,7 +31,7 @@
       lineinfile:
         path: /etc/bashrc
         state: present
-        line: HISTTIMEFORMAT="%F %T "        
+        line: HISTTIMEFORMAT="%F %T "
 
     - name: Enable OCP repositories
       rhsm_repository:
@@ -60,6 +60,7 @@
         - psacct
         - atomic
         - docker
+        - sysstat
 
     - name: Validate that docker-vg does not exist
       shell: lvs
