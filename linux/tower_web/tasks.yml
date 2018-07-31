@@ -4,11 +4,6 @@
         name: httpd 
         state: installed
 
-    - name: Satisfy the requirement for the uri module
-      yum:
-        name: python-httplib2
-        state: installed
-
     - name: Start and persistently enable httpd
       service:
         name: httpd
@@ -27,8 +22,4 @@
         content: "Hello world\n"
         dest: /var/www/html/index.html
 
-    - name: Test to see if we can connect to the webserver
-      local_action:
-      uri:
-        url: http://servera.lab.example.com
 ...
