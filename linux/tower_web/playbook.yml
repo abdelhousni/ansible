@@ -5,5 +5,4 @@
   tasks:
     - name: Include the primary tasks from tasks.yml
       include: tasks.yml
-      when: ansible_local.custom.maintenance.window == "open"
 ...
