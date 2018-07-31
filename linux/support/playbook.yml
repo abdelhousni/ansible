@@ -23,6 +23,16 @@
         state: present
         dest: /etc/ssh/sshd_config
         line: AllowGroups wheel
+      notify: Restart the ssh daemon
+
+    - name: Disallow password authentication
+      lineinfile:
+        state: present
+        dest: /etc/ssh/sshd_config
+        line: PasswordAuthentication no
+      notify: Restart the ssh daemon
+
+  handlers:
 
     - name: Restart the ssh daemon
       service:
