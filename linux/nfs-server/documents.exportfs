@@ -1,1 +1,1 @@
-/documents *(do,sync,all_squash)
+/documents *(ro,sync,all_squash)
