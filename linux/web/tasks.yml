@@ -26,9 +26,4 @@
       copy:
         content: "Hello world\n"
         dest: /var/www/html/index.html
-
-    - name: Test to see if we can connect to the webserver
-      local_action:
-      uri:
-        url: http://servera.lab.example.com
 ...
