@@ -14,6 +14,8 @@
       - concerts
       - instruments
 
+    db_pass: redhat
+
   tasks:
     
     - name: Create the users
@@ -34,10 +36,6 @@
         name: mariadb
         state: started
         enabled: yes
-    
-    - name: Include the passwords from ansible_vault
-      include_vars:
-        file: passwords.yml
 
     - name: Give the Beatles access to their databases
       mysql_user:

@@ -18,7 +18,8 @@
         path: /vhosts/{{ ansible_fqdn }}/html
         setype: httpd_sys_content_t
 
-    - template:
+    - name: Render the configuration from a j2 template
+      template:
         src: vhost.template.j2
         dest: /etc/httpd/conf.d/{{ ansible_hostname}}.conf
         owner: apache
