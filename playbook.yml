@@ -1,8 +1,0 @@
-  gather_facts: no
-  tasks:
-  - debug:
-      msg: my current sequence number is {{ item }}
-      #    with_sequence: '25-42'
-      with_sequence:
-        - start: 24
-        - end: 42
