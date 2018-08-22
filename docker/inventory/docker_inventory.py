@@ -23,7 +23,7 @@ class DockerInventory(object):
         print(dumps(data))
 
     def get_containers(self):
-        return self.docker.containers.list(all=True)
+        return self.docker.containers.list(all=False)
 
     def containers(self):
         resdata = deepcopy(self._data_structure)
