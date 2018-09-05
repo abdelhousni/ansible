@@ -1,0 +1,18 @@
+- name: Install or update software
+  hosts: all
+  
+  vars:
+    - pkgname: foo
+    - pkgstatus: present
+
+  tasks:
+
+    - name: Make sure that we're running on a Red Hat based machine
+      assert:
+        that: ansible_os_family == "RedHat"
+
+    - name: Install software on Red Hat based system
+      yum:
+        name: "{{ pkgname }}"
+        state: "{{ pkgstatus }}"
+
