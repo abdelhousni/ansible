@@ -6,7 +6,7 @@
     - name: Create groups
       group:
         name: "{{ item }}"
-      with_items:
+      loop:
         - flintstones
         - rubbles
 
@@ -14,7 +14,7 @@
       user:
         name: "{{ item.name }}"
         groups: "{{ item.groups }}"
-      with_items:
+      with_dict:
         - { name: 'fred', groups: 'flintstones' }
         - { name: 'wilma', groups: 'flintstones' }
         - { name: 'barney', groups: 'rubbles' }

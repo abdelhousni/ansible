@@ -1,0 +1,10 @@
+- name: Update all software packages on RHEL6 and RHEL7 systems
+  hosts: all
+  tasks:
+
+
+    - name: Update software
+      yum:
+        name: '*'
+        state: latest
+      when: ( ansible_distribution  == "RedHat" and ansible_distribution_major_version == 6 ) or ( ansible_distribution == "RedHat" and ansible_distribution_major_version ==7 )

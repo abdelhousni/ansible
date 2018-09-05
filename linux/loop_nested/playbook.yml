@@ -21,13 +21,13 @@
     - name: Create the users
       user:
         name: "{{ item }}"
-      with_items:
+      loop:
         - "{{ beatles }}"
 
     - name: Install mariadb-server
       yum:
         name: "{{ item }}"
-      with_items:
+      loop:
         - "{{ '@mariadb' }}"
         - "{{ '@mariadb-client' }}"
 
