@@ -9,7 +9,7 @@
         dest: /etc/ansible/facts.d/
         src: custom.fact
 
-    - name: Allow root to login via SSH with the maintenance indow open
+    - name: Allow root to login via SSH with the maintenance window open
       lineinfile:
         dest: /etc/ssh/sshd_config
         state: present
