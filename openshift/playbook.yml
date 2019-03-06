@@ -3,6 +3,7 @@
   hosts: all
   vars_files:
     - data.yml
+
   tasks:
     - name: Register at access.redhat.com
       redhat_subscription:
@@ -18,7 +19,7 @@
       rhsm_repository:
         name: "{{ item }}"
         state: enabled
-      with_items:
+      loop:
         - rhel-7-server-rpms
         - rhel-7-server-extras-rpms
         - rhel-7-server-optional-rpms
@@ -37,7 +38,7 @@
       rhsm_repository:
         name: "{{ item }}"
         state: enabled
-      with_items:
+      loop:
         - rhel-7-server-ose-3.9-rpms
         - rhel-7-fast-datapath-rpms
         - rhel-7-server-ansible-2.4-rpms
