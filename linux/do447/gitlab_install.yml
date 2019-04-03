@@ -1,0 +1,47 @@
+- name: Setup GitLab on utility.lab.example.com
+  hosts: utility.lab.example.com
+
+  vars:
+    nginx_port: 8081
+    unicorn_port: 8082
+    ipa_server: utility.lab.example.com
+    ipa_admin_user: admin
+    # Yes, we know that we should be using Ansible Vault #dontjudge
+    ipa_admin_pass: redhat321
+    
+  tasks:
+    
+    - name: Configure firewalld to allow the GitLab WebUI
+      firewalld:
+        port: 8081/tcp
+        state: present
+        permanent: true
+        immediate: true
+
+    - name: Install gitlab.rb template
+      copy:
+        src: gitlab.rb
+        dest: /opt/gitlab/etc/gitlab.rb
+      notify: Reconfigure GitLab
+
+    - name: Create GitLab user in FreeIPA for integration
+      ipa_user:
+        name: git
+        state: present
+        givenname: Git
+        sn: Lab
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_admin_user }}"
+        ipa_pass: "{{ ipa_admin_pass }}"
+
+    - name: Install FreeIPA integration file
+      copy:
+        src: freeipa_settings.yml
+        dest: /etc/gitlab/freeipa_settings.yml
+      notify: Reconfigure GitLab
+
+  handlers:
+
+    - name: Reconfigure GitLab
+      command: gitlab-ctl reconfigure
+      

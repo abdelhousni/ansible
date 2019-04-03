@@ -1,0 +1,388 @@
+2019-04-02 09:03:47,992 p=7562 u=student |  ERROR! Incorrect options passed
+2019-04-02 09:14:54,157 p=7730 u=student |  ERROR! the playbook: dns could not be found
+2019-04-02 09:15:02,916 p=7737 u=student |  playbook: dns.yml
+2019-04-02 09:15:10,839 p=7743 u=student |  PLAY [Set DNS records for IPA] ***********************************************************************************************
+2019-04-02 09:15:10,859 p=7743 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-02 09:15:13,785 p=7743 u=student |  ok: [utility.lab.example.com]
+2019-04-02 09:15:13,810 p=7743 u=student |  TASK [Create blue.lab.example.com] *******************************************************************************************
+2019-04-02 09:15:14,776 p=7743 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "msg": "missing required arguments: record_name, record_value"}
+2019-04-02 09:15:14,780 p=7743 u=student |  	to retry, use: --limit @/home/student/scratch/dns.retry
+
+2019-04-02 09:15:14,780 p=7743 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-02 09:15:14,781 p=7743 u=student |  utility.lab.example.com    : ok=1    changed=0    unreachable=0    failed=1   
+2019-04-02 09:16:08,508 p=7781 u=student |  PLAY [Set DNS records for IPA] ***********************************************************************************************
+2019-04-02 09:16:08,524 p=7781 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-02 09:16:10,146 p=7781 u=student |  ok: [utility.lab.example.com]
+2019-04-02 09:16:10,171 p=7781 u=student |  TASK [Create blue.lab.example.com] *******************************************************************************************
+2019-04-02 09:16:11,610 p=7781 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "msg": "response dnszone_find: DNS is not configured"}
+2019-04-02 09:16:11,613 p=7781 u=student |  	to retry, use: --limit @/home/student/scratch/dns.retry
+
+2019-04-02 09:16:11,613 p=7781 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-02 09:16:11,614 p=7781 u=student |  utility.lab.example.com    : ok=1    changed=0    unreachable=0    failed=1   
+2019-04-02 23:35:53,995 p=2831 u=student |  PLAY [utility.lab.example.com] ***********************************************************************************************
+2019-04-02 23:35:54,014 p=2831 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-02 23:35:56,799 p=2831 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:35:56,826 p=2831 u=student |  TASK [firewalld is enabled and started] **************************************************************************************
+2019-04-02 23:35:57,739 p=2831 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:35:57,762 p=2831 u=student |  TASK [Enable firewall services for FreeIPA in public zone] *******************************************************************
+2019-04-02 23:35:59,269 p=2831 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldap)
+2019-04-02 23:36:00,303 p=2831 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldaps)
+2019-04-02 23:36:01,395 p=2831 u=student |  ok: [utility.lab.example.com] => (item=dns)
+2019-04-02 23:36:01,428 p=2831 u=student |  TASK [/etc/hosts 127.0.0.1 should not resolve to FQDN] ***********************************************************************
+2019-04-02 23:36:02,228 p=2831 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:36:02,250 p=2831 u=student |  TASK [FQDN resolves to default IPv4 address in /etc/hosts] *******************************************************************
+2019-04-02 23:36:02,927 p=2831 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:36:02,951 p=2831 u=student |  TASK [FreeIPA server packages installed] *************************************************************************************
+2019-04-02 23:37:11,468 p=2831 u=student |  changed: [utility.lab.example.com] => (item=ipa-server)
+2019-04-02 23:37:33,371 p=2831 u=student |  ok: [utility.lab.example.com] => (item=ipa-server-dns)
+2019-04-02 23:37:54,646 p=2831 u=student |  ok: [utility.lab.example.com] => (item=rng-tools)
+2019-04-02 23:37:54,670 p=2831 u=student |  TASK [rngd service running to avoid install blocking on entropy issues] ******************************************************
+2019-04-02 23:37:55,328 p=2831 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:37:55,354 p=2831 u=student |  TASK [Set up FreeIPA server (may take some time to run)] *********************************************************************
+2019-04-02 23:37:57,309 p=2831 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": true, "cmd": ["ipa-server-install", "--domain=lab.example.net", "--realm=LAB.EXAMPLE.NET", "--ds-password=einstein", "--admin-password=redhat321", "--hostname=utility.lab.example.com", "--ip-address=172.25.250.8", "--no-ntp", "--setup-dns", "--reverse-zone=250.25.172.in-addr.arpa", "--mkhomedir", "--unattended"], "delta": "0:00:01.156742", "end": "2019-04-03 03:37:57.219873", "msg": "non-zero return code", "rc": 2, "start": "2019-04-03 03:37:56.063131", "stderr": "Usage: ipa-server-install [options]\n\nipa-server-install: error: You must specify at least one of --forwarder, --auto-forwarders, or --no-forwarders options\nipapython.admintool: ERROR    The ipa-server-install command failed.", "stderr_lines": ["Usage: ipa-server-install [options]", "", "ipa-server-install: error: You must specify at least one of --forwarder, --auto-forwarders, or --no-forwarders options", "ipapython.admintool: ERROR    The ipa-server-install command failed."], "stdout": "Checking DNS domain lab.example.net, please wait ...", "stdout_lines": ["Checking DNS domain lab.example.net, please wait ..."]}
+2019-04-02 23:37:57,312 p=2831 u=student |  	to retry, use: --limit @/home/student/scratch/create_ipa_server.retry
+
+2019-04-02 23:37:57,312 p=2831 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-02 23:37:57,313 p=2831 u=student |  utility.lab.example.com    : ok=7    changed=1    unreachable=0    failed=1   
+2019-04-02 23:39:46,286 p=2989 u=student |  PLAY [utility.lab.example.com] ***********************************************************************************************
+2019-04-02 23:39:46,301 p=2989 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-02 23:39:48,984 p=2989 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:39:49,011 p=2989 u=student |  TASK [firewalld is enabled and started] **************************************************************************************
+2019-04-02 23:39:49,807 p=2989 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:39:49,829 p=2989 u=student |  TASK [Enable firewall services for FreeIPA in public zone] *******************************************************************
+2019-04-02 23:39:51,094 p=2989 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldap)
+2019-04-02 23:39:52,124 p=2989 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldaps)
+2019-04-02 23:39:53,104 p=2989 u=student |  ok: [utility.lab.example.com] => (item=dns)
+2019-04-02 23:39:53,129 p=2989 u=student |  TASK [/etc/hosts 127.0.0.1 should not resolve to FQDN] ***********************************************************************
+2019-04-02 23:39:53,916 p=2989 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:39:53,940 p=2989 u=student |  TASK [FQDN resolves to default IPv4 address in /etc/hosts] *******************************************************************
+2019-04-02 23:39:54,553 p=2989 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:39:54,577 p=2989 u=student |  TASK [FreeIPA server packages installed] *************************************************************************************
+2019-04-02 23:40:16,602 p=2989 u=student |  ok: [utility.lab.example.com] => (item=ipa-server)
+2019-04-02 23:40:38,862 p=2989 u=student |  ok: [utility.lab.example.com] => (item=ipa-server-dns)
+2019-04-02 23:41:00,744 p=2989 u=student |  ok: [utility.lab.example.com] => (item=rng-tools)
+2019-04-02 23:41:00,775 p=2989 u=student |  TASK [rngd service running to avoid install blocking on entropy issues] ******************************************************
+2019-04-02 23:41:01,451 p=2989 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:41:01,476 p=2989 u=student |  TASK [Set up FreeIPA server (may take some time to run)] *********************************************************************
+2019-04-02 23:49:36,997 p=2989 u=student |  changed: [utility.lab.example.com]
+2019-04-02 23:49:37,022 p=2989 u=student |  TASK [Get IPA "admin" user Kerberos credentials] *****************************************************************************
+2019-04-02 23:49:37,754 p=2989 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:49:37,777 p=2989 u=student |  TASK [Check existence of "development" hostgroup] ****************************************************************************
+2019-04-02 23:49:39,743 p=2989 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "cmd": ["ipa", "hostgroup-find", "development"], "delta": "0:00:01.301834", "end": "2019-04-03 03:49:39.656272", "msg": "non-zero return code", "rc": 1, "start": "2019-04-03 03:49:38.354438", "stderr": "", "stderr_lines": [], "stdout": "--------------------\n0 hostgroups matched\n--------------------\n----------------------------\nNumber of entries returned 0\n----------------------------", "stdout_lines": ["--------------------", "0 hostgroups matched", "--------------------", "----------------------------", "Number of entries returned 0", "----------------------------"]}
+2019-04-02 23:49:39,743 p=2989 u=student |  ...ignoring
+2019-04-02 23:49:39,766 p=2989 u=student |  TASK [Check existence of "testing" hostgroup] ********************************************************************************
+2019-04-02 23:49:41,967 p=2989 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "cmd": ["ipa", "hostgroup-find", "testing"], "delta": "0:00:01.489158", "end": "2019-04-03 03:49:41.877407", "msg": "non-zero return code", "rc": 1, "start": "2019-04-03 03:49:40.388249", "stderr": "", "stderr_lines": [], "stdout": "--------------------\n0 hostgroups matched\n--------------------\n----------------------------\nNumber of entries returned 0\n----------------------------", "stdout_lines": ["--------------------", "0 hostgroups matched", "--------------------", "----------------------------", "Number of entries returned 0", "----------------------------"]}
+2019-04-02 23:49:41,967 p=2989 u=student |  ...ignoring
+2019-04-02 23:49:41,988 p=2989 u=student |  TASK [Check existence of "production" hostgroup] *****************************************************************************
+2019-04-02 23:49:43,666 p=2989 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "cmd": ["ipa", "hostgroup-find", "production"], "delta": "0:00:00.927674", "end": "2019-04-03 03:49:43.581733", "msg": "non-zero return code", "rc": 1, "start": "2019-04-03 03:49:42.654059", "stderr": "", "stderr_lines": [], "stdout": "--------------------\n0 hostgroups matched\n--------------------\n----------------------------\nNumber of entries returned 0\n----------------------------", "stdout_lines": ["--------------------", "0 hostgroups matched", "--------------------", "----------------------------", "Number of entries returned 0", "----------------------------"]}
+2019-04-02 23:49:43,667 p=2989 u=student |  ...ignoring
+2019-04-02 23:49:43,703 p=2989 u=student |  TASK [Create "development" hostgroup] ****************************************************************************************
+2019-04-02 23:49:45,744 p=2989 u=student |  changed: [utility.lab.example.com]
+2019-04-02 23:49:45,766 p=2989 u=student |  TASK [Create "testing" hostgroup] ********************************************************************************************
+2019-04-02 23:49:47,707 p=2989 u=student |  changed: [utility.lab.example.com]
+2019-04-02 23:49:47,730 p=2989 u=student |  TASK [Create "production" hostgroup] *****************************************************************************************
+2019-04-02 23:49:49,688 p=2989 u=student |  changed: [utility.lab.example.com]
+2019-04-02 23:49:49,693 p=2989 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-02 23:49:49,694 p=2989 u=student |  utility.lab.example.com    : ok=15   changed=4    unreachable=0    failed=0   
+2019-04-02 23:53:04,449 p=3295 u=student |  PLAY [Set DNS records for IPA] ***********************************************************************************************
+2019-04-02 23:53:04,464 p=3295 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-02 23:53:07,430 p=3295 u=student |  ok: [utility.lab.example.com]
+2019-04-02 23:53:07,453 p=3295 u=student |  TASK [Create blue.lab.example.net] *******************************************************************************************
+2019-04-02 23:53:09,258 p=3295 u=student |  changed: [utility.lab.example.com]
+2019-04-02 23:53:09,301 p=3295 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-02 23:53:09,301 p=3295 u=student |  utility.lab.example.com    : ok=2    changed=1    unreachable=0    failed=0   
+2019-04-03 00:01:47,736 p=3426 u=student |  ERROR! Syntax Error while loading YAML.
+  did not find expected key
+
+The error appears to have been in '/home/student/scratch/create_dns_zones.yml': line 15, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+  - name: Create zones
+  ^ here
+
+2019-04-03 00:02:19,155 p=3441 u=student |  playbook: create_dns_zones.yml
+2019-04-03 00:02:26,071 p=3448 u=student |  PLAY [Set DNS records for IPA] ***********************************************************************************************
+2019-04-03 00:02:26,085 p=3448 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-03 00:02:29,016 p=3448 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:02:29,040 p=3448 u=student |  TASK [Create zones] **********************************************************************************************************
+2019-04-03 00:02:29,063 p=3448 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"msg": "Invalid data passed to 'loop', it requires a list, got this instead: blue.lab.example.net green.lab.example.net. Hint: If you passed a list/dict of just one element, try adding wantlist=True to your lookup invocation or use q/query instead of lookup."}
+2019-04-03 00:02:29,066 p=3448 u=student |  	to retry, use: --limit @/home/student/scratch/create_dns_zones.retry
+
+2019-04-03 00:02:29,067 p=3448 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-03 00:02:29,067 p=3448 u=student |  utility.lab.example.com    : ok=1    changed=0    unreachable=0    failed=1   
+2019-04-03 00:03:41,949 p=3481 u=student |  PLAY [Set DNS records for IPA] ***********************************************************************************************
+2019-04-03 00:03:41,964 p=3481 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-03 00:03:44,613 p=3481 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:03:44,635 p=3481 u=student |  TASK [Create zones] **********************************************************************************************************
+2019-04-03 00:03:46,193 p=3481 u=student |  ok: [utility.lab.example.com] => (item=blue.lab.example.net)
+2019-04-03 00:03:47,844 p=3481 u=student |  changed: [utility.lab.example.com] => (item=green.lab.example.net)
+2019-04-03 00:03:47,849 p=3481 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-03 00:03:47,849 p=3481 u=student |  utility.lab.example.com    : ok=2    changed=1    unreachable=0    failed=0   
+2019-04-03 00:18:35,161 p=3702 u=student |  PLAY [utility.lab.example.com] ***********************************************************************************************
+2019-04-03 00:18:35,176 p=3702 u=student |  TASK [Gathering Facts] *******************************************************************************************************
+2019-04-03 00:18:35,177 p=3702 u=student |  Wednesday 03 April 2019  00:18:35 -0400 (0:00:00.104)       0:00:00.104 ******* 
+2019-04-03 00:18:37,816 p=3702 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:18:37,842 p=3702 u=student |  TASK [firewalld is enabled and started] **************************************************************************************
+2019-04-03 00:18:37,843 p=3702 u=student |  Wednesday 03 April 2019  00:18:37 -0400 (0:00:02.665)       0:00:02.770 ******* 
+2019-04-03 00:18:38,717 p=3702 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:18:38,755 p=3702 u=student |  TASK [Enable firewall services for FreeIPA in public zone] *******************************************************************
+2019-04-03 00:18:38,755 p=3702 u=student |  Wednesday 03 April 2019  00:18:38 -0400 (0:00:00.912)       0:00:03.682 ******* 
+2019-04-03 00:18:40,128 p=3702 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldap)
+2019-04-03 00:18:41,188 p=3702 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldaps)
+2019-04-03 00:18:42,188 p=3702 u=student |  ok: [utility.lab.example.com] => (item=dns)
+2019-04-03 00:18:42,211 p=3702 u=student |  TASK [/etc/hosts 127.0.0.1 should not resolve to FQDN] ***********************************************************************
+2019-04-03 00:18:42,212 p=3702 u=student |  Wednesday 03 April 2019  00:18:42 -0400 (0:00:03.456)       0:00:07.139 ******* 
+2019-04-03 00:18:43,045 p=3702 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:18:43,077 p=3702 u=student |  TASK [FQDN resolves to default IPv4 address in /etc/hosts] *******************************************************************
+2019-04-03 00:18:43,078 p=3702 u=student |  Wednesday 03 April 2019  00:18:43 -0400 (0:00:00.866)       0:00:08.005 ******* 
+2019-04-03 00:18:43,747 p=3702 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:18:43,770 p=3702 u=student |  TASK [FreeIPA server packages installed] *************************************************************************************
+2019-04-03 00:18:43,770 p=3702 u=student |  Wednesday 03 April 2019  00:18:43 -0400 (0:00:00.692)       0:00:08.697 ******* 
+2019-04-03 00:19:07,095 p=3702 u=student |  ok: [utility.lab.example.com] => (item=ipa-server)
+2019-04-03 00:19:28,107 p=3702 u=student |  ok: [utility.lab.example.com] => (item=ipa-server-dns)
+2019-04-03 00:19:49,773 p=3702 u=student |  ok: [utility.lab.example.com] => (item=rng-tools)
+2019-04-03 00:19:49,795 p=3702 u=student |  TASK [rngd service running to avoid install blocking on entropy issues] ******************************************************
+2019-04-03 00:19:49,796 p=3702 u=student |  Wednesday 03 April 2019  00:19:49 -0400 (0:01:06.025)       0:01:14.723 ******* 
+2019-04-03 00:19:50,469 p=3702 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:19:50,492 p=3702 u=student |  TASK [Set up FreeIPA server (may take some time to run)] *********************************************************************
+2019-04-03 00:19:50,493 p=3702 u=student |  Wednesday 03 April 2019  00:19:50 -0400 (0:00:00.696)       0:01:15.420 ******* 
+2019-04-03 00:28:18,210 p=3702 u=student |  changed: [utility.lab.example.com]
+2019-04-03 00:28:18,235 p=3702 u=student |  TASK [Get IPA "admin" user Kerberos credentials] *****************************************************************************
+2019-04-03 00:28:18,235 p=3702 u=student |  Wednesday 03 April 2019  00:28:18 -0400 (0:08:27.742)       0:09:43.162 ******* 
+2019-04-03 00:28:18,989 p=3702 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:28:19,012 p=3702 u=student |  TASK [Check existence of "development" hostgroup] ****************************************************************************
+2019-04-03 00:28:19,012 p=3702 u=student |  Wednesday 03 April 2019  00:28:19 -0400 (0:00:00.777)       0:09:43.939 ******* 
+2019-04-03 00:28:21,160 p=3702 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "cmd": ["ipa", "hostgroup-find", "development"], "delta": "0:00:01.439697", "end": "2019-04-03 04:28:21.056888", "msg": "non-zero return code", "rc": 1, "start": "2019-04-03 04:28:19.617191", "stderr": "", "stderr_lines": [], "stdout": "--------------------\n0 hostgroups matched\n--------------------\n----------------------------\nNumber of entries returned 0\n----------------------------", "stdout_lines": ["--------------------", "0 hostgroups matched", "--------------------", "----------------------------", "Number of entries returned 0", "----------------------------"]}
+2019-04-03 00:28:21,161 p=3702 u=student |  ...ignoring
+2019-04-03 00:28:21,184 p=3702 u=student |  TASK [Check existence of "testing" hostgroup] ********************************************************************************
+2019-04-03 00:28:21,184 p=3702 u=student |  Wednesday 03 April 2019  00:28:21 -0400 (0:00:02.171)       0:09:46.112 ******* 
+2019-04-03 00:28:23,295 p=3702 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "cmd": ["ipa", "hostgroup-find", "testing"], "delta": "0:00:01.232178", "end": "2019-04-03 04:28:23.206485", "msg": "non-zero return code", "rc": 1, "start": "2019-04-03 04:28:21.974307", "stderr": "", "stderr_lines": [], "stdout": "--------------------\n0 hostgroups matched\n--------------------\n----------------------------\nNumber of entries returned 0\n----------------------------", "stdout_lines": ["--------------------", "0 hostgroups matched", "--------------------", "----------------------------", "Number of entries returned 0", "----------------------------"]}
+2019-04-03 00:28:23,295 p=3702 u=student |  ...ignoring
+2019-04-03 00:28:23,317 p=3702 u=student |  TASK [Check existence of "production" hostgroup] *****************************************************************************
+2019-04-03 00:28:23,318 p=3702 u=student |  Wednesday 03 April 2019  00:28:23 -0400 (0:00:02.133)       0:09:48.245 ******* 
+2019-04-03 00:28:24,897 p=3702 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "cmd": ["ipa", "hostgroup-find", "production"], "delta": "0:00:00.929726", "end": "2019-04-03 04:28:24.811345", "msg": "non-zero return code", "rc": 1, "start": "2019-04-03 04:28:23.881619", "stderr": "", "stderr_lines": [], "stdout": "--------------------\n0 hostgroups matched\n--------------------\n----------------------------\nNumber of entries returned 0\n----------------------------", "stdout_lines": ["--------------------", "0 hostgroups matched", "--------------------", "----------------------------", "Number of entries returned 0", "----------------------------"]}
+2019-04-03 00:28:24,897 p=3702 u=student |  ...ignoring
+2019-04-03 00:28:24,918 p=3702 u=student |  TASK [Create "development" hostgroup] ****************************************************************************************
+2019-04-03 00:28:24,919 p=3702 u=student |  Wednesday 03 April 2019  00:28:24 -0400 (0:00:01.600)       0:09:49.846 ******* 
+2019-04-03 00:28:26,841 p=3702 u=student |  changed: [utility.lab.example.com]
+2019-04-03 00:28:26,877 p=3702 u=student |  TASK [Create "testing" hostgroup] ********************************************************************************************
+2019-04-03 00:28:26,877 p=3702 u=student |  Wednesday 03 April 2019  00:28:26 -0400 (0:00:01.958)       0:09:51.804 ******* 
+2019-04-03 00:28:28,977 p=3702 u=student |  changed: [utility.lab.example.com]
+2019-04-03 00:28:29,000 p=3702 u=student |  TASK [Create "production" hostgroup] *****************************************************************************************
+2019-04-03 00:28:29,000 p=3702 u=student |  Wednesday 03 April 2019  00:28:29 -0400 (0:00:02.123)       0:09:53.928 ******* 
+2019-04-03 00:28:31,116 p=3702 u=student |  changed: [utility.lab.example.com]
+2019-04-03 00:28:31,120 p=3702 u=student |  PLAY RECAP *******************************************************************************************************************
+2019-04-03 00:28:31,121 p=3702 u=student |  utility.lab.example.com    : ok=15   changed=4    unreachable=0    failed=0   
+2019-04-03 00:28:31,121 p=3702 u=student |  Wednesday 03 April 2019  00:28:31 -0400 (0:00:02.120)       0:09:56.049 ******* 
+2019-04-03 00:28:31,122 p=3702 u=student |  =============================================================================== 
+2019-04-03 00:28:31,122 p=3702 u=student |  Set up FreeIPA server (may take some time to run) ------------------------------------------------------------------- 507.74s
+2019-04-03 00:28:31,122 p=3702 u=student |  FreeIPA server packages installed ------------------------------------------------------------------------------------ 66.03s
+2019-04-03 00:28:31,123 p=3702 u=student |  Enable firewall services for FreeIPA in public zone ------------------------------------------------------------------- 3.46s
+2019-04-03 00:28:31,123 p=3702 u=student |  Gathering Facts ------------------------------------------------------------------------------------------------------- 2.67s
+2019-04-03 00:28:31,123 p=3702 u=student |  Check existence of "development" hostgroup ---------------------------------------------------------------------------- 2.17s
+2019-04-03 00:28:31,124 p=3702 u=student |  Check existence of "testing" hostgroup -------------------------------------------------------------------------------- 2.13s
+2019-04-03 00:28:31,124 p=3702 u=student |  Create "testing" hostgroup -------------------------------------------------------------------------------------------- 2.12s
+2019-04-03 00:28:31,124 p=3702 u=student |  Create "production" hostgroup ----------------------------------------------------------------------------------------- 2.12s
+2019-04-03 00:28:31,125 p=3702 u=student |  Create "development" hostgroup ---------------------------------------------------------------------------------------- 1.96s
+2019-04-03 00:28:31,125 p=3702 u=student |  Check existence of "production" hostgroup ----------------------------------------------------------------------------- 1.60s
+2019-04-03 00:28:31,125 p=3702 u=student |  firewalld is enabled and started -------------------------------------------------------------------------------------- 0.91s
+2019-04-03 00:28:31,125 p=3702 u=student |  /etc/hosts 127.0.0.1 should not resolve to FQDN ----------------------------------------------------------------------- 0.87s
+2019-04-03 00:28:31,126 p=3702 u=student |  Get IPA "admin" user Kerberos credentials ----------------------------------------------------------------------------- 0.78s
+2019-04-03 00:28:31,126 p=3702 u=student |  rngd service running to avoid install blocking on entropy issues ------------------------------------------------------ 0.70s
+2019-04-03 00:28:31,126 p=3702 u=student |  FQDN resolves to default IPv4 address in /etc/hosts ------------------------------------------------------------------- 0.69s
+2019-04-03 00:53:28,919 p=4208 u=student |  ERROR! Syntax Error while loading YAML.
+  did not find expected key
+
+The error appears to have been in '/home/student/scratch/create_ipa_server.yml': line 87, column 27, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+        msg: There is currently a process bound to 389/tcp
+      when: ':389.*slapd' in netstat_output.stdout
+                          ^ here
+
+2019-04-03 00:55:46,053 p=4233 u=student |  PLAY [utility.lab.example.com] ************************************************************************************************
+2019-04-03 00:55:46,068 p=4233 u=student |  TASK [Gathering Facts] ********************************************************************************************************
+2019-04-03 00:55:46,068 p=4233 u=student |  Wednesday 03 April 2019  00:55:46 -0400 (0:00:00.105)       0:00:00.105 ******* 
+2019-04-03 00:55:48,765 p=4233 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:55:48,792 p=4233 u=student |  TASK [firewalld is enabled and started] ***************************************************************************************
+2019-04-03 00:55:48,792 p=4233 u=student |  Wednesday 03 April 2019  00:55:48 -0400 (0:00:02.723)       0:00:02.829 ******* 
+2019-04-03 00:55:49,657 p=4233 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:55:49,679 p=4233 u=student |  TASK [Enable firewall services for FreeIPA in public zone] ********************************************************************
+2019-04-03 00:55:49,680 p=4233 u=student |  Wednesday 03 April 2019  00:55:49 -0400 (0:00:00.887)       0:00:03.717 ******* 
+2019-04-03 00:55:50,912 p=4233 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldap)
+2019-04-03 00:55:52,005 p=4233 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldaps)
+2019-04-03 00:55:53,026 p=4233 u=student |  ok: [utility.lab.example.com] => (item=dns)
+2019-04-03 00:55:53,049 p=4233 u=student |  TASK [/etc/hosts 127.0.0.1 should not resolve to FQDN] ************************************************************************
+2019-04-03 00:55:53,050 p=4233 u=student |  Wednesday 03 April 2019  00:55:53 -0400 (0:00:03.370)       0:00:07.087 ******* 
+2019-04-03 00:55:53,861 p=4233 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:55:53,884 p=4233 u=student |  TASK [FQDN resolves to default IPv4 address in /etc/hosts] ********************************************************************
+2019-04-03 00:55:53,884 p=4233 u=student |  Wednesday 03 April 2019  00:55:53 -0400 (0:00:00.834)       0:00:07.921 ******* 
+2019-04-03 00:55:54,582 p=4233 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:55:54,612 p=4233 u=student |  TASK [FreeIPA server packages installed] **************************************************************************************
+2019-04-03 00:55:54,612 p=4233 u=student |  Wednesday 03 April 2019  00:55:54 -0400 (0:00:00.727)       0:00:08.649 ******* 
+2019-04-03 00:56:17,856 p=4233 u=student |  ok: [utility.lab.example.com] => (item=ipa-server)
+2019-04-03 00:56:38,318 p=4233 u=student |  ok: [utility.lab.example.com] => (item=ipa-server-dns)
+2019-04-03 00:56:59,892 p=4233 u=student |  ok: [utility.lab.example.com] => (item=rng-tools)
+2019-04-03 00:56:59,915 p=4233 u=student |  TASK [rngd service running to avoid install blocking on entropy issues] *******************************************************
+2019-04-03 00:56:59,915 p=4233 u=student |  Wednesday 03 April 2019  00:56:59 -0400 (0:01:05.303)       0:01:13.952 ******* 
+2019-04-03 00:57:00,811 p=4233 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:57:00,835 p=4233 u=student |  TASK [Find out if anything is running on IPA ports] ***************************************************************************
+2019-04-03 00:57:00,835 p=4233 u=student |  Wednesday 03 April 2019  00:57:00 -0400 (0:00:00.919)       0:01:14.872 ******* 
+2019-04-03 00:57:01,786 p=4233 u=student |  changed: [utility.lab.example.com]
+2019-04-03 00:57:01,810 p=4233 u=student |  TASK [Make sure that we're not already running an IPA server] *****************************************************************
+2019-04-03 00:57:01,810 p=4233 u=student |  Wednesday 03 April 2019  00:57:01 -0400 (0:00:00.974)       0:01:15.847 ******* 
+2019-04-03 00:57:01,844 p=4233 u=student |  skipping: [utility.lab.example.com]
+2019-04-03 00:57:01,865 p=4233 u=student |  TASK [Set up FreeIPA server (may take some time to run)] **********************************************************************
+2019-04-03 00:57:01,866 p=4233 u=student |  Wednesday 03 April 2019  00:57:01 -0400 (0:00:00.055)       0:01:15.902 ******* 
+2019-04-03 00:57:03,564 p=4233 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": true, "cmd": ["ipa-server-install", "--domain=lab.example.io", "--realm=LAB.EXAMPLE.IO", "--ds-password=einstein", "--admin-password=redhat321", "--hostname=utility.lab.example.com", "--ip-address=172.25.250.8", "--no-ntp", "--setup-dns", "--reverse-zone=250.25.172.in-addr.arpa", "--no-forwarders", "--mkhomedir", "--unattended"], "delta": "0:00:00.989056", "end": "2019-04-03 04:57:03.478340", "msg": "non-zero return code", "rc": 2, "start": "2019-04-03 04:57:02.489284", "stderr": "Usage: ipa-server-install [options]\n\nipa-server-install: error: option --domain: DNS zone lab.example.io. already exists in DNS and is handled by server(s): utility.lab.example.com.\nipapython.admintool: ERROR    The ipa-server-install command failed.", "stderr_lines": ["Usage: ipa-server-install [options]", "", "ipa-server-install: error: option --domain: DNS zone lab.example.io. already exists in DNS and is handled by server(s): utility.lab.example.com.", "ipapython.admintool: ERROR    The ipa-server-install command failed."], "stdout": "Checking DNS domain lab.example.io, please wait ...", "stdout_lines": ["Checking DNS domain lab.example.io, please wait ..."]}
+2019-04-03 00:57:03,568 p=4233 u=student |  	to retry, use: --limit @/home/student/scratch/create_ipa_server.retry
+
+2019-04-03 00:57:03,568 p=4233 u=student |  PLAY RECAP ********************************************************************************************************************
+2019-04-03 00:57:03,569 p=4233 u=student |  utility.lab.example.com    : ok=8    changed=1    unreachable=0    failed=1   
+2019-04-03 00:57:03,570 p=4233 u=student |  Wednesday 03 April 2019  00:57:03 -0400 (0:00:01.704)       0:01:17.607 ******* 
+2019-04-03 00:57:03,570 p=4233 u=student |  =============================================================================== 
+2019-04-03 00:57:03,571 p=4233 u=student |  FreeIPA server packages installed ------------------------------------------------------------------------------------- 65.30s
+2019-04-03 00:57:03,571 p=4233 u=student |  Enable firewall services for FreeIPA in public zone -------------------------------------------------------------------- 3.37s
+2019-04-03 00:57:03,571 p=4233 u=student |  Gathering Facts -------------------------------------------------------------------------------------------------------- 2.72s
+2019-04-03 00:57:03,572 p=4233 u=student |  Set up FreeIPA server (may take some time to run) ---------------------------------------------------------------------- 1.70s
+2019-04-03 00:57:03,572 p=4233 u=student |  Find out if anything is running on IPA ports --------------------------------------------------------------------------- 0.97s
+2019-04-03 00:57:03,572 p=4233 u=student |  rngd service running to avoid install blocking on entropy issues ------------------------------------------------------- 0.92s
+2019-04-03 00:57:03,573 p=4233 u=student |  firewalld is enabled and started --------------------------------------------------------------------------------------- 0.89s
+2019-04-03 00:57:03,573 p=4233 u=student |  /etc/hosts 127.0.0.1 should not resolve to FQDN ------------------------------------------------------------------------ 0.83s
+2019-04-03 00:57:03,573 p=4233 u=student |  FQDN resolves to default IPv4 address in /etc/hosts -------------------------------------------------------------------- 0.73s
+2019-04-03 00:57:03,574 p=4233 u=student |  Make sure that we're not already running an IPA server ----------------------------------------------------------------- 0.06s
+2019-04-03 00:58:19,092 p=4374 u=student |  PLAY [utility.lab.example.com] ************************************************************************************************
+2019-04-03 00:58:19,107 p=4374 u=student |  TASK [Gathering Facts] ********************************************************************************************************
+2019-04-03 00:58:19,107 p=4374 u=student |  Wednesday 03 April 2019  00:58:19 -0400 (0:00:00.102)       0:00:00.102 ******* 
+2019-04-03 00:58:21,842 p=4374 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:58:21,881 p=4374 u=student |  TASK [firewalld is enabled and started] ***************************************************************************************
+2019-04-03 00:58:21,881 p=4374 u=student |  Wednesday 03 April 2019  00:58:21 -0400 (0:00:02.773)       0:00:02.876 ******* 
+2019-04-03 00:58:22,731 p=4374 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:58:22,754 p=4374 u=student |  TASK [Enable firewall services for FreeIPA in public zone] ********************************************************************
+2019-04-03 00:58:22,755 p=4374 u=student |  Wednesday 03 April 2019  00:58:22 -0400 (0:00:00.873)       0:00:03.749 ******* 
+2019-04-03 00:58:23,985 p=4374 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldap)
+2019-04-03 00:58:25,001 p=4374 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldaps)
+2019-04-03 00:58:25,933 p=4374 u=student |  ok: [utility.lab.example.com] => (item=dns)
+2019-04-03 00:58:25,956 p=4374 u=student |  TASK [/etc/hosts 127.0.0.1 should not resolve to FQDN] ************************************************************************
+2019-04-03 00:58:25,957 p=4374 u=student |  Wednesday 03 April 2019  00:58:25 -0400 (0:00:03.201)       0:00:06.951 ******* 
+2019-04-03 00:58:26,749 p=4374 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:58:26,770 p=4374 u=student |  TASK [FQDN resolves to default IPv4 address in /etc/hosts] ********************************************************************
+2019-04-03 00:58:26,771 p=4374 u=student |  Wednesday 03 April 2019  00:58:26 -0400 (0:00:00.814)       0:00:07.765 ******* 
+2019-04-03 00:58:27,409 p=4374 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:58:27,433 p=4374 u=student |  TASK [FreeIPA server packages installed] **************************************************************************************
+2019-04-03 00:58:27,434 p=4374 u=student |  Wednesday 03 April 2019  00:58:27 -0400 (0:00:00.663)       0:00:08.428 ******* 
+2019-04-03 00:58:48,853 p=4374 u=student |  ok: [utility.lab.example.com] => (item=ipa-server)
+2019-04-03 00:59:09,918 p=4374 u=student |  ok: [utility.lab.example.com] => (item=ipa-server-dns)
+2019-04-03 00:59:31,243 p=4374 u=student |  ok: [utility.lab.example.com] => (item=rng-tools)
+2019-04-03 00:59:31,265 p=4374 u=student |  TASK [rngd service running to avoid install blocking on entropy issues] *******************************************************
+2019-04-03 00:59:31,265 p=4374 u=student |  Wednesday 03 April 2019  00:59:31 -0400 (0:01:03.831)       0:01:12.260 ******* 
+2019-04-03 00:59:31,940 p=4374 u=student |  ok: [utility.lab.example.com]
+2019-04-03 00:59:31,963 p=4374 u=student |  TASK [Find out if anything is running on IPA ports] ***************************************************************************
+2019-04-03 00:59:31,964 p=4374 u=student |  Wednesday 03 April 2019  00:59:31 -0400 (0:00:00.698)       0:01:12.958 ******* 
+2019-04-03 00:59:32,927 p=4374 u=student |  changed: [utility.lab.example.com]
+2019-04-03 00:59:32,952 p=4374 u=student |  TASK [Make sure that we're not already running an IPA server] *****************************************************************
+2019-04-03 00:59:32,952 p=4374 u=student |  Wednesday 03 April 2019  00:59:32 -0400 (0:00:00.988)       0:01:13.947 ******* 
+2019-04-03 00:59:33,011 p=4374 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "msg": "There is currently a process bound to 389/tcp"}
+2019-04-03 00:59:33,015 p=4374 u=student |  	to retry, use: --limit @/home/student/scratch/create_ipa_server.retry
+
+2019-04-03 00:59:33,016 p=4374 u=student |  PLAY RECAP ********************************************************************************************************************
+2019-04-03 00:59:33,016 p=4374 u=student |  utility.lab.example.com    : ok=8    changed=1    unreachable=0    failed=1   
+2019-04-03 00:59:33,017 p=4374 u=student |  Wednesday 03 April 2019  00:59:33 -0400 (0:00:00.064)       0:01:14.011 ******* 
+2019-04-03 00:59:33,017 p=4374 u=student |  =============================================================================== 
+2019-04-03 00:59:33,017 p=4374 u=student |  FreeIPA server packages installed ------------------------------------------------------------------------------------- 63.83s
+2019-04-03 00:59:33,018 p=4374 u=student |  Enable firewall services for FreeIPA in public zone -------------------------------------------------------------------- 3.20s
+2019-04-03 00:59:33,018 p=4374 u=student |  Gathering Facts -------------------------------------------------------------------------------------------------------- 2.77s
+2019-04-03 00:59:33,018 p=4374 u=student |  Find out if anything is running on IPA ports --------------------------------------------------------------------------- 0.99s
+2019-04-03 00:59:33,019 p=4374 u=student |  firewalld is enabled and started --------------------------------------------------------------------------------------- 0.87s
+2019-04-03 00:59:33,019 p=4374 u=student |  /etc/hosts 127.0.0.1 should not resolve to FQDN ------------------------------------------------------------------------ 0.81s
+2019-04-03 00:59:33,019 p=4374 u=student |  rngd service running to avoid install blocking on entropy issues ------------------------------------------------------- 0.70s
+2019-04-03 00:59:33,020 p=4374 u=student |  FQDN resolves to default IPv4 address in /etc/hosts -------------------------------------------------------------------- 0.66s
+2019-04-03 00:59:33,020 p=4374 u=student |  Make sure that we're not already running an IPA server ----------------------------------------------------------------- 0.06s
+2019-04-03 01:07:01,752 p=4576 u=student |  ERROR! Syntax Error while loading YAML.
+  did not find expected key
+
+The error appears to have been in '/home/student/scratch/create_ipa_server.yml': line 82, column 47, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+        msg: There are currently processes bound to 389/tcp and 636/tcp, consider using ipa-server-install --uninstall
+      when: "':389' in netstat_result.stdout" and "':636' in netstat_result.stdout"
+                                              ^ here
+This one looks easy to fix.  It seems that there is a value started
+with a quote, and the YAML parser is expecting to see the line ended
+with the same kind of quote.  For instance:
+
+    when: "ok" in result.stdout
+
+Could be written as:
+
+   when: '"ok" in result.stdout'
+
+Or equivalently:
+
+   when: "'ok' in result.stdout"
+We could be wrong, but this one looks like it might be an issue with
+unbalanced quotes.  If starting a value with a quote, make sure the
+line ends with the same set of quotes.  For instance this arbitrary
+example:
+
+    foo: "bad" "wolf"
+
+Could be written as:
+
+    foo: '"bad" "wolf"'
+
+2019-04-03 01:08:30,866 p=4602 u=student |  PLAY [utility.lab.example.com] ************************************************************************************************
+2019-04-03 01:08:30,882 p=4602 u=student |  TASK [Gathering Facts] ********************************************************************************************************
+2019-04-03 01:08:30,883 p=4602 u=student |  Wednesday 03 April 2019  01:08:30 -0400 (0:00:00.107)       0:00:00.107 ******* 
+2019-04-03 01:08:33,519 p=4602 u=student |  ok: [utility.lab.example.com]
+2019-04-03 01:08:33,547 p=4602 u=student |  TASK [firewalld is enabled and started] ***************************************************************************************
+2019-04-03 01:08:33,547 p=4602 u=student |  Wednesday 03 April 2019  01:08:33 -0400 (0:00:02.664)       0:00:02.772 ******* 
+2019-04-03 01:08:34,412 p=4602 u=student |  ok: [utility.lab.example.com]
+2019-04-03 01:08:34,435 p=4602 u=student |  TASK [Enable firewall services for FreeIPA in public zone] ********************************************************************
+2019-04-03 01:08:34,436 p=4602 u=student |  Wednesday 03 April 2019  01:08:34 -0400 (0:00:00.888)       0:00:03.660 ******* 
+2019-04-03 01:08:35,700 p=4602 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldap)
+2019-04-03 01:08:36,804 p=4602 u=student |  ok: [utility.lab.example.com] => (item=freeipa-ldaps)
+2019-04-03 01:08:37,783 p=4602 u=student |  ok: [utility.lab.example.com] => (item=dns)
+2019-04-03 01:08:37,825 p=4602 u=student |  TASK [/etc/hosts 127.0.0.1 should not resolve to FQDN] ************************************************************************
+2019-04-03 01:08:37,825 p=4602 u=student |  Wednesday 03 April 2019  01:08:37 -0400 (0:00:03.389)       0:00:07.049 ******* 
+2019-04-03 01:08:38,634 p=4602 u=student |  ok: [utility.lab.example.com]
+2019-04-03 01:08:38,659 p=4602 u=student |  TASK [FQDN resolves to default IPv4 address in /etc/hosts] ********************************************************************
+2019-04-03 01:08:38,659 p=4602 u=student |  Wednesday 03 April 2019  01:08:38 -0400 (0:00:00.834)       0:00:07.884 ******* 
+2019-04-03 01:08:39,273 p=4602 u=student |  ok: [utility.lab.example.com]
+2019-04-03 01:08:39,296 p=4602 u=student |  TASK [FreeIPA server packages installed] **************************************************************************************
+2019-04-03 01:08:39,296 p=4602 u=student |  Wednesday 03 April 2019  01:08:39 -0400 (0:00:00.637)       0:00:08.521 ******* 
+2019-04-03 01:09:02,017 p=4602 u=student |  ok: [utility.lab.example.com] => (item=ipa-server)
+2019-04-03 01:09:23,855 p=4602 u=student |  ok: [utility.lab.example.com] => (item=ipa-server-dns)
+2019-04-03 01:09:45,075 p=4602 u=student |  ok: [utility.lab.example.com] => (item=rng-tools)
+2019-04-03 01:09:45,102 p=4602 u=student |  TASK [rngd service running to avoid install blocking on entropy issues] *******************************************************
+2019-04-03 01:09:45,102 p=4602 u=student |  Wednesday 03 April 2019  01:09:45 -0400 (0:01:05.805)       0:01:14.327 ******* 
+2019-04-03 01:09:45,913 p=4602 u=student |  ok: [utility.lab.example.com]
+2019-04-03 01:09:45,937 p=4602 u=student |  TASK [Find out if anything is running on IPA ports] ***************************************************************************
+2019-04-03 01:09:45,937 p=4602 u=student |  Wednesday 03 April 2019  01:09:45 -0400 (0:00:00.834)       0:01:15.162 ******* 
+2019-04-03 01:09:46,897 p=4602 u=student |  changed: [utility.lab.example.com]
+2019-04-03 01:09:46,920 p=4602 u=student |  TASK [Make sure that we're not already running an IPA server] *****************************************************************
+2019-04-03 01:09:46,920 p=4602 u=student |  Wednesday 03 April 2019  01:09:46 -0400 (0:00:00.982)       0:01:16.145 ******* 
+2019-04-03 01:09:46,980 p=4602 u=student |  fatal: [utility.lab.example.com]: FAILED! => {"changed": false, "msg": "There are currently processes bound to 389/tcp and 636/tcp, consider using ipa-server-install --uninstall"}
+2019-04-03 01:09:46,983 p=4602 u=student |  	to retry, use: --limit @/home/student/scratch/create_ipa_server.retry
+
+2019-04-03 01:09:46,984 p=4602 u=student |  PLAY RECAP ********************************************************************************************************************
+2019-04-03 01:09:46,984 p=4602 u=student |  utility.lab.example.com    : ok=8    changed=1    unreachable=0    failed=1   
+2019-04-03 01:09:46,985 p=4602 u=student |  Wednesday 03 April 2019  01:09:46 -0400 (0:00:00.064)       0:01:16.209 ******* 
+2019-04-03 01:09:46,985 p=4602 u=student |  =============================================================================== 
+2019-04-03 01:09:46,985 p=4602 u=student |  FreeIPA server packages installed ------------------------------------------------------------------------------------- 65.81s
+2019-04-03 01:09:46,985 p=4602 u=student |  Enable firewall services for FreeIPA in public zone -------------------------------------------------------------------- 3.39s
+2019-04-03 01:09:46,986 p=4602 u=student |  Gathering Facts -------------------------------------------------------------------------------------------------------- 2.66s
+2019-04-03 01:09:46,986 p=4602 u=student |  Find out if anything is running on IPA ports --------------------------------------------------------------------------- 0.98s
+2019-04-03 01:09:46,986 p=4602 u=student |  firewalld is enabled and started --------------------------------------------------------------------------------------- 0.89s
+2019-04-03 01:09:46,987 p=4602 u=student |  rngd service running to avoid install blocking on entropy issues ------------------------------------------------------- 0.83s
+2019-04-03 01:09:46,987 p=4602 u=student |  /etc/hosts 127.0.0.1 should not resolve to FQDN ------------------------------------------------------------------------ 0.83s
+2019-04-03 01:09:46,987 p=4602 u=student |  FQDN resolves to default IPv4 address in /etc/hosts -------------------------------------------------------------------- 0.64s
+2019-04-03 01:09:46,988 p=4602 u=student |  Make sure that we're not already running an IPA server ----------------------------------------------------------------- 0.06s
+2019-04-03 01:26:55,769 p=4884 u=student |  playbook: gitlab_install.yml
