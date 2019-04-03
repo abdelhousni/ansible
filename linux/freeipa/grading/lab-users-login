@@ -1,0 +1,287 @@
+#!/bin/bash
+#
+# Copyright 2018 Red Hat, Inc.
+#
+# NAME
+#     lab-users-login - grading script for RH362 Controlling Users Access
+#
+# SYNOPSIS
+#     lab-users-login {setup|cleanup}
+#
+#        setup   - prepare the system for starting the lab
+#        cleanup - perform post-lab cleanup
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Fri May 18 2018 Artur Glogowski <aglogows@redhat.com>
+#   - added oathtool 
+#   * Thu Apr 12 2018 Artur Glogowski <aglogows@redhat.com>
+#   - added AD trust
+#   - added client modification
+#   - added squid deployment
+#   * Wed Mar 28 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - original code
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+
+idm='idm.lab.example.net'
+lab_directory_name='users-login'
+
+# Variables from the ad-trust script
+target3='idm'
+target4='client'
+directory='/home/student/ansible'
+ansible_version='2.5.0-0.0.devel.201801312256git.512d6f6ac6.el7.ans.noarch'
+materials_url=http://materials.example.com
+targets=( ${target} ${target3} ${target4} )
+REQSVC=( freeipa-ldap freeipa-ldaps dns )
+REQPKG=( ipa-server ipa-server-dns )
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+
+  for target in ${targets[@]}; do
+    pad " · Verify ${target} access"
+    if host_reachable ${target}; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  done
+
+  if ! rpm -q ansible; then
+    pad ' · Installing ansible'
+    yum install -y ${materials_url}/classroom/ansible/ansible-${ansible_version}.rpm && mkdir /home/student/ansible
+    if [ $? -eq 0 ]; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  fi
+
+  if [ ! -d "$directory" ]; then
+    pad ' · Creating directory'
+    mkdir $directory && chown -R student:student ${directory}
+    if [ $? -eq 0 ]; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  fi
+
+  pad ' . Downloading files from Classroom server'
+  cd /home/student/ansible && wget --no-parent -r -nH --reject="index.html*" --cut-dirs=2 ${materials_url}/classroom/ansible/ && chown -R student:student /home/student/ansible
+  if [ $? -eq 0 ]
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  if ! rpm -q oathtool; then
+    pad ' · Installing oathtool'
+    mkdir /home/student/tool
+    cd /home/student/tool && wget ${materials_url}/classroom/oathtool-2.4.1-9.el7.x86_64.rpm && wget ${materials_url}/classroom/liboath-2.4.1-9.el7.x86_64.rpm  && chown -R student:student /home/student/tool
+    rpm -ivh /home/student/tool/*.rpm && rm -rf /home/student/tool
+    if [ $? -eq 0 ]; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  fi
+  
+
+   if ! rpm -q python2-winrm
+    then
+      pad ' · Installing python modules'
+      cd $directory && rpm -ivh python2-winrm-0.2.2-1.el7.noarch.rpm python2-ntlm3-1.0.2-1.el7.noarch.rpm python2-requests_ntlm-0.3.0-1.el7.noarch.rpm python-xmltodict-0.9.0-1.el7.noarch.rpm
+      if [ $? -eq 0 ]
+      then
+        print_SUCCESS
+      else
+        print_FAIL
+      fi
+    fi
+
+
+  CMD="systemctl is-enabled firewalld && systemctl is-active firewalld"
+  if ! ${ssh} ${target3} "${CMD}"; then
+    pad " · Configuring firewalld service on ${target3}"
+    ${ssh} ${target3} "${CMD}"
+    print_SUCCESS
+  else
+    pad " · firewalld service is configured on ${target3}"
+    print_SUCCESS
+  fi
+
+  CMD="firewall-cmd --list-service | grep -w freeipa-ldap && firewall-cmd --list-service | grep -w freeipa-ldaps"
+  if ! ${ssh} ${target3} "${CMD}"; then
+    pad " · Configuring firewalld access on ${target3}"
+    CMD2="firewall-cmd --add-service=freeipa-ldap --permanent && firewall-cmd --add-service=freeipa-ldaps --permanent && firewall-cmd --add-service=dns --permanent && firewall-cmd --reload"
+    ${ssh} ${target3} "${CMD2}"
+    print_SUCCESS
+  else
+    pad " · firewalld access is configured on ${target3}"
+    print_SUCCESS
+  fi
+
+  pad ' · Configuring IdM server'
+  cd /home/student/ansible && ansible-playbook install_ipa_server.yml
+  if [ $? -eq 0 ]; then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+
+    pad ' · Configuring network settings on idm host'
+    cd /home/student/ansible && ansible-playbook idm_network.yml
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+    pad " . Checking ${target3} packages"
+    CMD='rpm -q ipa-server-trust-ad'
+    ${ssh} ${target3} "${CMD}"
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      cd /home/student/ansible && ansible-playbook install_trust_rpm.yml
+      print_SUCCESS
+    fi
+
+    pad ' . Creating IdM users'
+    if cd /home/student/ansible/ && ansible-playbook idm_users.yml
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad ' . Creating Active Directory users'
+    if cd /home/student/ansible/windows && ansible-playbook users.yml
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+    pad ' · Registering client'
+    cd /home/student/ansible && ansible-playbook install_ipa_client.yml --extra-vars "ipa_client=client.lab.example.net"
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+    pad ' · Registering utility'
+    cd /home/student/ansible && ansible-playbook install_ipa_client_force.yml --extra-vars "ipa_client=utility.lab.example.net"
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+    pad ' . Enabling home directories'
+    CMD="rpm -q oddjob-mkhomedir"
+    if ! ${ssh} ${target4} "${CMD}"
+    then
+      CMD2="yum install -y oddjob-mkhomedir"
+      ${ssh} ${target4} "${CMD2}"
+      CMD3="authconfig --update --enablemkhomedir"
+      ${ssh} ${target4} "${CMD3}"
+      print_SUCCESS||print_FAIL
+    else
+      print_SUCCESS
+    fi
+
+    pad ' . Starting GUI on client'
+    CMD='systemctl isolate graphical.target'
+    if ${ssh} ${target4} "${CMD}"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad ' . Installing proxy on utility'
+    if cd /home/student/ansible/ && ansible-playbook install_squid.yml
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad ' . Verifying the trust'
+    CMD='ipa trustdomain-find "example.net"'
+    if ${ssh} ${target3} ${CMD}
+    then
+      print_SUCCESS
+    else
+       cd /home/student/ansible/windows && ansible-playbook win_dns.yml
+       cd /home/student/ansible/ && ansible-playbook idm_trust.yml
+       print_SUCCESS
+    fi
+    
+    pad ' . Verifying ID views'
+    cd /home/student/ansible && ansible-playbook direct_id.yml
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  pad ' . Modifying idmuser02:'
+  CMD='ipa user-mod idmuser02 --user-auth-type=password'
+  if ${ssh} ${target3} "${CMD}"
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+   pad ' . Stopping GUI on client'
+   CMD='systemctl isolate multi-user.target'
+   if ${ssh} ${target4} "${CMD}"
+   then
+     print_SUCCESS
+   else
+     print_FAIL
+   fi
+  
+
+}
+
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

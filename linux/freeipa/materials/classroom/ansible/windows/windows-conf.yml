@@ -1,0 +1,9 @@
+---
+# This playbook sets the correct hostname for windows server
+
+- name: Set the hostname
+  hosts: ad.example.net
+  gather_facts: false
+  tasks:
+    - name: Run powershell script
+      script: files/hostname.ps1

@@ -1,0 +1,106 @@
+#!/bin/bash
+#
+# Copyright 2018 Red Hat, Inc.
+#
+# NAME
+#     lab-ad-trust - grading script for RH362 ad-trust GE
+#
+# SYNOPSIS
+#     lab-ad-trust {setup|cleanup}
+#
+#
+# DESCRIPTION
+#     This script, based on singular argument, it does setup, and cleanup, for the AD direct one-way trust GE.
+#
+# CHANGELOG
+#   * Thu Mar 12 2018 Artur Glogowski <aglogows@redhat.com>
+#   - original code
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+target2='client'
+target3='idm'
+target4='replica1'
+directory='/home/student/ansible'
+REQSVC=( freeipa-ldap freeipa-ldaps dns )
+REQPKG=( ipa-server ipa-server-dns )
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+  host_reachable ${target}
+  host_reachable ${target3}
+
+  idm_client_base_state no_users
+ 
+  pad ' . Checking status of ad.example.net server'
+  if cd /home/student/ansible/windows && ansible ad.example.net -m win_ping
+  then 
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad ' . Creating Active Directory users'
+  if cd /home/student/ansible/windows && ansible-playbook adusers.yml
+  then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+   
+  CMD="realm list|grep active-directory"
+  if ! ${ssh} ${target4} "${CMD}"
+  then
+    pad " . Checking direct connection on ${target4}"
+    print_SUCCESS
+  else
+    pad " . Removing direct connection from ${target4}"
+    CMD2="echo password123! | realm leave --remove example.net"
+    ${ssh} ${target4} "${CMD2}"
+    print_SUCCESS
+  fi
+
+  pad ' . Disabling Windows lock screen'
+  cd /home/student/ansible/windows && ansible-playbook unlock.yml
+  if [ $? -eq 0 ]
+  then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+ 
+  print_line 
+}
+
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+  pad " · Removing files from ${target}" 
+  cd $directory && rm -rf python*.rpm
+  if [ $? -eq 0 ]
+  then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+
+  print_line
+}
+
+
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

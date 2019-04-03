@@ -1,0 +1,81 @@
+#!/bin/bash
+#
+# Copyright 2018 Red Hat, Inc.
+#
+# NAME
+#     demo-manage-content - grading script for RH362 Manage Content Demo
+#
+# SYNOPSIS
+#     demo-manage-content {setup|grade|cleanup|solve}
+#
+#        setup   - prepare the system for starting the lab
+#        cleanup - perform post-lab cleanup
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, or
+#     cleanup for the Manage Content Demo.
+#
+# CHANGELOG
+#   * Tue Feb 6 2018 Victor Costea <vcostea@redhat.com>
+#   - original code
+
+#########################################################################
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='idm'
+reqd_package='krb5-workstation'
+demo_user='demouser'
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+
+function lab_setup {
+
+  print_header "Setting up ${target} for demo exercise work:"
+
+  pad " · Verify the ${target} server is reachable"
+  if host_reachable ${target}; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+# Check for package that provides klist and kinit on "ipa" server
+  pad " · Verify the package ${reqd_package} is installed"
+  if ${ssh} ${target} "rpm -q --quiet ${reqd_package}"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  print_line
+
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+  host_reachable ${target}
+
+  pad ' · Cleaning demonstration files'
+  if ${ssh} ${target} "ipa user-del ${demo_user}"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

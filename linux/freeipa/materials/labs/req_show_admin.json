@@ -1,0 +1,11 @@
+{
+    "id": 0,
+    "method": "user_show",
+    "params": [
+        [
+            "admin"
+        ],
+        {
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+---
+# This playbook creates Active Direcory forest 
+
+- name: Creating example.net AD forest
+  hosts: ad.example.net
+  gather_facts: false
+  tasks:
+    - name: Run powershell script
+      script: files/ad.ps1

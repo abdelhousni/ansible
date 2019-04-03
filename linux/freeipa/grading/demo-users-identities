@@ -1,0 +1,218 @@
+#!/bin/bash
+#
+# Copyright 2018 Red Hat, Inc.
+#
+# NAME
+#     demo-users-identities - grading script for RH362 Controlling Users Access
+#
+# SYNOPSIS
+#     demo-users-identities {setup|cleanup}
+#
+#        setup   - prepare the system for starting the lab
+#        cleanup - perform post-lab cleanup
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Wed Apr 04 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - adds code for managing the SSH configuration file
+#   * Tue Apr 03 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - lab_setup updates
+#   * Wed Mar 28 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - original code
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+
+idm='idm.lab.example.net'
+ad='ad.lab.example.net'
+client='client'
+title="Managing User Identities"
+lab_directory_name='users-identities'
+
+# Variables from the ad-trust script
+target2='client'
+target3='idm'
+directory='/home/student/ansible'
+ansible_version='2.5.0-0.0.devel.201801312256git.512d6f6ac6.el7.ans.noarch'
+materials_url=http://materials.example.com
+targets=( ${target} ${target2} ${target3} )
+REQSVC=( freeipa-ldap freeipa-ldaps dns )
+REQPKG=( ipa-server ipa-server-dns )
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+
+  for target in ${targets[@]}; do
+    pad " · Verify ${target} access"
+    if host_reachable ${target}; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  done
+
+  my_grab_lab_files 'no-solution'
+  chmod 600 /home/student/${RHT_COURSE^^}/labs/${lab_directory_name}/*
+  mv .ssh/config .ssh/config.bak
+
+  if ! rpm -q ansible; then
+    pad ' · Installing ansible'
+    yum install -y ${materials_url}/classroom/ansible/ansible-${ansible_version}.rpm && mkdir /home/student/ansible
+    if [ $? -eq 0 ]; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  fi
+
+  if [ ! -d "$directory" ]; then
+    pad ' · Creating directory'
+    mkdir $directory && chown -R student:student ${directory}
+    if [ $? -eq 0 ]; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  fi
+
+  pad ' . Downloading files from Classroom server'
+  cd /home/student/ansible && wget --no-parent -r -nH --reject="index.html*" --cut-dirs=2 ${materials_url}/classroom/ansible/ && chown -R student:student /home/student/ansible
+  if [ $? -eq 0 ]
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  CMD="systemctl is-enabled firewalld && systemctl is-active firewalld"
+  if ! ${ssh} ${target3} "${CMD}"; then
+    pad " · Configuring firewalld service on ${target3}"
+    ${ssh} ${target3} "${CMD}"
+    print_SUCCESS
+  else
+    pad " · firewalld service is configured on ${target3}"
+    print_SUCCESS
+  fi
+
+  CMD="firewall-cmd --list-service | grep -w freeipa-ldap && firewall-cmd --list-service | grep -w freeipa-ldaps"
+  if ! ${ssh} ${target3} "${CMD}"; then
+    pad " · Configuring firewalld access on ${target3}"
+    CMD2="firewall-cmd --add-service=freeipa-ldap --permanent && firewall-cmd --add-service=freeipa-ldaps --permanent && firewall-cmd --add-service=dns --permanent && firewall-cmd --reload"
+    ${ssh} ${target3} "${CMD2}"
+    print_SUCCESS
+  else
+    pad " · firewalld access is configured on ${target3}"
+    print_SUCCESS
+  fi
+
+  pad ' · Configuring IdM server'
+  cd /home/student/ansible && ansible-playbook install_ipa_server.yml
+  if [ $? -eq 0 ]; then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+
+  pad ' . Registering client'
+  cd /home/student/ansible && ansible-playbook install_ipa_client.yml --extra-vars "ipa_client=client.lab.example.net"
+  if [ $? -eq 0 ]
+  then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+
+  pad ' . Creating IdM users'
+  if cd /home/student/ansible/ && ansible-playbook idm_users.yml
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad ' . Checking status of ad.example.net server'
+  if cd /home/student/ansible/windows && ansible ${ad} -m win_ping; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Creating Active Directory users'
+  cd /home/student/ansible/windows && ansible-playbook users.yml
+  if [ $? -eq 0 ]; then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+
+  pad " · Configuring home directories"
+  if ${ssh} ${client} "authconfig --enablemkhomedir --update"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Setting policy"
+  ${ssh} root@${idm} "ipa pwpolicy-mod --minlength=10 --lockouttime=2400 --maxfail 3"
+  print_SUCCESS
+
+  print_line
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  idmuser06='idmuser06'
+  group05='idmgroup05'
+  role='"User Provisioning"'
+
+  print_line "Deleting IdM Objects"
+  declare -a objects=(
+    "user-del ${idmuser06}"
+    "pwpolicy-del ${group05}"
+    "group-del ${group05}"
+    "role-del ${role}"
+    "automember-del ${group05} --type=group"
+  )
+
+  ${ssh} ${client} "echo RedHat123^ | kinit admin"
+  ${ssh} ${client} "rm -rf /home/${idmuser06}"
+  ${ssh} ${client} "sss_cache -E"
+  sleep 2
+
+  for object in "${objects[@]}"; do
+    # RAZ:
+    # No need to issue fail, as if the command fails
+    # this indicates that the resource does not exist
+    # in the IdM server. Can be safely ignored.
+    if ssh ${idm} "ipa ${object}"; then
+      pad " · ${object}"
+      print_SUCCESS
+    fi
+  done
+
+  mv .ssh/config.bak .ssh/config
+  print_line
+  cleanup_lab_files
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

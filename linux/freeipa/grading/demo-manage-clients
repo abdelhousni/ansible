@@ -1,0 +1,161 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     demo-manage-clients - grading script for RH362 Managing Clients demo
+#
+# SYNOPSIS
+#     demo-manage-clients {setup|cleanup}
+#
+#        setup   - prepare the system for starting the lab
+#        cleanup - perform post-lab cleanup
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Thu March 01 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - original code
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+idm_ip=172.25.250.8
+package="ipa-client"
+log_file=/var/log/krb5kdc.log
+client=client.lab.example.net
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup grade solve)
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+
+  pad ' . Ensuring IdM services are ready: '
+  if idm_service_ready
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+
+  print_line
+}
+
+function lab_solve {
+
+  print_header "Solving the lab on ${target}:"
+
+  pad " · Configuring NFS"
+  if ${ssh} root@${client} "nmcli connection modify 'System eth0' ipv4.dns ${idm_ip}"; then
+    if ${ssh} root@${client} "nmcli connection up 'System eth0'"; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  else
+    print_FAIL
+  fi
+
+  if ${ssh} root@${client} "id admin"; then
+    ${ssh} ${client} "ipa-client-install --uninstall --unattended"
+    ${ssh} ${client} "yum -y remove ${package}"
+  fi
+
+  pad " · Installing ${package}"
+  if ${ssh} root@${client} "yum list installed ${package}"; then
+    print_SUCCESS
+  else
+    if ${ssh} root@${client} "yum -y install ${package}"; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  fi
+
+  pad " · Enrolling client"
+  if ${ssh} ${client} "ipa-client-install --principal admin --password RedHat123^ --unattended"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Authenticating to the IdM server"
+  if ${ssh} ${client} "echo RedHat123^ | kinit admin"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+ pad " · Checking logs"
+ if ${ssh} root@${idm_ip} "grep AS_REQ ${log_file}"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+}
+
+function lab_grade {
+
+  print_header "Grading the student's work on ${target}:"
+  host_reachable ${target}
+
+  pad " · Ensuring ${package} is installed"
+  if ${ssh} ${client} "yum list installed ${package}"; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Checking DNS settings"
+  if ${ssh} ${client} "nmcli connection show 'System eth0'" | grep "ipv4.dns:".*${idm_dns}; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Checking Kerberos authentication"
+  if ${ssh} ${client} klist | grep "krbtgt/"; then
+    print_PASS
+    ${ssh} ${client} "echo RedHat123^ | kinit admin"
+  else
+    print_FAIL
+  fi
+
+  # Overall grade
+  print_line
+  pad 'Overall lab grade'
+  if [[ ${fail_count} -eq 0 ]]
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  print_line
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  pad ' . Nothing to do'
+  print_SUCCESS
+
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

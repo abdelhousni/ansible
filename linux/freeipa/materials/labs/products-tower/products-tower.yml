@@ -1,0 +1,19 @@
+- name:  Install Tower license
+  hosts: localhost
+
+  tasks:
+  - uri:
+      url: http://materials.example.com/labs/products-tower/Ansible-Tower-license.txt
+      status_code: 200
+      return_content: yes
+    register: license
+
+  - uri:
+      url: https://tower.lab.example.net/api/v1/config/
+      method: POST
+      body: "{{ license.content }}"
+      body_format: json
+      status_code: 200
+      user: admin
+      password: redhat
+      validate_certs: no

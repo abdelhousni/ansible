@@ -1,0 +1,52 @@
+#Playbook for creating ID views for integration with AD
+#Artur Glogowski <aglogows@redhat.com>
+- name: Configuring user group and directory
+  hosts: client.lab.example.net
+  tasks:
+    - name: Creating the user group
+      group: 
+        name: adusers
+        state: present
+        gid: 1111
+
+    - name: Creating the home directory
+      file: 
+        path: /home/aduser05_view
+        state: directory
+        mode: 0755
+        owner: 1111
+        group: 1111
+
+- name: Creating the ID view and shortnames
+  hosts: idm.lab.example.net
+  tasks:
+    - name: Creating ID view
+      shell: ipa idview-add  --desc="AD id view" adview
+      ignore_errors: true
+ 
+    - name: Creating override settings 
+      shell: ipa idoverrideuser-add --desc="Overrides for aduser05" --shell=/bin/bash --homedir=/home/aduser05_view --uid=1111 --gidnumber=1111 adview aduser05@example.net
+      ignore_errors: true
+
+    - name: Applying ID view 
+      shell: ipa idview-apply --hosts=client.lab.example.net adview
+      ignore_errors: true
+
+    - name: Setting the domain resolution order
+      shell: ipa config-mod --domain-resolution-order='lab.example.net:example.net'
+      ignore_errors: true
+
+- name: Restart SSSD
+  hosts: client.lab.example.net
+  tasks:
+    
+    - name: Enabling home directories creation
+      shell: authconfig --update --enablemkhomedir
+
+    - name: Restarting the SSSD service
+      service:
+        name: sssd
+        state: restarted
+    
+
+

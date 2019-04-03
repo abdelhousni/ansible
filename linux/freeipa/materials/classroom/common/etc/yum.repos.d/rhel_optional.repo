@@ -1,0 +1,5 @@
+[rhel_optional]
+baseurl = http://content.example.com/idm4.5/x86_64/optional
+enabled = true
+gpgcheck = false
+name = RHEL Server Optional

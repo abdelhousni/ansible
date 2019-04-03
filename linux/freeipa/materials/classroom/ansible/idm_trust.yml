@@ -1,0 +1,82 @@
+# idm_trust.yml
+# Artur Glogowski <aglogows@redhat.com>
+
+- hosts: idm.lab.example.net
+
+
+  vars:
+    
+    ad_domain: example.net
+    ad_user: Administrator
+    ad_password: password123!
+    ipa_domain: lab.example.net
+    ipa_realm: LAB.EXAMPLE.NET
+    ipa_ds_password: RedHat123^       # This is the directory manager password
+    ipa_admin_user: admin
+    ipa_admin_password: RedHat123^    # This is the initial password for the 'admin' IPA superuser (web UI)
+    ipa_server_package:
+      - ipa-server-trust-ad
+
+  tasks:
+
+    - name: IPA trust-ad package installed
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items: "{{ ipa_server_package }}"
+
+    - name: check IPA status
+      command: ipactl status
+      register: ipa_status
+      changed_when: false
+      ignore_errors: true
+
+    - name: Get IPA "admin" user Kerberos credentials
+      shell: echo {{ ipa_admin_password }} | kinit -f {{ ipa_admin_user }}
+      changed_when: false
+
+
+    - name: Creating DNS records
+      command: ipa-adtrust-install --netbios-name=LABEXAMPLE -A {{ ipa_admin_user }} -a {{ ipa_admin_password }} -U
+
+    - name: Changing searchdomain
+      lineinfile: 
+        path: /etc/resolv.conf
+        regexp: '^search'
+        line: 'search lab.example.net'
+
+    - name: Changing nameserver
+      lineinfile: 
+        path: /etc/resolv.conf
+        regexp: '^nameserver'
+        line: 'nameserver 127.0.0.1'
+
+    - name: Changing bind config file
+      copy:
+        src: /home/student/ansible/windows/files/named.conf
+        dest: /etc/named.conf
+        owner: root
+        group: named
+        mode: 0640
+
+    - name: Restart IPA
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: ipa
+
+    - name: Adding forwardzone
+      command: ipa dnsforwardzone-add {{ ad_domain }} --forwarder=172.25.250.13 --forward-policy=only 
+      ignore_errors: true
+
+    - name: Restart DNS
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: named-pkcs11
+
+    - name: Adding the trust
+      shell: echo {{ ad_password }} | ipa trust-add --type=ad {{ ad_domain }} --admin {{ ad_user }} --password
+
+
+      

@@ -1,0 +1,285 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     lab-products-review - grading script for RH362 products-review GE
+#
+# SYNOPSIS
+#     lab-products-review {setup}
+#
+#        setup   - prepare the system for starting the lab
+#        grade   - perform evaluation steps on the system
+#        cleanup - perform post-lab cleanup
+#        solve   - do the lab exercise for the student (may call setup)
+#        (ONLY INCLUDE PROVIDED COMMANDS, REMOVE REST)
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Wed Apr 18 2018 Chen Chang <cchang@redhat.com>
+#   - original code
+#########################################################################
+#########################################################################
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+idmtarget='idm.lab.example.net'
+replica2target='replica2.lab.example.net'
+towertarget='tower.lab.example.net'
+utilitytarget='utility.lab.example.net'
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup grade)
+
+
+function lab_setup {
+
+  print_header "Setting up ${replica2target} for lab exercise work:"
+  host_reachable ${replica2target}
+
+  pad " · Registering ${replica2target}"
+  cd /home/student/ansible && ansible-playbook install_ipa_client.yml --extra-vars "ipa_client=replica2.lab.example.net"
+  if [ $? -eq 0 ]
+  then
+    print_SUCCESS
+  else
+    print_SUCCESS
+  fi
+
+  print_header "Setting up ${towertarget} for lab exercise work:"
+  host_reachable ${towertarget}
+
+  pad ' · Installing required package'
+  ${ssh} ${towertarget} "rpm -q python-ldap"
+  if [ $? -eq 0 ]
+  then
+    print_SUCCESS
+  else
+    ${ssh} ${towertarget} "yum install -y python-ldap"
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_FAILURE
+    fi
+  fi
+
+  print_header "Setting up ${idmtarget} for lab exercise work:"
+  host_reachable ${idmtarget}
+
+  # Configure password expiry
+  ${ssh} ${idmtarget} "echo RedHat123^ | kinit admin"
+
+  for userid in 5 6; do
+
+    idmuser=productsuser0${userid}
+    pad "Create ${idmuser} user"
+    if ${ssh} ${idmtarget} "echo tower123 | ipa user-add ${idmuser} --first=Products --last=User0${userid} --password"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad "Modify ${idmuser} user"
+    if ${ssh} ${idmtarget} "echo ${idmuser} | ipa user-mod --setattr krbPasswordExpiration=20990606060606Z"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    idmgroup=productsgroup0${userid}
+    pad "Create ${idmuser} group"
+    if ${ssh} ${idmtarget} "ipa group-add ${idmgroup}"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad "Modify ${idmgroup} group"
+    if ${ssh} ${idmtarget} "ipa group-add-member ${idmgroup} --user ${idmuser}"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  done
+}
+
+function lab_cleanup {
+  target=${workstationtarget}
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  # Nothing to do
+  pad ' . Cleaning lab files'
+  print_SUCCESS
+
+  print_line
+}
+
+function lab_grade {
+
+  print_header "Grading the student's work on ${utilitytarget}:"
+  host_reachable ${utilitytarget}
+
+  # Put in the steps to grade the lab (use print_PASS or print_FAIL)
+  pad ' · Required file exists'
+  cmd1='[[ -f /export/reviewhome/productsuser01/test.txt ]]'
+  if ${ssh} ${utilitytarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · File contents include required string'
+  cmd1="grep -q 'test' /export/reviewhome/productsuser01/test.txt"
+  if ${ssh} ${utilitytarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  print_header "Grading the student's work on ${towertarget}:"
+  host_reachable ${towertarget}
+
+
+  # Put in the steps to grade the lab (use print_PASS or print_FAIL)
+  
+  pad ' · Installing tower-cli'
+  cmd1="rpm -q python2-ansible-tower-cli python-click python-colorama"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    cmd1="yum install -y http://materials.example.com/labs/products-review/packages/python2-ansible-tower-cli-3.0.2-1.el7.noarch.rpm http://materials.example.com/labs/products-review/packages/python-click-6.3-1.el7.noarch.rpm http://materials.example.com/labs/products-review/packages/python-colorama-0.3.2-3.el7.noarch.rpm"
+    if ${ssh} ${towertarget} "${cmd1}"
+    then
+      print_PASS
+    else
+      print_FAIL
+    fi
+  fi
+
+  pad ' · Configuring tower-cli'
+  cmd1="tower-cli config host tower.lab.example.net && tower-cli config username admin && tower-cli config password redhat"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking productsuser05 user'
+  cmd1="tower-cli user get --username productsuser05"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking productsuser06 user'
+  cmd1="tower-cli user get --username productsuser05"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking Lab organization'
+  cmd1="tower-cli organization get -n Lab"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking Example organization'
+  cmd1="tower-cli organization get -n Example"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking productsgroup06 team'
+  cmd1="tower-cli team get -n productsgroup06"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking inventory'
+  cmd1="tower-cli inventory get -n 'IdM Lab Hosts'"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking inventory IdM group'
+  cmd1="tower-cli group get -n IdM"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking inventory ipaservers group'
+  cmd1="tower-cli group get -n ipaservers"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad ' · Checking host group'
+  cmd1="tower-cli host get -n idm.lab.example.net"
+  if ${ssh} ${towertarget} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  # Overall grade
+  print_line
+  pad 'Overall lab grade'
+  if [[ ${fail_count} -eq 0 ]]
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"
+
+

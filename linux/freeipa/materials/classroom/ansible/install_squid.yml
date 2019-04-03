@@ -1,0 +1,32 @@
+#Squid server installation
+#Artur Glogowski <aglogows@redhat.com>
+---
+- hosts: utility.lab.example.net
+
+  tasks:
+    - name: Install squid
+      yum: 
+        name: squid 
+        state: present
+        update_cache: yes
+    - name: Copy template
+      template:
+        src: templates/squid.conf.j2
+        dest: /etc/squid/squid.conf
+        owner: root
+        group: squid
+        mode: 0640
+    - name: Configuring firewall
+      firewalld:
+        service: squid
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: Starting squid
+      service: 
+        name: squid
+        state: started
+        enabled: yes
+      

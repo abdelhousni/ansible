@@ -1,0 +1,143 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     lab-products-tower - grading script for RH362 products-tower GE
+#
+# SYNOPSIS
+#     lab-products-tower {setup}
+#
+#        setup   - prepare the system for starting the lab
+#        grade   - perform evaluation steps on the system
+#        cleanup - perform post-lab cleanup
+#        solve   - do the lab exercise for the student (may call setup)
+#        (ONLY INCLUDE PROVIDED COMMANDS, REMOVE REST)
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Thu Apr 11 2018 Chen Chang <cchang@redhat.com>
+#   - original code
+#########################################################################
+#########################################################################
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+idmtarget='idm.lab.example.net'
+towertarget='tower.lab.example.net'
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+
+function lab_setup {
+  print_header "Setting up ${idmtarget} for lab exercise work:"
+  host_reachable ${towertarget}
+
+  pad "Installing Tower license:"
+  cd /home/student/ansible && curl -O http://materials.example.com/labs/products-tower/products-tower.yml && ansible-playbook products-tower.yml
+
+  if [ $? == 0 ]
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  print_header "Setting up ${idmtarget} for lab exercise work:"
+  host_reachable ${idmtarget}
+
+  # Configure password expiry
+  ${ssh} ${idmtarget} "echo RedHat123^ | kinit admin"
+
+  pad "Changing Kerberos permissions:"
+  ${ssh} ${idmtarget} 'ipa permission-find "Set Password Expiry"'
+  if [ $? == 0 ]
+  then
+    print_SUCCESS
+  else
+    ${ssh} ${idmtarget} 'ipa permission-add "Set Password Expiry" --bindtype=permission --right=write --type=user --attrs=krbPasswordExpiration' && print_SUCCESS || print_FAIL
+  fi
+ 
+  pad "Adding Kerberos privileges:"
+  if ${ssh} ${idmtarget} 'ipa privilege-find "Set Password Expiry"'
+  then
+    print_SUCCESS
+  else
+    ${ssh} ${idmtarget} 'echo "Set Password Expiry" | ipa privilege-add-permission "User Administrators"'
+    print_SUCCESS
+  fi
+ 
+  pad "Adding Kerberos role:"
+  if ${ssh} ${idmtarget} 'ipa role-add-member "User Administrator" --groups=admins'
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  for userid in 2 3 4; do
+
+    idmuser=productsuser0${userid}
+    pad "Create ${idmuser} user"
+    if ${ssh} ${idmtarget} "echo tower123 | ipa user-add ${idmuser} --first=Products --last=User0${userid} --password"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad "Modify ${idmuser} user"
+    if ${ssh} ${idmtarget} "echo ${idmuser} | ipa user-mod --setattr krbPasswordExpiration=20990606060606Z"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    idmgroup=productsgroup0${userid}
+    pad "Create ${idmuser} group"
+    if ${ssh} ${idmtarget} "ipa group-add ${idmgroup}"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad "Modify ${idmgroup} group"
+    if ${ssh} ${idmtarget} "ipa group-add-member ${idmgroup} --user ${idmuser}"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  done
+}
+
+function lab_cleanup {
+  target=${workstationtarget}
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  # Nothing to do
+  pad ' . Cleaning lab files'
+  print_SUCCESS
+
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"
+
+
