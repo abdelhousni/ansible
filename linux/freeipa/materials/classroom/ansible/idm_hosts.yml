@@ -1,0 +1,7 @@
+- hosts: idm.lab.example.net
+  tasks:
+    - name: Fixing /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: '172.25.250.8 idm.lab.example.net idm'
+        insertafter: 172.25.250.7

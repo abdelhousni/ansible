@@ -1,0 +1,12 @@
+{
+    "id": 0,
+    "method": "env",
+    "params": [
+        [
+        ],
+        {
+            "server": true,
+            "all": true
+        }
+    ]
+}

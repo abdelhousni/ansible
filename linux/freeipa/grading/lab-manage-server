@@ -1,0 +1,95 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     lab-manage-server - grading script for RH362
+#
+# SYNOPSIS
+#     lab-manage-clients {setup|cleanup}
+#
+#        setup   - prepare the system for starting the lab
+#        cleanup - perform post-lab cleanup
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Fri Mar 16 2018 Victor Costea <vcostea@redhat.com>
+#   - Make setup "check and set" standalone using code from lab-ad-trust
+#   * Wed Feb 21 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - integrates fixes
+#   * Mon Feb 19 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - updates to work with the updated IdM domain
+#   - updates the cleanup verb
+#   * Thu Feb 14 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - original code
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+idm='idm.lab.example.net'
+lab_directory_name='manage-server'
+title="Managing IdM Server Content"
+
+# Variables from ad-trust script
+target3='idm'
+directory='/home/student/ansible'
+REQSVC=( freeipa-ldap freeipa-ldaps dns )
+REQPKG=( ipa-server ipa-server-dns )
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+
+  idm_base_state no_users
+
+  my_grab_lab_files 'no-solution'
+  scp -r /home/student/${RHT_COURSE^^} root@${idm}:/root/
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  cleanup_lab_files
+  print_line
+
+  print_line "Deleting IdM Objects"
+  declare -a objects=(
+    'user-del idmuser01'
+    'user-del idmuser02'
+    'user-del idmuser03'
+    'stageuser-del idmuser04'
+    'group-del idmgroup01'
+    'group-del idmgroup02'
+    'group-del idmgroup03'
+    'pwpolicy-del idmgroup03'
+  )
+
+  for object in "${objects[@]}"; do
+    # RAZ:
+    # No need to issue fail, as if the command fails
+    # this indicates that the resource does not exist
+    # in the IdM server. Can be safely ignored.
+    if ssh ${idm} "ipa ${object}"; then
+      pad " · ${object}"
+      print_SUCCESS
+    fi
+  done
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

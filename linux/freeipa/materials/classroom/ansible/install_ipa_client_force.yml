@@ -1,0 +1,46 @@
+# install_ipa_client.yml
+# Chen Chang <cchang@redhat.com>
+
+- hosts: "{{ ipa_client }}"
+
+  vars:
+    ipa_server: idm.lab.example.net
+    ipa_server_ip: 172.25.250.8
+    ipa_domain: lab.example.net
+    ipa_realm: LAB.EXAMPLE.NET
+    ipa_admin_password: RedHat123^
+
+  tasks:
+
+    - name: IPA client packages installed
+      package:
+        name: ipa-client
+        state: latest
+
+    - name: Disable Network Manager DNS management
+      ini_file:
+        path: /etc/NetworkManager/NetworkManager.conf
+        section: main
+        option: dns
+        value: none
+
+    - name: Set DNS server to IPA server
+      lineinfile:
+        path: /etc/resolv.conf
+        regexp: '^nameserver '
+        line: "nameserver {{ ipa_server_ip }}"
+            
+    - name: Get Kerberos credentials as IPA admin
+      shell: echo "{{ipa_admin_password }}" | kinit -f admin
+      ignore_errors: yes
+      register: cred_result
+      changed_when: false
+
+    - name: Install IPA client
+      command: >
+        ipa-client-install
+        --principal=admin
+        --password={{ ipa_admin_password }}
+        --unattended
+        --force-join
+      when: "'kinit: Configuration file does not specify default realm when parsing name admin' in cred_result.stderr"

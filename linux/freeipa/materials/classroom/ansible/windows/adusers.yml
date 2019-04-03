@@ -1,0 +1,91 @@
+#Artur Glogowski <aglogows@redhat.com>
+---
+# This playbook creates Active Directory users
+
+- name: Ensure AD users are present
+  hosts: ad.example.net
+  gather_facts: false
+  become: false
+
+  vars:
+    user_pass: RedHat123^
+
+  tasks:
+    - name: Ensure user aduser01 is present
+      win_domain_user:
+        name: aduser01
+        firstname: Ad
+        surname: User01
+        password: "{{ user_pass }}"
+        state: present
+        account_locked: False
+        password_expired: False
+        enabled: True
+        user_cannot_change_password: True
+    - name: Ensure user aduser02 is present
+      win_domain_user:
+        name: aduser02
+        firstname: Ad
+        surname: User02
+        password: "{{ user_pass }}"
+        state: present
+        account_locked: False
+        password_expired: False
+        enabled: True
+        user_cannot_change_password: True
+    - name: Ensure user aduser03 is present
+      win_domain_user:
+        name: aduser03
+        firstname: Ad
+        surname: User03
+        password: "{{ user_pass }}"
+        state: present
+        account_locked: False
+        password_expired: False
+        enabled: True
+        user_cannot_change_password: True
+    - name: Ensure user aduser04 is present
+      win_domain_user:
+        name: aduser04
+        firstname: Ad
+        surname: User04
+        password: "{{ user_pass }}"
+        state: present
+        account_locked: False
+        password_expired: False
+        enabled: True
+        user_cannot_change_password: True
+    - name: Ensure user aduser05 is present
+      win_domain_user:
+        name: aduser05
+        firstname: Ad
+        surname: User05
+        password: "{{ user_pass }}"
+        state: present
+        account_locked: False
+        password_expired: False
+        enabled: True
+        user_cannot_change_password: True
+    - name: Ensure user demoaduser01 is present
+      win_domain_user:
+        name: demoaduser01
+        firstname: Ad
+        surname: Demo
+        password: "{{ user_pass }}"
+        state: present
+        account_locked: False
+        password_expired: False
+        enabled: True
+        user_cannot_change_password: True
+    - name: Ensure user demoaduser02 is present
+      win_domain_user:
+        name: demoaduser02
+        firstname: Ad
+        surname: Demo2
+        password: "{{ user_pass }}"
+        state: present
+        account_locked: False
+        password_expired: False
+        enabled: True
+        user_cannot_change_password: True
+

@@ -1,0 +1,125 @@
+# install_ipa_server.yml
+# Chen Chang <cchang@redhat.com>
+
+- hosts: idm.lab.example.net
+
+
+  vars:
+
+    ipa_domain: lab.example.net
+    ipa_realm: LAB.EXAMPLE.NET
+    ipa_ds_password: RedHat123^       # This is the directory manager password
+    ipa_admin_password: RedHat123^    # This is the initial password for the 'admin' IPA superuser (web UI)
+    ipa_server_packages:
+      - ipa-server
+      - ipa-server-dns
+    ipa_firewalld_services:
+      - freeipa-ldap
+      - freeipa-ldaps
+      - dns
+    ntp_server: classroom.example.com
+
+  tasks:
+
+    - name: firewalld is enabled and started
+      service: 
+        name: firewalld 
+        state: started
+        enabled: yes
+
+    - name: Enable firewall services for IPA in public zone
+      firewalld:
+        service: "{{ item }}"
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+      with_items: "{{ ipa_firewalld_services }}"
+
+    - name: /etc/hosts 127.0.0.1 should not resolve to FQDN
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '^127\.0\.0\.1'
+        line: '127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4'
+        state: present
+
+    - name: FQDN resolves to default IPv4 address in /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: '172.25.250.8 idm.lab.example.net idm'
+        insertafter: 172.25.250.7
+
+    - name: IPA server packages installed
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items: "{{ ipa_server_packages }}"
+
+    - name: check IPA status
+      command: ipactl status
+      register: ipa_status
+      changed_when: false
+      ignore_errors: true
+
+    - name: Set up IPA server
+      command: >
+        ipa-server-install 
+        --domain={{ ipa_domain }}
+        --realm={{ ipa_realm }}
+        --ds-password={{ ipa_ds_password }}
+        --admin-password={{ ipa_admin_password }}
+        --hostname={{ ansible_fqdn }}
+        --ip-address={{ ansible_default_ipv4.address }}
+        --setup-dns
+        --no-forwarders
+        --mkhomedir
+        --reverse-zone=250.25.172.in-addr.arpa.
+        --unattended
+      when: ipa_status.rc == 4
+
+    - name: Get IPA "admin" user Kerberos credentials
+      shell: echo {{ ipa_admin_password }} | kinit -f admin
+      changed_when: false
+
+    - name: Create ipa_pwd_extop plugin modification ldif
+      copy:
+        dest: /root/ipa_pwd_extop.ldif
+        content: |
+          dn: cn=ipa_pwd_extop,cn=plugins,cn=config
+          changetype: modify
+          add: passSyncManagersDNs
+          passSyncManagersDNs: uid=admin,cn=users,cn=accounts,dc=lab,dc=example,dc=net
+
+    - name: Add passSyncManagersDNs attribute to ipa_pwd_extop plugin
+      shell: |
+        ldapmodify -x -D "cn=Directory Manager" \
+        -w {{ ipa_ds_password }} \
+        -h idm.lab.example.net \
+        -p 389 \
+        -f /root/ipa_pwd_extop.ldif
+      args:
+        executable: /usr/bin/bash
+      register: ldapmodify_result
+      failed_when: ldapmodify_result.rc != 0 and ldapmodify_result.rc != 20
+   
+    - name: Setup NTP remove default redhat.com servers
+      lineinfile: 
+        path: /etc/ntp.conf 
+        state: absent
+        regexp: "^server.*.pool.ntp.org"
+      register: ntp_modified
+  
+    - name: Setup NTP - add classroom.example.com
+      lineinfile:
+        path: /etc/ntp.conf
+        state: present
+        insertafter: "# Use public servers from the pool.ntp.org project."
+        line: "server {{ ntp_server }} iburst"
+      register: classroom_added
+
+    - name: Restart NTP
+      systemd:
+        name: ntpd
+        enabled: yes
+        state: restarted
+      when: ntp_modified.changed or classroom_added.changed

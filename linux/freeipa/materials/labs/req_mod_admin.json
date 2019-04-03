@@ -1,0 +1,12 @@
+{
+    "id": 0,
+    "method": "user_mod",
+    "params": [
+        [
+             "admin"
+        ],
+        {
+             "setattr": "ipasshpubkey=REPLACE_ME"
+        }
+    ]
+}

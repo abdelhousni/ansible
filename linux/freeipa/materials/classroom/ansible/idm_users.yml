@@ -1,0 +1,128 @@
+# Creates users and groups in IdM
+# Artur Glogowski <aglogows@redhat.com>
+
+- hosts: idm.lab.example.net
+
+  vars:
+    ipa_server: idm.lab.example.net
+    ipa_server_ip: 172.25.250.8
+    ipa_domain: lab.example.net
+    ipa_realm: LAB.EXAMPLE.NET
+    ipa_admin_password: RedHat123^
+    ipa_user: admin
+    user_pass: RedHat123^
+
+  tasks:
+    - name: Creating idmuser01
+      ipa_user: 
+        name: idmuser01
+        state: present
+        givenname: idmuser01
+        sn: idm 
+        mail: idmuser01@example.net
+        password: "{{ user_pass }}"
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+
+
+    - name: Creating idmuser02
+      ipa_user: 
+        name: idmuser02
+        state: present
+        givenname: idmuser02
+        sn: idm 
+        mail: idmuser02@example.net
+        password: "{{ user_pass }}"
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+
+    - name: Creating idmuser03
+      ipa_user: 
+        name: idmuser03
+        state: present
+        givenname: idmuser03
+        sn: idm 
+        mail: idmuser03@example.net
+        password: "{{ user_pass }}"
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+
+
+    - name: Creating idmuser04
+      ipa_user: 
+        name: idmuser04
+        state: present
+        givenname: idmuser04
+        sn: idm 
+        mail: idmuser04@example.net
+        password: "{{ user_pass }}"
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+
+    - name: Creating idmuser05
+      ipa_user: 
+        name: idmuser05
+        state: present
+        givenname: idmuser05
+        sn: idm 
+        mail: idmuser05@example.net
+        password: "{{ user_pass }}"
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+
+    - name: Creating helpdesk
+      ipa_user:
+        name: helpdesk
+        state: present
+        givenname: help
+        sn: desk
+        mail: helpdesk@example.net
+        password: "{{ user_pass }}"
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+
+    - name: Creating idmgroup01
+      ipa_group:
+        name: idmgroup01
+        state: present
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+      
+    - name: Creating idmgroup02
+      ipa_group:
+        name: idmgroup02
+        state: present
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+      
+    - name: Creating idmgroup03
+      ipa_group:
+        name: idmgroup03
+        state: present
+        user:
+        - idmuser01
+        - idmuser03
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+ 
+    - name: Creating admins group
+      ipa_group:
+        name: admins
+        state: present
+        user:
+        - admin
+        - helpdesk
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_user }}"
+        ipa_pass: "{{ ipa_admin_password }}"
+
+

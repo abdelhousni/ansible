@@ -1,0 +1,20 @@
+# install_trust_rpm.yml
+# Artur Glogowski <aglogows@redhat.com>
+
+- hosts: idm.lab.example.net
+
+
+  vars:
+
+    ipa_server_packages:
+      - ipa-server
+      - ipa-server-dns
+      - ipa-server-trust-ad
+
+  tasks:
+    - name: IPA server packages installed
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items: "{{ ipa_server_packages }}"
+

@@ -1,0 +1,160 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     lab-template - grading script for RH000 awesome lab
+#
+# SYNOPSIS
+#     lab-template {setup|grade|cleanup|solve}
+#
+#        setup   - prepare the system for starting the lab
+#        grade   - perform evaluation steps on the system
+#        cleanup - perform post-lab cleanup
+#        solve   - do the lab exercise for the student (may call setup)
+#        (ONLY INCLUDE PROVIDED COMMANDS, REMOVE REST)
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Thu Feb  9 2017 Your Name <yname@redhat.com>
+#   - original code
+
+#########################################################################
+#########################################################################
+#                   How to use this template:
+#
+# 1. Rename the file to lab-<something_related_to_your_lab>
+# 2. Adjust the comments above
+# 3. Modify the two functions, lab_setup and lab_grade to perform the
+#    steps you desire. All work is performed on workstation, so ssh and
+#    scp must be used to perform grading steps on remote host to be graded
+# 4. Remove these "How to use this template" comments
+#########################################################################
+#########################################################################
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='servera'
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup grade cleanup solve)
+
+
+function lab_setup {
+
+  reqd_package='yum'        # Just an example
+
+  print_header "Setting up ${target} for lab exercise work:"
+  host_reachable ${target}
+
+
+  # Check for lab prerequisites (perhaps a required package?).
+  if ! ${ssh} ${target} "rpm -q --quiet ${reqd_package}"
+  then
+    pad " · Error - yum is not installed on ${target}"
+    print_FAIL
+  else
+
+    # Put in the steps needed to set up the lab. The example below
+    # creates an example file and copies it to the appropriate student
+    # machine.
+    pad ' · Creating example file needed for lab'
+    cat > /tmp/example.txt << EOF
+This is an example file.
+It must contain a "special" string for the lab to be a success.
+EOF
+    print_SUCCESS
+
+    pad " · Copying example needed file to ${target}"
+    if ${scp} /tmp/example.txt ${target}:
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    print_line
+  fi
+}
+
+function lab_grade {
+
+  print_header "Grading the student's work on ${target}:"
+  host_reachable ${target}
+
+  # Put in the steps to grade the lab (use print_PASS or print_FAIL)
+  pad ' · Required file exists'
+  cmd1='[[ -f example.txt ]]'
+  if ${ssh} ${target} "${cmd1}" &> /dev/null
+  then
+    print_PASS
+    pad ' · File contents include required string'
+    cmd1="grep -q 'Red Hat' example.txt"
+    if ${ssh} ${target} "${cmd1}" &> /dev/null
+    then
+      print_PASS
+    else
+      print_FAIL
+    fi
+  else
+    print_FAIL
+  fi
+
+  # Overall grade
+  print_line
+  pad 'Overall lab grade'
+  if [[ ${fail_count} -eq 0 ]]
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  print_line
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+  host_reachable ${target}
+
+  pad ' · Removing "Red Hat" from example.txt file'
+  cmd1='sed -i -e '/Red Hat/d' example.txt'
+  ${ssh} ${target} "${cmd1}" &> /dev/null
+  print_SUCCESS
+
+  print_line
+}
+
+
+function lab_solve {
+
+  lab_setup
+
+  print_header "Solving the lab on ${target}:"
+
+  pad ' · Creating file to include required string'
+  cmd1='echo "Red Hat" >> example.txt'
+  if ${ssh} ${target} "${cmd1}" &> /dev/null
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

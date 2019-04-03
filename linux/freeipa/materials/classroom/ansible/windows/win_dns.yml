@@ -1,0 +1,13 @@
+---
+# This playbook configures AD DNS for the trust 
+
+- name: Modifying DNS configuration
+  hosts: ad.example.net
+  gather_facts: false
+  tasks:
+    - name: Adding IdM A record to example.net
+      win_command: dnscmd 127.0.0.1 /RecordAdd example.net idm.lab.example.net. A 172.25.250.8
+      ignore_errors: true 
+    - name: Adding NS record to example.net
+      win_command: dnscmd 127.0.0.1 /RecordAdd example.net lab.example.net. NS idm.lab.example.net.
+      ignore_errors: true

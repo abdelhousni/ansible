@@ -1,0 +1,263 @@
+#!/bin/bash
+#
+# Copyright 2018 Red Hat, Inc.
+#
+# NAME
+#     demo-scale-resilient - grading script for RH362 Chapter09 replication GE
+# SYNOPSIS
+#     demo-scale-resilient {setup|cleanup}
+#
+#
+# DESCRIPTION
+#     This script, based on singular argument, it does setup, and cleanup, for the replication LAB.
+#
+# CHANGELOG
+#   * Tue April 17 2018 Artur Glogowski <aglogows@redhat.com>
+#   - original code
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+target2='replica1'
+target3='idm'
+target4='client'
+target5='replica2'
+directory='/home/student/ansible'
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+  host_reachable ${target3}
+
+   #temp fix
+   ${ssh} ${target2} chattr -i /etc/sysconfig/network-scripts/ifcfg-eth0
+   ${ssh} ${target5} chattr -i /etc/sysconfig/network-scripts/ifcfg-eth0
+
+    if ! rpm -q ansible
+    then
+      pad ' · Installing ansible'
+      yum install -y http://materials.example.com/classroom/ansible/ansible-2.5.0-0.0.devel.201801312256git.512d6f6ac6.el7.ans.noarch.rpm && mkdir /home/student/ansible
+      if [ $? -eq 0 ]
+      then
+        print_SUCCESS
+      else
+        print_FAIL
+      fi
+    fi
+
+    if [ ! -d "$directory" ];
+    then
+      pad ' · Creating directory'
+      mkdir $directory && chown -R student:student $directory
+      if [ $? -eq 0 ]
+      then
+        print_SUCCESS
+      else
+        print_FAIL
+      fi
+    fi
+
+    pad ' . Downloading files from classroom server'
+    cd /home/student/ansible && wget --no-parent -r -nH --reject="index.html*" --cut-dirs=2 http://materials.example.com/classroom/ansible/ && chown -R student:student /home/student/ansible
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    if ! rpm -q python2-winrm
+    then
+      pad ' · Installing python modules'
+      cd $directory && rpm -ivh python2-winrm-0.2.2-1.el7.noarch.rpm python2-ntlm3-1.0.2-1.el7.noarch.rpm python2-requests_ntlm-0.3.0-1.el7.noarch.rpm python-xmltodict-0.9.0-1.el7.noarch.rpm
+      if [ $? -eq 0 ]
+      then
+        print_SUCCESS
+      else
+        print_FAIL
+      fi
+    fi
+
+  CMD="systemctl is-enabled firewalld && systemctl is-active firewalld"
+  if ! ${ssh} ${target3} "${CMD}"
+  then
+    pad " · Configuring firewalld service on ${target3}"
+    ${ssh} ${target3} "${CMD}"
+    print_SUCCESS
+  else
+    pad " · firewalld service is configured on ${target3}"
+    print_SUCCESS
+  fi
+
+  CMD="firewall-cmd --list-service | grep -w freeipa-ldap && firewall-cmd --list-service | grep -w freeipa-ldaps"
+  if ! ${ssh} ${target3} "${CMD}"
+  then
+    pad " · Configuring firewalld access on ${target3}"
+    CMD2="firewall-cmd --add-service=freeipa-ldap --permanent && firewall-cmd --add-service=freeipa-ldaps --permanent && firewall-cmd --add-service=dns --permanent && firewall-cmd --reload"
+    ${ssh} ${target3} "${CMD2}"
+    print_SUCCESS
+  else
+    pad " · firewalld access is configured on ${target3}"
+    print_SUCCESS
+  fi
+
+
+    pad ' . Configuring IdM server'
+    CMD='rpm -q ipa-server'
+    ${ssh} ${target3} "${CMD}"
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      cd /home/student/ansible && ansible-playbook install_ipa_server.yml
+      print_SUCCESS
+    fi
+
+    pad ' · Configuring network settings on idm host'
+    cd /home/student/ansible && ansible-playbook idm_network.yml
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+    pad " . Checking ${target3} packages"
+    CMD='rpm -q ipa-server-trust-ad'
+    ${ssh} ${target3} "${CMD}"
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      cd /home/student/ansible && ansible-playbook install_trust_rpm.yml
+      print_SUCCESS
+    fi
+  
+    pad ' . Creating IdM users'
+    CMD='ipa user-find|grep idmuser05'
+    if ${ssh} ${target3} "${CMD}"
+    then
+      print_SUCCESS
+    else
+      cd /home/student/ansible/ && ansible-playbook idm_users.yml
+      print_SUCCESS||print_FAIL
+    fi
+ 
+    pad ' . Creating Active Directory users'
+    if cd /home/student/ansible/windows && ansible-playbook users.yml
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+
+    pad ' · Registering client'
+    cd /home/student/ansible && ansible-playbook install_ipa_client.yml --extra-vars "ipa_client=client.lab.example.net"
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+    pad ' . Enabling home directories'
+    CMD="rpm -q oddjob-mkhomedir"
+    CMD2='yum install -y oddjob-mkhomedir'
+    CMD3='authconfig --update --enablemkhomedir'                              
+    if ! ${ssh} ${target4} ${CMD}
+    then
+      ${ssh} ${target4} ${CMD2}
+      ${ssh} ${target4} ${CMD3}
+      print_SUCCESS||print_FAIL
+    else
+      ${ssh} ${target4} ${CMD3}
+      print_SUCCESS
+    fi
+
+
+    pad ' . Verifying the trust'
+    CMD='ipa trustdomain-find "example.net"'
+    if ${ssh} ${target3} ${CMD}
+    then
+      print_SUCCESS
+    else
+       cd /home/student/ansible/windows && ansible-playbook win_dns.yml 
+       cd /home/student/ansible/ && ansible-playbook idm_trust.yml
+       print_SUCCESS
+    fi
+
+
+    pad ' . Verifying ID views'
+    cd /home/student/ansible && ansible-playbook direct_id.yml
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+   
+    pad ' . Configuring network on replica1'
+    if cd /home/student/ansible && ansible-playbook network.yml --extra-vars "server=replica1.lab.example.net --extra-vars ip=172.25.250.9/24"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+    pad ' . Configuring network on replica2'
+    if cd /home/student/ansible && ansible-playbook network.yml --extra-vars "server=replica2.lab.example.net --extra-vars ip=172.25.250.10/24"
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+
+ 
+    pad ' · Registering replica1'
+    CMD='rpm -q ipa-client'
+    if ${ssh} ${target2} "${CMD}"
+    then
+      print_SUCCESS
+    else
+      cd /home/student/ansible && ansible-playbook install_ipa_client.yml --extra-vars "ipa_client=replica1.lab.example.net"
+      print_SUCCESS
+    fi
+
+    pad ' . Verifying users and rules'
+    CMD='ipa user-enable idmuser04'
+    CMD2='ipa hbacrule-enable allow_all'
+    ${ssh} ${target3} "${CMD}"
+    ${ssh} ${target3} "${CMD2}"
+    print_SUCCESS
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+  pad " . Removing files from ${target}" 
+  cd $directory && rm -rf python*.rpm
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_SUCCESS
+    fi
+
+}
+
+
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

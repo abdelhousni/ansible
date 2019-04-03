@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     lab-pki-auth - grading script for RH362
+#
+# SYNOPSIS
+#     lab-pki-auth {setup|cleanup}
+#
+#        setup   - prepare the system for starting the lab
+#        cleanup - perform post-lab cleanup
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Thu Apr 11 2018 Morgan Weetman <mweetman@redhat.com>
+#   - original code
+
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup)
+
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+
+  idm_client_base_state
+
+
+  print_line
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  pad " . Nothing to do: "
+  print_SUCCESS
+
+  print_line
+}
+
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

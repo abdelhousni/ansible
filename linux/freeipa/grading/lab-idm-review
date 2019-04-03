@@ -1,0 +1,190 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     lab-idm-review - grading script for RH362 idm-review lab
+#
+# SYNOPSIS
+#     lab-idm-review {grade|cleanup|solve}
+#
+#        grade   - perform evaluation steps on the system
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Fri Feb 16 2018 Chen Chang <cchang@redhat.com>
+#   - original code
+
+#########################################################################
+#########################################################################
+#                   How to use this template:
+#
+# 1. Rename the file to lab-<something_related_to_your_lab>
+# 2. Adjust the comments above
+# 3. Modify the two functions, lab_setup and lab_grade to perform the
+#    steps you desire. All work is performed on workstation, so ssh and
+#    scp must be used to perform grading steps on remote host to be graded
+# 4. Remove these "How to use this template" comments
+#########################################################################
+#########################################################################
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='idm'
+REQSVC=( freeipa-ldap freeipa-ldaps dns )
+REQPKG=( ipa-server ipa-server-dns )
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup grade)
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+  host_reachable ${target}
+
+
+  # Check for lab prerequisites
+  CMD="systemctl is-enabled firewalld && systemctl is-active firewalld"
+  if ! ${ssh} ${target} "${CMD}"
+  then
+    pad " · Error - firewalld service is not configured on ${target}"
+    print_FAIL
+  else
+    pad " · firewalld service is configured on ${target}"
+    print_PASS
+  fi
+
+  CMD="firewall-cmd --list-service | grep -w freeipa-ldap && firewall-cmd --list-service | grep -w freeipa-ldaps"
+  if ! ${ssh} ${target} "${CMD}"
+  then
+    pad " · Error - firewalld access is not configured on ${target}"
+    print_FAIL
+  else
+    pad " · firewalld access is configured on ${target}"
+    print_PASS
+  fi
+
+  CMD="rpm -q ipa-server"
+  if ! ${ssh} ${target} "${CMD}"
+  then
+    pad " · Error - ipa-server package is not installed on ${target}"
+    print_FAIL
+
+    if ! rpm -q ansible
+    then
+      pad ' · Installing ansible'
+      yum install -y http://materials.example.com/classroom/ansible/ansible-2.5.0-0.0.devel.201801312256git.512d6f6ac6.el7.ans.noarch.rpm && mkdir /home/student/ansible
+      if [ $? -eq 0 ]
+      then
+        print_SUCCESS
+      else
+        print_FAIL
+      fi
+    fi
+  
+    pad ' · Installing IPA server on idm host'
+    cd /home/student/ansible && curl -O http://materials.example.com/classroom/ansible/ansible.cfg && curl -O http://materials.example.com/classroom/ansible/inventory && curl -O http://materials.example.com/classroom/ansible/install_ipa_server_basic.yml && ansible-playbook install_ipa_server_basic.yml
+    if [ $? -eq 0 ]
+    then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  else
+    pad " · IPA server is installed on ${target}"
+    print_PASS
+  fi
+  
+  print_line
+}
+
+
+function lab_grade {
+
+  print_header "Grading the student's work on ${target}:"
+  host_reachable ${target}
+
+  pad ' · firewalld enabled and running'
+  cmd1='systemctl is-enabled firewalld && systemctl is-active firewalld'
+  if ${ssh} ${target} "${cmd1}"
+  then
+    print_PASS
+ 
+    for FWSVC in "${REQSVC[@]}"; do
+      pad " · Service $FWSVC allowed through firewall"
+      cmd1="firewall-cmd --list-service | grep -w $FWSVC"
+      if ${ssh} ${target} "${cmd1}"
+      then
+        print_PASS
+      else
+        print_FAIL
+      fi
+    done
+  else
+    print_FAIL
+  fi
+
+  pad ' · IPA host entry exists in /etc/hosts'
+  cmd1='grep 172.25.250.8[[:space:]][[:space:]]*idm.lab.example.net[[:space:]][[:space:]]*idm /etc/hosts'
+  if ${ssh} ${target} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  for PKG in "${REQPKG[@]}"; do
+    pad " · Required package $PKG installed"
+    cmd1="rpm -q $PKG"
+    if ${ssh} ${target} "${cmd1}"
+    then
+      print_PASS
+    else
+      print_FAIL
+    fi
+  done
+
+  pad " · Correct realm name configured"
+  cmd1='dig @localhost TXT _kerberos.lab.example.net +short | grep "LAB.EXAMPLE.NET"'
+  if ${ssh} ${target} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Correct Directory Manager password"
+  cmd1='echo RedHat123^ | kinit admin'
+  if ${ssh} ${target} "${cmd1}"
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  # Overall grade
+  print_line
+  pad 'Overall lab grade'
+  if [[ ${fail_count} -eq 0 ]]
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

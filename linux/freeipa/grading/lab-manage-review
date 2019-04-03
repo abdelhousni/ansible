@@ -1,0 +1,429 @@
+#!/bin/bash
+#
+# Copyright 2017 Red Hat, Inc.
+#
+# NAME
+#     lab-manage-server - grading script for RH362
+#
+# SYNOPSIS
+#     lab-manage-clients {setup|cleanup}
+#
+#        setup   - prepare the system for starting the lab
+#        cleanup - perform post-lab cleanup
+#
+# DESCRIPTION
+#     This script, based on singular argument, either does setup, grading,
+#     cleanup, or solve.
+#
+# CHANGELOG
+#   * Thu Feb 22 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - adds lab_{setup,grade,solve,cleanup}
+#   * Wed Feb 21 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - integrates fixes
+#   * Mon Feb 19 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - updates to work with the updated IdM domain
+#   - updates the cleanup verb
+#   * Thu Feb 14 2018 Razique Mahroua <rmahroua@redhat.com>
+#   - original code
+
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# Initialize and set some variables
+run_as_root='true'
+target='workstation'
+client='client.lab.example.net'
+idm='idm.lab.example.net'
+idm_dns='172.25.250.8'
+lab_directory_name='manage-review'
+title="Centralizing Server Content"
+
+user04=idmuser04
+user05=idmuser05
+user10=idmuser10
+group01=idmgroup01
+group02=idmgroup02
+group10=idmgroup10
+package='ipa-client'
+
+# This defines which subcommands are supported (setup, grade, etc.).
+# Corresponding lab_COMMAND functions must be defined.
+declare -a valid_commands=(setup cleanup grade solve)
+
+function lab_setup {
+
+  print_header "Setting up ${target} for lab exercise work:"
+
+  pad ' . Ensuring IdM services are ready: '
+  if idm_service_ready
+  then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+# Ensure there are no left-over artifacts from previous labs
+  lab_cleanup
+
+  my_grab_lab_files 'no-solution'
+  scp -r /home/student/${RHT_COURSE^^} root@${client}:/root/
+
+  
+  ${ssh} ${client} "echo RedHat123^ | kinit admin"
+  pad " · Creating ${user10}"
+  if ${ssh} root@${client} "ipa user-add ${user10} --first=user10 --last=idm "; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Creating ${group02}"
+  if ${ssh} root@${client} "ipa group-add ${group02} --desc 'Delete Me'"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Creating ${group10}"
+  if ${ssh} root@${client} "ipa group-add ${group10} --desc 'Idm Group 10'"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Setting policy"
+  ${ssh} root@${client} "ipa pwpolicy-mod --minlength=10 --lockouttime=2400 --maxfail 3"
+  print_SUCCESS
+  print_line
+
+  pad " . Restoring eth0 DNS configuration on ${client}"
+  if ${ssh} root@${client} 'nmcli connection modify "System eth0" ipv4.dns 172.25.250.254 && nmcli connection up "System eth0"'; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+
+}
+
+function lab_grade {
+
+  print_header "Grading the student's work on ${target}:"
+  host_reachable ${target}
+
+  pad " · Ensuring ${package} is installed"
+  if ${ssh} ${client} yum list installed ${package}; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Checking DNS settings"
+  if ${ssh} ${client} "nmcli connection show 'System eth0'" | grep "ipv4.dns:".*${idm_dns}; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Checking home directory for ${user04}"
+  if ${ssh} ${client} "stat /home/${user04}"; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Checking home directory for ${user05}"
+  if ${ssh} ${client} "stat /home/${user05}"; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Checking Kerberos authentication"
+  if ${ssh} ${client} klist | grep "krbtgt/"; then
+    print_PASS
+    ${ssh} ${client} "echo RedHat123^ | kinit admin"
+  else
+    print_FAIL
+  fi
+
+  print_header 'Checking Users'
+  pad " · Ensuring ${user04} is present"
+  if ${ssh} ${client} "ipa user-find" | grep ${user04}; then
+    print_PASS
+    pad " · Checking key for ${user04}"
+     if ${ssh} ${client} "ipa user-show ${user04}" | grep "SSH public key".*lab.example.com; then
+      print_PASS
+    else
+      print_FAIL
+    fi
+  else
+    print_FAIL
+  fi
+
+  pad " · Ensuring ${user05} is removed"
+  if ${ssh} ${client} "ipa user-find" | grep ${user05}; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Ensuring ${user10} is removed"
+  if ${ssh} ${client} "ipa user-find" | grep ${user10}; then
+    print_FAIL
+  else
+    print_PASS
+  fi
+
+  print_header 'Checking Groups'
+  pad " · Ensuring ${group02} is removed"
+  if ${ssh} ${client} "ipa group-find" | grep ${group02}; then
+    print_FAIL
+  else
+    print_PASS
+  fi
+
+  pad " · Ensuring ${user04} is member of ${group01}"
+  if ${ssh} ${client} "ipa group-show ${group01}" | grep "Member users:".*${user04}; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  pad " · Ensuring ${user05} is member of ${group10}"
+  if ${ssh} ${client} "ipa group-show ${group10}" | grep "Member users:".*${user05}; then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  print_header 'Checking policies'
+  pad " · Ensuring ${group10} policy is present"
+  if ${ssh} ${client} "ipa pwpolicy-find" | grep ${group10}; then
+    print_PASS
+
+    pad " · Reviewing ${group10} policy"
+    if ${ssh} ${client} "ipa pwpolicy-show ${group10}" | grep "Min length: 8"; then
+      if ${ssh} ${client} "ipa pwpolicy-show ${group10}" | grep "Priority: 1"; then
+        print_PASS
+      else
+        print_FAIL
+      fi
+    else
+      print_FAIL
+    fi
+  else
+    print_FAIL
+  fi
+
+  pad " · Reviewing default policy"
+  if ${ssh} ${client} "ipa pwpolicy-show global_policy" | grep "Min length: 8"; then
+    if ${ssh} ${client} "ipa pwpolicy-show global_policy" | grep "Lockout duration: 1200"; then
+      if ${ssh} ${client} "ipa pwpolicy-show global_policy" | grep "Max failures: 5"; then
+        print_PASS
+      else
+        print_FAIL
+      fi
+    else
+      print_FAIL
+    fi
+  else
+    print_FAIL
+  fi
+
+  # Overall grade
+  print_line
+  pad 'Overall lab grade'
+  if [[ ${fail_count} -eq 0 ]]
+  then
+    print_PASS
+  else
+    print_FAIL
+  fi
+
+  print_line
+}
+
+function lab_solve {
+  print_header "Solving the lab on ${target}:"
+  print_header "Installing IPA on ${client}"
+  pad " · Removing IPA"
+  if ${ssh} ${client} "ipa-client-install --uninstall --unattended"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Removing ${package}"
+  if ${ssh} ${client} "yum -y remove ${package}"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Installing ${package}"
+  if ${ssh} ${client} "yum -y install ${package}"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Configuring DNS"
+  if ${ssh} ${client} "nmcli connection modify 'System eth0' ipv4.dns ${idm_dns} && nmcli connection up 'System eth0'"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Enrolling client"
+  if ${ssh} ${client} "ipa-client-install --principal admin --password RedHat123^ --unattended"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Authenticating to the IdM server"
+  if ${ssh} ${client} "echo RedHat123^ | kinit admin"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Configuring home directories"
+  if ${ssh} ${client} "authconfig --enablemkhomedir --update"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+  print_line
+
+  print_header "Creating IdM Objects"
+  user_key="$(cat /home/student/RH362/labs/manage-review/lab-pub.key)"
+  user_pass=$(openssl rand -base64 8)
+
+  declare -a objects=(
+    "stageuser-add ${user04} --first=user04 --last=idm"
+    "user-add ${user05} --first=user05 --last=idm"
+    "stageuser-activate ${user04}"
+    "user-mod ${user04} --sshpubkey=\"${user_key}\""
+    "user-disable ${user05}"
+    "user-del ${user10}"
+    "group-add ${group01} --desc 'Devops Group'"
+    "group-add-member ${group01} --users=idmuser04"
+    "group-del ${group02}"
+    "pwpolicy-mod --minlength=8 --lockouttime=1200 --maxfail 5"
+    "pwpolicy-add ${group10} --minlength 8 --priority 1"
+  )
+
+  for object in "${objects[@]}"; do
+    object_display=$(echo ${object} | cut -c -45)
+    pad " · Running ${object_display}"
+    if ssh ${client} "ipa ${object}"; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  done
+
+  pad " · Changing ${user04} password"
+  if ${ssh} ${client} "echo 'redh@t123!'|ipa user-mod ${user04} --password"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Changing ${user05} password"
+  if ${ssh} ${client} "echo ${user_pass} |ipa user-mod ${user05} --password"; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Testing SSH authentication for ${user04}"
+  if ${ssh} ${user04}@${client} 'echo'; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+
+  pad " · Testing SSH authentication for ${user05}"
+  if ${ssh} ${user05}@${client} 'echo'; then
+    print_FAIL
+  else
+    print_SUCCESS
+  fi
+
+  declare -a objects=(
+    "user-enable ${user05}"
+    "group-add-member ${group01} --users=${user05}"
+  )
+
+  for object in "${objects[@]}"; do
+    pad " · Running ${object}"
+    if ssh ${client} "ipa ${object}"; then
+      print_SUCCESS
+    else
+      print_FAIL
+    fi
+  done
+
+  ${ssh} ${client} "sss_cache -E"
+  sleep 2
+
+  pad " · Testing SSH authentication for ${user05}"
+  if ${ssh} ${user05}@${client} 'ls'; then
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+  print_line
+
+}
+
+function lab_cleanup {
+
+  print_header "Cleaning up the lab on ${target}:"
+
+  cleanup_lab_files
+
+  print_line
+  print_line "Deleting IdM Objects"
+  declare -a objects=(
+    "user-del ${user04}"
+    "user-del ${user05}"
+    "user-del ${user10}"
+    "pwpolicy-del ${group10}"
+    "group-del ${group01}"
+    "group-del ${group02}"
+    "group-del ${group10}"
+  )
+  ${ssh} ${client} "echo RedHat123^ | kinit admin"
+
+  for object in "${objects[@]}"; do
+    # RAZ:
+    # No need to issue fail, as if the command fails
+    # this indicates that the resource does not exist
+    # in the IdM server. Can be safely ignored.
+    if ssh ${idm} "ipa ${object}"; then
+      pad " · ${object}"
+      print_SUCCESS
+    fi
+  done
+
+  pad " · Clearing cache on ${client}"
+  if ${ssh} ${client} "sss_cache -E"; then
+    ${ssh} ${client} "rm -rf /home/${idmuser04}"
+    ${ssh} ${client} "rm -rf /home/${idmuser05}"
+    print_SUCCESS
+  else
+    print_FAIL
+  fi
+  print_line
+}
+
+############### Don't EVER change anything below this line ###############
+
+# Source library of functions
+source /usr/local/lib/${function_lib}
+source /usr/local/lib/${platform_lib}
+
+grading_main_program "$@"

@@ -1,0 +1,42 @@
+#Artur Glogowski <aglogows@redhat.com>
+---
+# This playbook removes the trust from AD server
+
+- name: Removing existing trust
+  hosts: ad.example.net
+  gather_facts: false
+  tasks:
+    - name: Removing the trust
+      win_command: netdom trust lab.example.net /d:example.net /remove /UserD:administrator /PasswordD:password123! /FORCE
+    
+    - name: Removing NS record 
+      win_command: dnscmd 127.0.0.1 /RecordDelete example.net lab.example.net. NS idm.lab.example.net. /f
+      ignore_errors: true
+
+    - name: Removing IdM A record 
+      win_command: dnscmd 127.0.0.1 /RecordDelete example.net idm.lab.example.net. A 172.25.250.8 /f
+      ignore_errors: true 
+
+- name: Removing the trust from IdM server
+  hosts: idm.lab.example.net
+  tasks:
+
+    - name: Removing the AD trust
+      shell: ipa trust-del example.net
+      args:
+        executable: /bin/bash
+
+    - name: Removing the DNS forwardzone
+      shell: ipa dnsforwardzone-del example.net
+      args:
+        executable: /bin/bash
+      
+- name: Restart SSSD
+  hosts: client.lab.example.net
+  tasks:
+
+    - name: Restarting the SSSD service
+      service:
+        name: sssd
+        state: restarted
+ 
