@@ -24,17 +24,6 @@
         dest: /etc/gitlab/gitlab.rb
       notify: Reconfigure GitLab
 
-#    - name: Create GitLab user in FreeIPA for integration
-#      ipa_user:
-#        name: git
-#        state: present
-#        givenname: Git
-#        sn: Lab
-#        ipa_host: "{{ ipa_server }}"
-#        ipa_user: "{{ ipa_admin_user }}"
-#        ipa_pass: "{{ ipa_admin_pass }}"
-#        krbpasswordexpiration: "20300404235959"
-
     - name: Install FreeIPA integration file
       copy:
         src: freeipa_settings.yml
