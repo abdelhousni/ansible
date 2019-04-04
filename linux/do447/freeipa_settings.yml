@@ -1,13 +1,13 @@
-main: 
+main:
   label: 'FreeIPA'
   host: 'utility.lab.example.com'
   port: 389
   uid: 'uid'
   method: 'tls'
-  bind_dn: 'uid=git,cn=users,cn=accounts,dc=example,dc=com'
+  bind_dn: 'uid=git,cn=users,cn=accounts,dc=lab,dc=example,dc=io'
   password: 'redhat321'
   encryption: 'plain'
-  base: 'cn=accounts,dc=example,dc=com'
+  base: 'cn=accounts,dc=lab,dc=example,dc=io'
   verify_certificates: false
   attributes:
     username: ['uid']
@@ -15,3 +15,4 @@ main:
     name: 'displayName'
     first_name: 'givenName'
     last_name: 'sn'
+

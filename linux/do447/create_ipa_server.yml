@@ -70,23 +70,8 @@
         enabled: yes
         state: started
 
-    - name: Find out if anything is running on IPA ports
-      command: netstat -plnt
-      register: netstat_result
-
-    - name: Make sure that we're not already running an IPA server
-      fail:
-        msg: There are currently processes bound to needed ports - try uninstalling IPA and/or GitLab
-      when: >
-        "':389' in netstat_result.stdout" 
-        or
-        "'636' in netstat_result.stdout"
-        or 
-        "'80' in netstat_result.stdout"
-        or 
-        "'443' in netstat_result.stdout"
-        
-    # profile_tasks callback plugin suggests that this task may take ~10 minutes to complete
+    - name: Remove the current FreeIPA server
+      command: ipa-server-install --uninstall --unattended
 
     - name: Set up FreeIPA server (may take some time to run)
       command: >
@@ -138,3 +123,15 @@
       command: ipa hostgroup-add production
       when: production_exists.rc == 1
 
+    - name: Create GitLab user in FreeIPA for integration
+      ipa_user:
+        name: git
+        state: present
+        givenname: Git
+        sn: Lab
+        ipa_host: "{{ ipa_server }}"
+        ipa_user: "{{ ipa_admin_user }}"
+        ipa_pass: "{{ ipa_admin_pass }}"
+
+    - name: Reconfigure GitLab
+      command: gitlab-ctl reconfigure    
