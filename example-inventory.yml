@@ -1,0 +1,36 @@
+---
+ungrouped:
+  hosts:
+    green.lab.example.com: 
+      ansible_host: 172.25.0.10 # explicitly define which IP address to make connections on for ansible operations, useful for multihomed systems
+
+    blue.lab.example.com:
+    
+    172.25.0.[50:60]
+
+webservers:
+  hosts:
+    alpha.lab.example.org:
+      ansible_connection: buildah
+
+    beta.example.org:
+
+    www[001:006].example.com:
+
+  vars:
+    http_port:              80
+    https_port:             443
+
+prod_dbservers:
+  hosts:
+    db-[001:050].lab.example.com:
+
+dev_dbservers:
+  hosts:
+    db-[051:100].lab.example.com:
+
+db_servers:
+  children:
+    prod_dbservers
+    dev_dbservers
+...
