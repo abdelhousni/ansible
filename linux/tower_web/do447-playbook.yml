@@ -1,0 +1,31 @@
+---
+- name: Implement a basic webserver
+  hosts: webservers
+  vars:
+    packages:
+      - httpd
+      - httpd-devel
+
+  tasks:
+    - name: Install the webserver software
+      yum:
+        name: "{{packages}}"
+        state: installed
+
+    - name: Start and persistently enable httpd
+      service: 
+        name: httpd
+        enabled: yes
+        state: started
+
+    - name: Open the port in the firewall
+      firewall:
+        service: http
+        state: enabled
+        immediate: true
+        permanent: true
+
+    - copy:
+        content: "Hello world\n"
+        dest: /var/www/html/index.html
+...
