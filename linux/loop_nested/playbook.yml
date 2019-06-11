@@ -26,10 +26,10 @@
 
     - name: Install mariadb-server
       yum:
-        name: "{{ item }}"
-      loop:
+        name:
         - "{{ '@mariadb' }}"
         - "{{ '@mariadb-client' }}"
+        state: present
 
     - name: Start and enable the mariadb
       service:

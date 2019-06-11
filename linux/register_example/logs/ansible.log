@@ -1,0 +1,115 @@
+2019-06-05 06:47:04,810 p=4479 u=rgdacosta |  ERROR! Syntax Error while loading YAML.
+  mapping values are not allowed here
+
+The error appears to be in '/Users/rgdacosta/git/ansible/linux/register_example/playbook.yml': line 10, column 14, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+- name: Create a tar archive of the source directory
+      archive:
+             ^ here
+
+2019-06-05 06:50:59,312 p=4507 u=rgdacosta |  PLAY [Create and verify a zip file] ****************************************************************************************************
+2019-06-05 06:50:59,321 p=4507 u=rgdacosta |  TASK [Gathering Facts] *****************************************************************************************************************
+2019-06-05 06:51:00,249 p=4507 u=rgdacosta |  ok: [localhost]
+2019-06-05 06:51:00,264 p=4507 u=rgdacosta |  TASK [Create a tar archive of the source directory] ************************************************************************************
+2019-06-05 06:51:00,285 p=4507 u=rgdacosta |  fatal: [localhost]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'zipfile' is undefined\n\nThe error appears to be in '/Users/rgdacosta/git/ansible/linux/register_example/playbook.yml': line 11, column 7, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n    - name: Create a tar archive of the source directory\n      ^ here\n"}
+2019-06-05 06:51:00,286 p=4507 u=rgdacosta |  PLAY RECAP *****************************************************************************************************************************
+2019-06-05 06:51:00,286 p=4507 u=rgdacosta |  localhost                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2019-06-05 06:51:41,190 p=4562 u=rgdacosta |  PLAY [Create and verify a zip file] ****************************************************************************************************
+2019-06-05 06:51:41,196 p=4562 u=rgdacosta |  TASK [Gathering Facts] *****************************************************************************************************************
+2019-06-05 06:51:41,855 p=4562 u=rgdacosta |  ok: [localhost]
+2019-06-05 06:51:41,869 p=4562 u=rgdacosta |  TASK [Create a tar archive of the source directory] ************************************************************************************
+2019-06-05 06:51:45,852 p=4562 u=rgdacosta |  changed: [localhost]
+2019-06-05 06:51:45,869 p=4562 u=rgdacosta |  TASK [Check to see if the archive exists] **********************************************************************************************
+2019-06-05 06:51:46,209 p=4562 u=rgdacosta |  ok: [localhost]
+2019-06-05 06:51:46,229 p=4562 u=rgdacosta |  TASK [Make sure that the archive exists before proceeding] *****************************************************************************
+2019-06-05 06:51:46,255 p=4562 u=rgdacosta |  fatal: [localhost]: FAILED! => {
+    "assertion": "'zip' in archive.stat.mimetype", 
+    "changed": false, 
+    "evaluated_to": false, 
+    "msg": "Assertion failed"
+}
+2019-06-05 06:51:46,257 p=4562 u=rgdacosta |  PLAY RECAP *****************************************************************************************************************************
+2019-06-05 06:51:46,257 p=4562 u=rgdacosta |  localhost                  : ok=3    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2019-06-05 06:54:32,089 p=4695 u=rgdacosta |  PLAY [Create and verify a zip file] ****************************************************************************************************
+2019-06-05 06:54:32,096 p=4695 u=rgdacosta |  TASK [Gathering Facts] *****************************************************************************************************************
+2019-06-05 06:54:32,941 p=4695 u=rgdacosta |  ok: [localhost]
+2019-06-05 06:54:32,955 p=4695 u=rgdacosta |  TASK [Create a tar archive of the source directory] ************************************************************************************
+2019-06-05 06:54:33,330 p=4695 u=rgdacosta |  An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ImportError: cannot import name lzma
+2019-06-05 06:54:33,331 p=4695 u=rgdacosta |  fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to import the required Python library (lzma or backports.lzma) on Ricardos-MacBook-Pro.local's Python /usr/bin/python. This is required when using xz format. Please read module documentation and install in the appropriate location"}
+2019-06-05 06:54:33,332 p=4695 u=rgdacosta |  PLAY RECAP *****************************************************************************************************************************
+2019-06-05 06:54:33,333 p=4695 u=rgdacosta |  localhost                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2019-06-05 06:55:12,896 p=4781 u=rgdacosta |  PLAY [Create and verify a zip file] ****************************************************************************************************
+2019-06-05 06:55:12,914 p=4781 u=rgdacosta |  TASK [Gathering Facts] *****************************************************************************************************************
+2019-06-05 06:55:13,576 p=4781 u=rgdacosta |  ok: [localhost]
+2019-06-05 06:55:13,590 p=4781 u=rgdacosta |  TASK [Create a tar archive of the source directory] ************************************************************************************
+2019-06-05 06:55:15,061 p=4781 u=rgdacosta |  ok: [localhost]
+2019-06-05 06:55:15,076 p=4781 u=rgdacosta |  TASK [Check to see if the archive exists] **********************************************************************************************
+2019-06-05 06:55:15,418 p=4781 u=rgdacosta |  ok: [localhost]
+2019-06-05 06:55:15,437 p=4781 u=rgdacosta |  TASK [Show the archive dictionary] *****************************************************************************************************
+2019-06-05 06:55:15,468 p=4781 u=rgdacosta |  ok: [localhost] => {
+    "archive": {
+        "changed": false, 
+        "failed": false, 
+        "stat": {
+            "atime": 1559731906.1817982, 
+            "attr_flags": "", 
+            "attributes": [], 
+            "birthtime": 1559731902.224406, 
+            "block_size": 4096, 
+            "blocks": 16392, 
+            "charset": "unknown", 
+            "checksum": "ecf22498c3a6f88b5b37839d30af54921770b5b9", 
+            "ctime": 1559732114.9360917, 
+            "dev": 16777220, 
+            "device_type": 0, 
+            "executable": false, 
+            "exists": true, 
+            "flags": 0, 
+            "generation": 0, 
+            "gid": 20, 
+            "gr_name": "staff", 
+            "inode": 8634877020, 
+            "isblk": false, 
+            "ischr": false, 
+            "isdir": false, 
+            "isfifo": false, 
+            "isgid": false, 
+            "islnk": false, 
+            "isreg": true, 
+            "issock": false, 
+            "isuid": false, 
+            "mimetype": "unknown", 
+            "mode": "0644", 
+            "mtime": 1559732114.9360917, 
+            "nlink": 1, 
+            "path": "/Users/rgdacosta/scratch.tar.gz", 
+            "pw_name": "rgdacosta", 
+            "readable": true, 
+            "rgrp": true, 
+            "roth": true, 
+            "rusr": true, 
+            "size": 7650748, 
+            "uid": 501, 
+            "version": null, 
+            "wgrp": false, 
+            "woth": false, 
+            "writeable": true, 
+            "wusr": true, 
+            "xgrp": false, 
+            "xoth": false, 
+            "xusr": false
+        }
+    }
+}
+2019-06-05 06:55:15,486 p=4781 u=rgdacosta |  TASK [Make sure that the archive exists before proceeding] *****************************************************************************
+2019-06-05 06:55:15,512 p=4781 u=rgdacosta |  fatal: [localhost]: FAILED! => {
+    "assertion": "'zip' in archive.stat.mimetype", 
+    "changed": false, 
+    "evaluated_to": false, 
+    "msg": "Assertion failed"
+}
+2019-06-05 06:55:15,514 p=4781 u=rgdacosta |  PLAY RECAP *****************************************************************************************************************************
+2019-06-05 06:55:15,514 p=4781 u=rgdacosta |  localhost                  : ok=4    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   

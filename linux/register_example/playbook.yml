@@ -1,0 +1,29 @@
+- name: Create and verify a zip file
+  hosts: localhost
+  become: false
+
+  vars:
+    source: /Users/rgdacosta/scratch
+    zipfile: /Users/rgdacosta/scratch.tar.gz
+    zipformat: zip
+
+  tasks:
+
+    - name: Create a tar archive of the source directory
+      archive:
+        format: "{{ zipformat }}"
+        path: "{{ source }}"
+        dest: "{{ zipfile }}"
+
+    - name: Check to see if the archive exists
+      stat:
+        path: "{{ zipfile }}"
+      register: archive
+
+    - name: Show the archive dictionary
+      debug:
+        var: archive
+
+    - name: Make sure that the archive exists before proceeding
+      assert:
+        that: "'zip' in archive.stat.mimetype"

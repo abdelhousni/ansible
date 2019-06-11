@@ -1,0 +1,11 @@
+- name: Consistent network data
+  hosts: servera.lab.example.com
+  vars_files:
+    - network_vars.yml
+
+  tasks:
+
+    - name: Create /etc/hosts
+      template:
+        dest: /etc/hosts
+        src: hosts.j2
