@@ -1,0 +1,51 @@
+---
+- name: Ensure webservers are installed
+  hosts: webservers
+  vars:
+    web_pkg: httpd
+    web_port: 80
+    web_fqdn: servera.lab.example.com
+    web_backend_servers: servera.lab.example.com
+    web_service: http 
+    web_user: devops
+
+  tasks:
+
+    - name: Ensure {{ web_pkg }} is installed
+      yum:
+        name: "{{ web_pkg }}"
+        state: latest
+
+    - name: Ensure webserver is enabled
+      service:
+        name: "{{ web_pkg }}"
+        state: started
+        enabled: true
+
+    - name: Ensure port open in firewall
+      firewalld:
+        service: "{{ web_service }}"
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Ensure stub content is deployed
+      copy:
+        content: >
+          "Hello {{ web_user }}
+          
+          I am a web server running on {{ inventory_hostname }}"
+        dest: /var/www/html/index.html
+
+- name: Test web server deployment
+  hosts: localhost
+  become: false
+  tasks:
+
+    - name: Ensure content is received
+      uri:
+        url: http://servera.lab.example.com
+        return_content: true
+      register: web_server_output
+      failed_when: "'Hello world' not in web_server_output.content"
+

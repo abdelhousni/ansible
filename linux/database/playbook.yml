@@ -1,0 +1,39 @@
+- name: Ensure database servers are setup
+  hosts: databases
+  vars:
+    - database_list:
+        - instruments
+        - concerts
+        - lyrics
+
+  tasks:
+
+    - name: Ensure firewalld is enabled
+      firewalld:
+        service: mysql
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Ensure MySQL is installed
+      yum:
+        name:
+          - mysql
+          - mysql-common
+          - mysql-server
+          - python2-PyMySQL
+          - python3-PyMySQL
+        state: present
+
+    - name: Ensure MySQL is enabled
+      service:
+        name: mysqld
+        state: started
+        enabled: true
+
+    - name: Ensure databases exist
+      mysql_db:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ database_list }}"
+

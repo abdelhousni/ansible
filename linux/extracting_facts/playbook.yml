@@ -1,0 +1,9 @@
+- name: Display selected key from facts
+  hosts: localhost 
+  gather_facts: true
+
+  tasks:
+  
+  - name: Display single fact 
+    debug:
+      var: ansible_facts['system']

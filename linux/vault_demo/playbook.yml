@@ -2,6 +2,7 @@
 - name: Create our bedrock world!
   hosts: all
   no_log: true
+  gather_facts: true
   tasks:
 
     - name: Include our variables
@@ -12,4 +13,5 @@
       user:
         name: "{{ item.user }}"
         password: "{{ item.pass | password_hash('sha512') }}"
+        update_password: on_create
       with_items: "{{ bedrockers }}"

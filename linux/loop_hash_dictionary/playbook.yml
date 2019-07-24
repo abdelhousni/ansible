@@ -1,23 +1,31 @@
 ---
 - name: Create users in the appropriate groups
   hosts: all
+
+  vars:
+    mygroups:
+      - flintstones
+      - rubbles
+
+    myusers:
+       fred:
+          groups: flintstones
+       wilma:
+          groups: flintstones
+       barney:
+          groups: rubbles
+       betty:
+          groups: rubbles
   tasks:
 
     - name: Create groups
       group:
         name: "{{ item }}"
-      loop:
-        - flintstones
-        - rubbles
+      loop: "{{ mygroups }}"
 
     - name: Create users in their appropriate groups
       user:
-        name: "{{ item.name }}"
-        groups: "{{ item.groups }}"
-      with_dict:
-        - { name: 'fred', groups: 'flintstones' }
-        - { name: 'wilma', groups: 'flintstones' }
-        - { name: 'barney', groups: 'rubbles' }
-        - { name: 'betty', groups: 'rubbles' }
-        
-...
+        name: "{{ item.key }}"
+        groups: "{{ item.value.groups }}"
+      loop: "{{ lookup('dict', myusers) }}"
+

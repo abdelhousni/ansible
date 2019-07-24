@@ -1,0 +1,503 @@
+2019-07-22 14:02:25,761 p=20039 u=rgdacosta |  {
+    "_meta": {
+        "hostvars": {}
+    }, 
+    "all": {
+        "children": [
+            "devdc", 
+            "lamp", 
+            "ungrouped"
+        ]
+    }, 
+    "dbservers": {
+        "hosts": [
+            "serverc.lab.example.com", 
+            "serverd.lab.example.com"
+        ]
+    }, 
+    "devdc": {
+        "children": [
+            "dbservers", 
+            "webservers"
+        ]
+    }, 
+    "lamp": {
+        "hosts": [
+            "serverc.lab.example.com"
+        ]
+    }, 
+    "webservers": {
+        "hosts": [
+            "servera.lab.example.com", 
+            "serverb.lab.example.com"
+        ]
+    }
+}
+2019-07-22 14:12:38,305 p=20109 u=rgdacosta |  playbook: playbook.yml
+2019-07-22 14:12:53,780 p=20124 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 14:12:53,789 p=20124 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 14:12:55,501 p=20124 u=rgdacosta |  ok: [dev]
+2019-07-22 14:12:55,525 p=20124 u=rgdacosta |  TASK [Ensure package is installed] ***************************************************************************************************
+2019-07-22 14:13:19,049 p=20124 u=rgdacosta |  ok: [dev]
+2019-07-22 14:13:19,073 p=20124 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 14:13:20,003 p=20124 u=rgdacosta |  changed: [dev]
+2019-07-22 14:13:20,024 p=20124 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 14:13:20,900 p=20124 u=rgdacosta |  changed: [dev]
+2019-07-22 14:13:20,934 p=20124 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 14:13:21,480 p=20124 u=rgdacosta |  changed: [dev]
+2019-07-22 14:13:21,482 p=20124 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 14:13:21,483 p=20124 u=rgdacosta |  dev                        : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 14:14:50,626 p=20205 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 14:14:50,633 p=20205 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 14:14:53,197 p=20205 u=rgdacosta |  ok: [dev]
+2019-07-22 14:14:53,220 p=20205 u=rgdacosta |  TASK [Ensure package is installed] ***************************************************************************************************
+2019-07-22 14:15:14,967 p=20205 u=rgdacosta |  ok: [dev]
+2019-07-22 14:15:14,991 p=20205 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 14:15:16,143 p=20205 u=rgdacosta |  changed: [dev]
+2019-07-22 14:15:16,168 p=20205 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 14:15:17,100 p=20205 u=rgdacosta |  changed: [dev]
+2019-07-22 14:15:17,124 p=20205 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 14:15:18,135 p=20205 u=rgdacosta |  changed: [dev]
+2019-07-22 14:15:18,137 p=20205 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 14:15:18,137 p=20205 u=rgdacosta |  dev                        : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 14:18:07,918 p=20641 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 14:18:07,924 p=20641 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 14:18:09,539 p=20641 u=rgdacosta |  ok: [dev]
+2019-07-22 14:18:09,560 p=20641 u=rgdacosta |  TASK [Ensure package is installed] ***************************************************************************************************
+2019-07-22 14:18:34,035 p=20641 u=rgdacosta |  ok: [dev]
+2019-07-22 14:18:34,062 p=20641 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 14:18:35,012 p=20641 u=rgdacosta |  ok: [dev]
+2019-07-22 14:18:35,034 p=20641 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 14:18:35,892 p=20641 u=rgdacosta |  ok: [dev]
+2019-07-22 14:18:35,917 p=20641 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 14:18:36,850 p=20641 u=rgdacosta |  ok: [dev]
+2019-07-22 14:18:36,853 p=20641 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 14:18:36,854 p=20641 u=rgdacosta |  dev                        : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 14:21:19,730 p=21030 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 14:21:19,737 p=21030 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 14:21:21,333 p=21030 u=rgdacosta |  ok: [dev]
+2019-07-22 14:21:21,356 p=21030 u=rgdacosta |  TASK [Ensure package is installed] ***************************************************************************************************
+2019-07-22 14:21:42,146 p=21030 u=rgdacosta |  ok: [dev]
+2019-07-22 14:21:42,169 p=21030 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 14:21:43,087 p=21030 u=rgdacosta |  ok: [dev]
+2019-07-22 14:21:43,112 p=21030 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 14:21:43,940 p=21030 u=rgdacosta |  ok: [dev]
+2019-07-22 14:21:43,966 p=21030 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 14:21:44,944 p=21030 u=rgdacosta |  ok: [dev]
+2019-07-22 14:21:44,947 p=21030 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 14:21:44,947 p=21030 u=rgdacosta |  dev                        : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 14:24:13,658 p=21539 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 14:24:13,664 p=21539 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 14:24:15,300 p=21539 u=rgdacosta |  ok: [dev]
+2019-07-22 14:24:15,331 p=21539 u=rgdacosta |  TASK [Ensure package is installed] ***************************************************************************************************
+2019-07-22 14:24:36,726 p=21539 u=rgdacosta |  ok: [dev]
+2019-07-22 14:24:36,749 p=21539 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 14:24:37,658 p=21539 u=rgdacosta |  ok: [dev]
+2019-07-22 14:24:37,679 p=21539 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 14:24:38,597 p=21539 u=rgdacosta |  changed: [dev]
+2019-07-22 14:24:38,619 p=21539 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 14:24:39,545 p=21539 u=rgdacosta |  ok: [dev]
+2019-07-22 14:24:39,548 p=21539 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 14:24:39,548 p=21539 u=rgdacosta |  dev                        : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 14:25:24,237 p=21662 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 14:25:24,244 p=21662 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 14:25:25,470 p=21662 u=rgdacosta |  ok: [dev]
+2019-07-22 14:25:25,492 p=21662 u=rgdacosta |  TASK [Ensure package is installed] ***************************************************************************************************
+2019-07-22 14:25:47,554 p=21662 u=rgdacosta |  ok: [dev]
+2019-07-22 14:25:47,578 p=21662 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 14:25:48,484 p=21662 u=rgdacosta |  ok: [dev]
+2019-07-22 14:25:48,505 p=21662 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 14:25:49,314 p=21662 u=rgdacosta |  ok: [dev]
+2019-07-22 14:25:49,341 p=21662 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 14:25:50,363 p=21662 u=rgdacosta |  changed: [dev]
+2019-07-22 14:25:50,366 p=21662 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 14:25:50,366 p=21662 u=rgdacosta |  dev                        : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 15:06:51,396 p=22718 u=rgdacosta |  playbook: playbook.yml
+2019-07-22 15:07:00,534 p=22733 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 15:07:00,544 p=22733 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 15:07:02,316 p=22733 u=rgdacosta |  ok: [dev]
+2019-07-22 15:07:02,351 p=22733 u=rgdacosta |  TASK [Ensure httpd is installed] *****************************************************************************************************
+2019-07-22 15:07:23,983 p=22733 u=rgdacosta |  ok: [dev]
+2019-07-22 15:07:24,008 p=22733 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 15:07:25,012 p=22733 u=rgdacosta |  ok: [dev]
+2019-07-22 15:07:25,033 p=22733 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 15:07:26,022 p=22733 u=rgdacosta |  ok: [dev]
+2019-07-22 15:07:26,051 p=22733 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 15:07:27,434 p=22733 u=rgdacosta |  changed: [dev]
+2019-07-22 15:07:27,439 p=22733 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 15:07:27,439 p=22733 u=rgdacosta |  dev                        : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 15:08:28,288 p=23091 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 15:08:28,295 p=23091 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 15:08:29,910 p=23091 u=rgdacosta |  ok: [dev]
+2019-07-22 15:08:29,934 p=23091 u=rgdacosta |  TASK [Ensure httpd is installed] *****************************************************************************************************
+2019-07-22 15:08:52,484 p=23091 u=rgdacosta |  ok: [dev]
+2019-07-22 15:08:52,508 p=23091 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 15:08:53,487 p=23091 u=rgdacosta |  ok: [dev]
+2019-07-22 15:08:53,508 p=23091 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 15:08:54,350 p=23091 u=rgdacosta |  ok: [dev]
+2019-07-22 15:08:54,376 p=23091 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 15:08:55,424 p=23091 u=rgdacosta |  changed: [dev]
+2019-07-22 15:08:55,427 p=23091 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 15:08:55,427 p=23091 u=rgdacosta |  dev                        : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 15:11:03,058 p=23273 u=rgdacosta |  {
+    "_meta": {
+        "hostvars": {}
+    }, 
+    "all": {
+        "children": [
+            "devdc", 
+            "lamp", 
+            "ungrouped"
+        ]
+    }, 
+    "dbservers": {
+        "hosts": [
+            "serverc.lab.example.com", 
+            "serverd.lab.example.com"
+        ]
+    }, 
+    "devdc": {
+        "children": [
+            "dbservers", 
+            "webservers"
+        ]
+    }, 
+    "lamp": {
+        "hosts": [
+            "serverc.lab.example.com"
+        ]
+    }, 
+    "webservers": {
+        "hosts": [
+            "servera.lab.example.com", 
+            "serverb.lab.example.com"
+        ]
+    }
+}
+2019-07-22 15:19:14,098 p=23607 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 15:19:14,108 p=23607 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 15:19:16,738 p=23607 u=rgdacosta |  ok: [dev]
+2019-07-22 15:19:16,765 p=23607 u=rgdacosta |  TASK [Ensure httpd is installed] *****************************************************************************************************
+2019-07-22 15:19:38,556 p=23607 u=rgdacosta |  ok: [dev]
+2019-07-22 15:19:38,582 p=23607 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 15:19:39,526 p=23607 u=rgdacosta |  ok: [dev]
+2019-07-22 15:19:39,551 p=23607 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 15:19:40,659 p=23607 u=rgdacosta |  ok: [dev]
+2019-07-22 15:19:40,684 p=23607 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 15:19:41,816 p=23607 u=rgdacosta |  changed: [dev]
+2019-07-22 15:19:41,819 p=23607 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 15:19:41,819 p=23607 u=rgdacosta |  dev                        : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 15:20:48,103 p=23965 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 15:20:48,112 p=23965 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 15:20:49,704 p=23965 u=rgdacosta |  ok: [dev]
+2019-07-22 15:20:49,729 p=23965 u=rgdacosta |  TASK [Ensure httpd is installed] *****************************************************************************************************
+2019-07-22 15:21:12,151 p=23965 u=rgdacosta |  ok: [dev]
+2019-07-22 15:21:12,174 p=23965 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 15:21:13,122 p=23965 u=rgdacosta |  ok: [dev]
+2019-07-22 15:21:13,146 p=23965 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 15:21:14,034 p=23965 u=rgdacosta |  ok: [dev]
+2019-07-22 15:21:14,058 p=23965 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 15:21:15,098 p=23965 u=rgdacosta |  changed: [dev]
+2019-07-22 15:21:15,100 p=23965 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 15:21:15,100 p=23965 u=rgdacosta |  dev                        : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2019-07-22 15:22:15,786 p=24050 u=rgdacosta |  PLAY [Ensure webservers are installed] ***********************************************************************************************
+2019-07-22 15:22:15,795 p=24050 u=rgdacosta |  TASK [Gathering Facts] ***************************************************************************************************************
+2019-07-22 15:22:17,409 p=24050 u=rgdacosta |  ok: [dev]
+2019-07-22 15:22:17,435 p=24050 u=rgdacosta |  TASK [Ensure httpd is installed] *****************************************************************************************************
+2019-07-22 15:22:38,700 p=24050 u=rgdacosta |  ok: [dev]
+2019-07-22 15:22:38,725 p=24050 u=rgdacosta |  TASK [Ensure webserver is enabled] ***************************************************************************************************
+2019-07-22 15:22:39,632 p=24050 u=rgdacosta |  ok: [dev]
+2019-07-22 15:22:39,658 p=24050 u=rgdacosta |  TASK [Ensure port open in firewall] **************************************************************************************************
+2019-07-22 15:22:40,505 p=24050 u=rgdacosta |  ok: [dev]
+2019-07-22 15:22:40,533 p=24050 u=rgdacosta |  TASK [Ensure stub content is deployed] ***********************************************************************************************
+2019-07-22 15:22:41,576 p=24050 u=rgdacosta |  changed: [dev]
+2019-07-22 15:22:41,580 p=24050 u=rgdacosta |  PLAY RECAP ***************************************************************************************************************************
+2019-07-22 15:22:41,580 p=24050 u=rgdacosta |  dev                        : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2001-01-01 02:24:06,983 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 02:24:06,989 p=21605 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 02:24:07,000 p=21605 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:24:07,057 p=21605 u=student |  fatal: [dev]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: Could not resolve hostname dev: Name or service not known\r\n", "unreachable": true}
+2001-01-01 02:24:07,060 p=21605 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 02:24:07,060 p=21605 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 02:24:07,060 p=21605 u=student |  dev                        : ok=0    changed=0    unreachable=1    failed=0   
+2001-01-01 02:24:47,578 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 02:24:47,584 p=21670 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 02:24:47,595 p=21670 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:24:48,719 p=21670 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:24:48,737 p=21670 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 02:24:56,511 p=21670 u=student |  changed: [servera.lab.example.com]
+2001-01-01 02:24:56,525 p=21670 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 02:24:57,214 p=21670 u=student |  changed: [servera.lab.example.com]
+2001-01-01 02:24:57,229 p=21670 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 02:24:58,020 p=21670 u=student |  changed: [servera.lab.example.com]
+2001-01-01 02:24:58,035 p=21670 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 02:24:58,839 p=21670 u=student |  changed: [servera.lab.example.com]
+2001-01-01 02:24:58,841 p=21670 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 02:24:58,841 p=21670 u=student |  servera.lab.example.com    : ok=5    changed=4    unreachable=0    failed=0   
+2001-01-01 02:32:40,054 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 02:32:40,060 p=21841 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 02:32:40,071 p=21841 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:32:41,232 p=21841 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:32:41,249 p=21841 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 02:32:42,390 p=21841 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:32:42,405 p=21841 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 02:32:42,882 p=21841 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:32:42,897 p=21841 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 02:32:43,637 p=21841 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:32:43,653 p=21841 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 02:32:44,446 p=21841 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:32:44,454 p=21841 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 02:32:44,459 p=21841 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:32:44,836 p=21841 u=student |  ok: [localhost]
+2001-01-01 02:32:44,854 p=21841 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 02:32:45,214 p=21841 u=student |  fatal: [localhost]: FAILED! => {"changed": false, "msg": "unknown url type: servera.lab.example.com"}
+2001-01-01 02:32:45,216 p=21841 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 02:32:45,216 p=21841 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 02:32:45,216 p=21841 u=student |  localhost                  : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 02:32:45,216 p=21841 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2001-01-01 02:33:04,647 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 02:33:04,652 p=21981 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 02:33:04,664 p=21981 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:33:05,467 p=21981 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:33:05,484 p=21981 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 02:33:06,624 p=21981 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:33:06,639 p=21981 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 02:33:07,115 p=21981 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:33:07,130 p=21981 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 02:33:07,851 p=21981 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:33:07,866 p=21981 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 02:33:08,672 p=21981 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:33:08,679 p=21981 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 02:33:08,684 p=21981 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:33:09,034 p=21981 u=student |  ok: [localhost]
+2001-01-01 02:33:09,052 p=21981 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 02:33:09,420 p=21981 u=student |  ok: [localhost]
+2001-01-01 02:33:09,438 p=21981 u=student |  TASK [Display content of captured variable] *******************************************************************************************
+2001-01-01 02:33:09,463 p=21981 u=student |  ok: [localhost] => {
+    "web_server_output": {
+        "accept_ranges": "bytes", 
+        "changed": false, 
+        "connection": "close", 
+        "content": "\"Hello devops\nI am a web server running on servera.lab.example.com\"\n", 
+        "content_length": "68", 
+        "content_type": "text/html; charset=UTF-8", 
+        "cookies": {}, 
+        "cookies_string": "", 
+        "date": "Mon, 01 Jan 2001 08:33:09 GMT", 
+        "etag": "\"44-379caf310ff64\"", 
+        "failed": false, 
+        "last_modified": "Mon, 01 Jan 2001 08:24:58 GMT", 
+        "msg": "OK (68 bytes)", 
+        "redirected": false, 
+        "server": "Apache/2.4.6 (Red Hat Enterprise Linux)", 
+        "status": 200, 
+        "url": "http://servera.lab.example.com"
+    }
+}
+2001-01-01 02:33:09,464 p=21981 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 02:33:09,465 p=21981 u=student |  localhost                  : ok=3    changed=0    unreachable=0    failed=0   
+2001-01-01 02:33:09,465 p=21981 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2001-01-01 02:35:12,912 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 02:35:12,918 p=22145 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 02:35:12,929 p=22145 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:35:14,051 p=22145 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:14,068 p=22145 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 02:35:15,171 p=22145 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:15,185 p=22145 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 02:35:15,660 p=22145 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:15,675 p=22145 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 02:35:16,403 p=22145 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:16,419 p=22145 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 02:35:17,203 p=22145 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:17,211 p=22145 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 02:35:17,216 p=22145 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:35:17,579 p=22145 u=student |  ok: [localhost]
+2001-01-01 02:35:17,597 p=22145 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 02:35:17,970 p=22145 u=student |  ok: [localhost]
+2001-01-01 02:35:17,972 p=22145 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 02:35:17,972 p=22145 u=student |  localhost                  : ok=2    changed=0    unreachable=0    failed=0   
+2001-01-01 02:35:17,972 p=22145 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2001-01-01 02:35:34,341 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 02:35:34,347 p=22286 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 02:35:34,358 p=22286 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:35:35,160 p=22286 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:35,177 p=22286 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 02:35:36,280 p=22286 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:36,294 p=22286 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 02:35:36,772 p=22286 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:36,787 p=22286 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 02:35:37,503 p=22286 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:37,518 p=22286 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 02:35:38,307 p=22286 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:35:38,315 p=22286 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 02:35:38,320 p=22286 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:35:38,670 p=22286 u=student |  ok: [localhost]
+2001-01-01 02:35:38,689 p=22286 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 02:35:39,066 p=22286 u=student |  fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello devops\nI am a web server running on servera.lab.example.com\"\n", "content_length": "68", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Mon, 01 Jan 2001 08:35:39 GMT", "etag": "\"44-379caf310ff64\"", "failed_when_result": true, "last_modified": "Mon, 01 Jan 2001 08:24:58 GMT", "msg": "OK (68 bytes)", "redirected": false, "server": "Apache/2.4.6 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2001-01-01 02:35:39,068 p=22286 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 02:35:39,068 p=22286 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 02:35:39,068 p=22286 u=student |  localhost                  : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 02:35:39,068 p=22286 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2001-01-01 02:37:48,243 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 02:37:48,248 p=22440 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 02:37:48,259 p=22440 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 02:37:49,376 p=22440 u=student |  ok: [servera.lab.example.com]
+2001-01-01 02:37:49,393 p=22440 u=student |  TASK [Ensure nginx is installed] ******************************************************************************************************
+2001-01-01 02:37:50,535 p=22440 u=student |  fatal: [servera.lab.example.com]: FAILED! => {"changed": false, "msg": "No package matching 'nginx' found available, installed or updated", "rc": 126, "results": ["No package matching 'nginx' found available, installed or updated"]}
+2001-01-01 02:37:50,537 p=22440 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 02:37:50,537 p=22440 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 02:37:50,537 p=22440 u=student |  servera.lab.example.com    : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 03:49:39,087 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:49:39,092 p=23262 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:49:39,103 p=23262 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:49:40,224 p=23262 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:49:40,241 p=23262 u=student |  TASK [Ensure nginx is installed] ******************************************************************************************************
+2001-01-01 03:49:41,367 p=23262 u=student |  fatal: [servera.lab.example.com]: FAILED! => {"changed": false, "msg": "No package matching 'nginx' found available, installed or updated", "rc": 126, "results": ["No package matching 'nginx' found available, installed or updated"]}
+2001-01-01 03:49:41,369 p=23262 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 03:49:41,369 p=23262 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 03:49:41,370 p=23262 u=student |  servera.lab.example.com    : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 03:49:52,838 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:49:52,844 p=23294 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:49:52,855 p=23294 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:49:53,661 p=23294 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:49:53,679 p=23294 u=student |  TASK [Ensure nginx is installed] ******************************************************************************************************
+2001-01-01 03:49:54,782 p=23294 u=student |  fatal: [servera.lab.example.com]: FAILED! => {"changed": false, "msg": "No package matching 'nginx' found available, installed or updated", "rc": 126, "results": ["No package matching 'nginx' found available, installed or updated"]}
+2001-01-01 03:49:54,784 p=23294 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 03:49:54,784 p=23294 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 03:49:54,784 p=23294 u=student |  servera.lab.example.com    : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 03:50:16,040 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:50:16,046 p=23362 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:50:16,057 p=23362 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:50:16,870 p=23362 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:16,888 p=23362 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 03:50:17,350 p=23362 u=student |   [ERROR]: User interrupted execution
+
+2001-01-01 03:50:21,112 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:50:21,117 p=23387 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:50:21,128 p=23387 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:50:21,926 p=23387 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:21,943 p=23387 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 03:50:23,049 p=23387 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:23,063 p=23387 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 03:50:23,540 p=23387 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:23,555 p=23387 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 03:50:24,281 p=23387 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:24,297 p=23387 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 03:50:25,087 p=23387 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:25,095 p=23387 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 03:50:25,100 p=23387 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:50:25,463 p=23387 u=student |  ok: [localhost]
+2001-01-01 03:50:25,481 p=23387 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 03:50:25,856 p=23387 u=student |  fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello devops\nI am a web server running on servera.lab.example.com\"\n", "content_length": "68", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Mon, 01 Jan 2001 09:50:25 GMT", "etag": "\"44-379caf310ff64\"", "failed_when_result": true, "last_modified": "Mon, 01 Jan 2001 08:24:58 GMT", "msg": "OK (68 bytes)", "redirected": false, "server": "Apache/2.4.6 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2001-01-01 03:50:25,857 p=23387 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 03:50:25,857 p=23387 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 03:50:25,857 p=23387 u=student |  localhost                  : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 03:50:25,858 p=23387 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2001-01-01 03:50:36,367 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:50:36,373 p=23525 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:50:36,384 p=23525 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:50:37,191 p=23525 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:37,209 p=23525 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 03:50:38,316 p=23525 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:38,331 p=23525 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 03:50:38,802 p=23525 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:38,817 p=23525 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 03:50:39,525 p=23525 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:50:39,532 p=23525 u=student |   [ERROR]: User interrupted execution
+
+2001-01-01 03:52:15,455 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:52:15,461 p=23604 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:52:15,473 p=23604 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:52:16,589 p=23604 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:16,607 p=23604 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 03:52:17,713 p=23604 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:17,729 p=23604 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 03:52:18,213 p=23604 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:18,227 p=23604 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 03:52:18,931 p=23604 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:18,946 p=23604 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 03:52:19,730 p=23604 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:19,738 p=23604 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 03:52:19,743 p=23604 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:52:20,094 p=23604 u=student |  ok: [localhost]
+2001-01-01 03:52:20,113 p=23604 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 03:52:20,485 p=23604 u=student |  fatal: [localhost]: FAILED! => {
+    "accept_ranges": "bytes", 
+    "changed": false, 
+    "connection": "close", 
+    "content": "\"Hello devops\nI am a web server running on servera.lab.example.com\"\n", 
+    "content_length": "68", 
+    "content_type": "text/html; charset=UTF-8", 
+    "cookies": {}, 
+    "cookies_string": "", 
+    "date": "Mon, 01 Jan 2001 09:52:20 GMT", 
+    "etag": "\"44-379caf310ff64\"", 
+    "failed_when_result": true, 
+    "last_modified": "Mon, 01 Jan 2001 08:24:58 GMT", 
+    "redirected": false, 
+    "server": "Apache/2.4.6 (Red Hat Enterprise Linux)", 
+    "status": 200, 
+    "url": "http://servera.lab.example.com"
+}
+
+MSG:
+
+OK (68 bytes)
+
+2001-01-01 03:52:20,487 p=23604 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 03:52:20,487 p=23604 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 03:52:20,487 p=23604 u=student |  localhost                  : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 03:52:20,487 p=23604 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2001-01-01 03:52:33,544 p=23744 u=student |  ERROR! Invalid callback for stdout specified: 
+2001-01-01 03:52:44,299 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:52:44,305 p=23752 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:52:44,316 p=23752 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:52:45,121 p=23752 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:45,139 p=23752 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 03:52:46,237 p=23752 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:46,252 p=23752 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 03:52:46,722 p=23752 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:46,737 p=23752 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 03:52:47,444 p=23752 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:47,459 p=23752 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 03:52:48,248 p=23752 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:52:48,255 p=23752 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 03:52:48,260 p=23752 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:52:48,611 p=23752 u=student |  ok: [localhost]
+2001-01-01 03:52:48,630 p=23752 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 03:52:49,004 p=23752 u=student |  fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello devops\nI am a web server running on servera.lab.example.com\"\n", "content_length": "68", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Mon, 01 Jan 2001 09:52:48 GMT", "etag": "\"44-379caf310ff64\"", "failed_when_result": true, "last_modified": "Mon, 01 Jan 2001 08:24:58 GMT", "msg": "OK (68 bytes)", "redirected": false, "server": "Apache/2.4.6 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2001-01-01 03:52:49,005 p=23752 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 03:52:49,005 p=23752 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 03:52:49,006 p=23752 u=student |  localhost                  : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 03:52:49,006 p=23752 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2001-01-01 03:53:36,143 passlib.registry registered 'md5_crypt' handler: <class 'passlib.handlers.md5_crypt.md5_crypt'>
+2001-01-01 03:53:36,149 p=23906 u=student |  PLAY [Ensure webservers are installed] ************************************************************************************************
+2001-01-01 03:53:36,160 p=23906 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:53:36,969 p=23906 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:53:36,986 p=23906 u=student |  TASK [Ensure httpd is installed] ******************************************************************************************************
+2001-01-01 03:53:38,088 p=23906 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:53:38,103 p=23906 u=student |  TASK [Ensure webserver is enabled] ****************************************************************************************************
+2001-01-01 03:53:38,577 p=23906 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:53:38,593 p=23906 u=student |  TASK [Ensure port open in firewall] ***************************************************************************************************
+2001-01-01 03:53:39,314 p=23906 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:53:39,330 p=23906 u=student |  TASK [Ensure stub content is deployed] ************************************************************************************************
+2001-01-01 03:53:40,125 p=23906 u=student |  ok: [servera.lab.example.com]
+2001-01-01 03:53:40,132 p=23906 u=student |  PLAY [Test web server deployment] *****************************************************************************************************
+2001-01-01 03:53:40,137 p=23906 u=student |  TASK [Gathering Facts] ****************************************************************************************************************
+2001-01-01 03:53:40,489 p=23906 u=student |  ok: [localhost]
+2001-01-01 03:53:40,507 p=23906 u=student |  TASK [Ensure content is received] *****************************************************************************************************
+2001-01-01 03:53:40,891 p=23906 u=student |  fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello devops\nI am a web server running on servera.lab.example.com\"\n", "content_length": "68", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Mon, 01 Jan 2001 09:53:40 GMT", "etag": "\"44-379caf310ff64\"", "failed_when_result": true, "last_modified": "Mon, 01 Jan 2001 08:24:58 GMT", "msg": "OK (68 bytes)", "redirected": false, "server": "Apache/2.4.6 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2001-01-01 03:53:40,893 p=23906 u=student |  	to retry, use: --limit @/home/student/git/basic_ansible_examples/linux/ej_webserver/playbook.retry
+
+2001-01-01 03:53:40,894 p=23906 u=student |  PLAY RECAP ****************************************************************************************************************************
+2001-01-01 03:53:40,894 p=23906 u=student |  localhost                  : ok=1    changed=0    unreachable=0    failed=1   
+2001-01-01 03:53:40,894 p=23906 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   

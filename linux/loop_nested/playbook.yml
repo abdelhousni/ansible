@@ -21,8 +21,7 @@
     - name: Create the users
       user:
         name: "{{ item }}"
-      loop:
-        - "{{ beatles }}"
+      loop: "{{ beatles }}"
 
     - name: Install mariadb-server
       yum:

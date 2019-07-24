@@ -1,0 +1,15 @@
+all:
+  children:
+    devdc:
+      children:
+        dbservers:
+          hosts:
+            serverc.lab.example.com: {}
+            serverd.lab.example.com: {}
+        webservers:
+          hosts:
+            servera.lab.example.com: {}
+    lamp:
+      hosts:
+        serverc.lab.example.com: {}
+    ungrouped: {}
