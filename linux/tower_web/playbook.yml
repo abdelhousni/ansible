@@ -1,8 +1,0 @@
----
-- name: Implement a basic webserver
-  hosts: webservers
-
-  tasks:
-    - name: Include the primary tasks from tasks.yml
-      include: tasks.yml
-...

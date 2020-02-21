@@ -1,4 +1,4 @@
-- name: Install or update software
+- name: Manage software
   hosts: all
   
   vars:
@@ -11,7 +11,7 @@
       assert:
         that: ansible_os_family == "RedHat"
 
-    - name: Install software on Red Hat based system
+    - name: Manage software on Red Hat based system
       yum:
         name: "{{ pkgname }}"
         state: "{{ pkgstatus }}"

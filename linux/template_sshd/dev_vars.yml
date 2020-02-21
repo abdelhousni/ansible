@@ -1,6 +1,0 @@
----
-ssh_port: 22
-root_allowed: 'yes'
-groups_allowed: wheel
-passwords_allowed: 'yes'
-...

@@ -1,0 +1,12 @@
+- name: Gather facts for caching in Ansible Tower
+  hosts: all
+
+  tasks:
+
+    - name: Ensure running on Linux host
+      assert:
+        that: ansible_system == "Linux"
+
+    - name: Ensure facts are gathered
+      setup:
+      

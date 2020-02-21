@@ -501,3 +501,16 @@ OK (68 bytes)
 2001-01-01 03:53:40,894 p=23906 u=student |  PLAY RECAP ****************************************************************************************************************************
 2001-01-01 03:53:40,894 p=23906 u=student |  localhost                  : ok=1    changed=0    unreachable=0    failed=1   
 2001-01-01 03:53:40,894 p=23906 u=student |  servera.lab.example.com    : ok=5    changed=0    unreachable=0    failed=0   
+2020-02-10 20:52:11,257 p=rgdacosta u=50435 | ERROR! Syntax Error while loading YAML.
+  expected <block end>, but found '<block mapping start>'
+
+The error appears to be in '/Users/rgdacosta/git/basic_ansible_examples/linux/ej_webserver/playbook.yml': line 17, column 9, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+         name: "{{ web_pkg }}"
+        state: latest
+        ^ here
+
+2020-02-10 20:52:48,580 p=rgdacosta u=50495 | playbook: playbook.yml

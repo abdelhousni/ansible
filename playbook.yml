@@ -1,0 +1,42 @@
+- name: Storage demonstration
+  hosts: all
+
+  tasks:
+
+      - name: Ensure that a partition is created
+        parted:
+          device: /dev/vdb
+          number: 1
+          state: present
+
+      - name: Ensure that a filesystem exists
+        filesystem:
+          fstype: ext4
+          device: /dev/vdb1
+          state: present
+
+      - name: Ensure that filesystem is mounted
+        mount:
+            path: /mnt/data
+            src: /dev/vdb1
+            fstype: ext4
+            opts: defaults
+            state: present
+
+      - name: Ensure VG exists
+        lvg:
+          vg: data
+          pvs: /dev/vdb1
+
+      - name: Ensure LV exists
+        lvol:
+          vg: data
+          lv: mysql
+          size: 1G
+
+      - name: Ensure lvol has filesystem
+        filesystem:
+            fstype: xfs
+            device: /dev/data/mysql
+            state: present
+

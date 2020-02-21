@@ -1,6 +1,0 @@
-[redhat_training]
-environment: prod
-ssh_port: 22
-root_allowed: no
-groups_allowed: sshusers wheel
-passwords_allowed: no
