@@ -1,0 +1,28 @@
+- name: Ensure Web App is deployed
+  hosts: web_servers
+  gather_facts: false
+  # TODO: Introduce a rolling update that tries a single host first, then deploy the rest of host.
+  serial:
+    - 1
+    - 100%
+  # TODO: Instruct ansible to halt if a single host fail in any batch
+  max_fail_percentage: 0
+
+  vars:
+    - webapp_version: v1.0
+
+  # TODO: Add a task that, before role runs, store the time, webapp version and  remote hostname in the local file "/tmp/times.txt"
+  pre_tasks:
+    - name: Ensure deployed version is logged
+      shell: 'echo \"$(date): Deploying version {{ webapp_version }} into {{ inventory_hostname }}\" >> /tmp/times.txt'
+      delegate_to: localhost
+
+  roles:
+    - role: webapp
+
+  # TODO: Add a task that, after role runs, store the time, webapp version and  remote hostname in the local file "/tmp/times.txt"
+  post_tasks:
+    - name: Ensure deployed version is logged
+      shell: "echo '{{ lookup('pipe', 'date') }}: Deployment complete {{ webapp_version }} into {{ inventory_hostname }}' >> /tmp/times.txt"
+      delegate_to: localhost
+

@@ -1,0 +1,140 @@
+---
+- name: Canberra
+  address: |
+    Level 11
+    40 Marcus Clarke Street
+    Canberra City ACT 2601
+    Australia
+  phone:
+  - +61 2 6145 2810
+
+- name: Sydney
+  address: |
+    Level 35
+    100 Miller Street
+    North Sydney NSW 2060
+    Australia
+  phone:
+  - +61 2 8923 2800
+  - +61 2 8923 2899
+
+- name: Shanghai
+  address: |
+    15F-119, Tower 1, 8 Century Ave,
+    Pudong Xinqu district,
+    Shanghai 200120
+    China
+  phone:
+  - 800-810-2100
+  - 400-890-2100
+
+- name: Hong Kong
+  address: |
+    Suite 3507-8, 35th Floor
+    Tower 2, The Gateway
+    Harbour City, Kowloon
+    Hong Kong
+  phone:
+  - +852 2350 7600
+  - +852 2350 7676
+
+- name: Mumbai
+  address: |
+    Supreme Business Park, Supreme City
+    A-201, 2nd Floor, Hiranandani Gardens, Powai Mumbai 400076
+    India
+  phone:
+  - +91 22 61147559
+  - +91 22 61147599
+
+- name: Pune
+  address: |
+    Tower X, Cybercity, Magarpatta
+    Hadapsar Level 0-1
+    Pune 411013
+    India
+  phone:
+  - +020 66817173
+  - +91 20 304 674 99
+
+- name: Indonesia
+  address: |
+    Revenue Tower, 21st Floor no. 119, SCBD
+    Jl. Jend. Sudirman No. 52-53, Jakarta 12190
+    Indonesia
+  phone:
+  - +6221 50166868
+  - +62 21 29888 201
+
+- name: Tokyo
+  address: |
+    4-1-18 Ebisu
+    Ebisu Neonato 8F
+    Shibuya-ku, Tokyo 150-0013
+    Japan
+  phone:
+  - +81 3 5798 8500
+  - +81 3 5798 8599
+
+- name: Osaka
+  address: |
+    1-1-1 Miyahara
+    Shin Osaka Hankyu Building 3F
+    Yodogawa-ku, Osaka 532-0003
+    Japan
+  phone:
+  - +81 6 7668 8330
+  - +81 6 7668 8440
+
+- name: Seoul
+  address: |
+    170-9 Samsung-dong, Gangnam-gu
+    Deokmyung Building
+    Seoul 135-741
+    Korea
+  phone:
+  - +82 2 3490 5200
+  - +82 2 3490 5299
+
+- name: Malaysia
+  address: |
+    Level, 17.01 The Gardens South Tower
+    Mid Valley City
+    Lingkaran Syed Putra
+    59200 Kuala Lumpur
+    Malaysia
+  phone:
+  - +603 4065 7000
+  - +603 4065 7049
+
+- name: Auckland
+  address: |
+    Level 4, Rabobank Tower
+    2 Commerce Street
+    Auckland 1010, New Zealand
+  phone:
+  - +64 9 8874 106
+
+- name: Wellington
+  address: |
+    1 Willis Street
+    Level 6 Zip-6011
+
+- name: Singapore
+  address: |
+    8 Shenton Way
+    11-01 AXA Tower
+    Singapore 068 811
+    Singapore
+  phone:
+  - +65 6490 4200
+  - +65 6490 4201
+
+- name: Thailand
+  address: |
+    4, 4/5 Level 12 Zen World Tower,
+    Office no. 1224 & 1226
+    Rajdamri Road., Pathumwan
+    Bangkok 10300 Thailand
+  phone:
+  - 66 2 697 9035
