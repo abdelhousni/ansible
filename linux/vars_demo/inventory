@@ -2,9 +2,6 @@
 servera.lab.example.com 
 serverb.lab.example.com
 
-[webservers:vars]
-user1=wilma
-
 [dbservers]
 serverc.lab.example.com
 serverd.lab.example.com
