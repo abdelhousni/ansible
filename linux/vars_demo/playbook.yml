@@ -1,13 +1,12 @@
 ---
-- name: Create a user
+- name: Variables demonstration
   hosts: webservers
-  gather_facts: no
-#  vars:
-#    - user1: fred
+  gather_facts: false
+
 
   tasks:
 
-    - name: Create user {{ user1 }}
-      user:
-        name: "{{ user1 }}"
+    - name: Ensure that variable my_var is displayed
+      debug:
+        msg: The value of the variable my_var is {{ my_var }}
 ...
