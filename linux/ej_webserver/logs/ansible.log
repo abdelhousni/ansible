@@ -514,3 +514,272 @@ The offending line appears to be:
         ^ here
 
 2020-02-10 20:52:48,580 p=rgdacosta u=50495 | playbook: playbook.yml
+2022-02-21 03:54:23,742 p=7132 u=student n=ansible |   hosts (4):
+2022-02-21 03:54:23,743 p=7132 u=student n=ansible |     servera
+2022-02-21 03:54:23,743 p=7132 u=student n=ansible |     serverb
+2022-02-21 03:54:23,743 p=7132 u=student n=ansible |     serverc
+2022-02-21 03:54:23,743 p=7132 u=student n=ansible |     serverd
+2022-02-21 03:54:35,670 p=7151 u=student n=ansible |   hosts (4):
+2022-02-21 03:54:35,670 p=7151 u=student n=ansible |     servera
+2022-02-21 03:54:35,670 p=7151 u=student n=ansible |     serverb
+2022-02-21 03:54:35,671 p=7151 u=student n=ansible |     serverc
+2022-02-21 03:54:35,671 p=7151 u=student n=ansible |     serverd
+2022-02-21 04:48:56,688 p=7809 u=student n=ansible | serverb | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2022-02-21 04:48:56,695 p=7809 u=student n=ansible | servera | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2022-02-21 04:48:56,748 p=7809 u=student n=ansible | serverc | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2022-02-21 04:48:56,765 p=7809 u=student n=ansible | serverd | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2022-02-21 04:50:03,101 p=7894 u=student n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: servere
+
+2022-02-21 04:50:03,101 p=7894 u=student n=ansible | [WARNING]: No hosts matched, nothing to do
+
+2022-02-21 04:50:35,224 p=7946 u=student n=ansible | servere | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: Could not resolve hostname servere: Name or service not known",
+    "unreachable": true
+}
+2022-02-21 05:10:17,570 p=8158 u=student n=ansible | [WARNING]: module hpe_nimble_access_control_record not found in:
+/home/student/.ansible/plugins/modules:/usr/share/ansible/plugins/modules:/usr/lib/python3.6/site-
+packages/ansible/modules
+
+2022-02-21 05:14:59,097 p=8227 u=student n=ansible | servera | FAILED! => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "msg": "This command has to be run under the root user.",
+    "results": []
+}
+2022-02-21 05:15:41,305 p=8281 u=student n=ansible | servera | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Installed: mod_http2-1.15.7-3.module+el8.4.0+8625+d397f3da.x86_64",
+        "Installed: redhat-logos-httpd-84.4-1.el8.noarch",
+        "Installed: httpd-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: httpd-filesystem-2.4.37-39.module+el8.4.0+9658+b87b2deb.noarch",
+        "Installed: httpd-tools-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: apr-1.6.3-11.el8.x86_64",
+        "Installed: apr-util-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-bdb-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-openssl-1.6.1-6.el8.x86_64"
+    ]
+}
+2022-02-21 05:16:09,933 p=8312 u=student n=ansible | servera | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "msg": "Nothing to do",
+    "rc": 0,
+    "results": []
+}
+2022-02-21 06:22:19,379 p=8903 u=student n=ansible | servera | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Removed: mod_http2-1.15.7-3.module+el8.4.0+8625+d397f3da.x86_64",
+        "Removed: httpd-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64"
+    ]
+}
+2022-02-21 06:22:57,912 p=8946 u=student n=ansible | servera | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Installed: httpd-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: mod_http2-1.15.7-3.module+el8.4.0+8625+d397f3da.x86_64"
+    ]
+}
+2022-02-21 06:23:00,252 p=8946 u=student n=ansible | serverc | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Installed: mod_http2-1.15.7-3.module+el8.4.0+8625+d397f3da.x86_64",
+        "Installed: redhat-logos-httpd-84.4-1.el8.noarch",
+        "Installed: httpd-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: httpd-filesystem-2.4.37-39.module+el8.4.0+9658+b87b2deb.noarch",
+        "Installed: httpd-tools-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: apr-1.6.3-11.el8.x86_64",
+        "Installed: apr-util-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-bdb-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-openssl-1.6.1-6.el8.x86_64"
+    ]
+}
+2022-02-21 06:23:00,274 p=8946 u=student n=ansible | serverb | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Installed: mod_http2-1.15.7-3.module+el8.4.0+8625+d397f3da.x86_64",
+        "Installed: redhat-logos-httpd-84.4-1.el8.noarch",
+        "Installed: httpd-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: httpd-filesystem-2.4.37-39.module+el8.4.0+9658+b87b2deb.noarch",
+        "Installed: httpd-tools-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: apr-1.6.3-11.el8.x86_64",
+        "Installed: apr-util-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-bdb-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-openssl-1.6.1-6.el8.x86_64"
+    ]
+}
+2022-02-21 06:23:00,431 p=8946 u=student n=ansible | serverd | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Installed: mod_http2-1.15.7-3.module+el8.4.0+8625+d397f3da.x86_64",
+        "Installed: redhat-logos-httpd-84.4-1.el8.noarch",
+        "Installed: httpd-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: httpd-filesystem-2.4.37-39.module+el8.4.0+9658+b87b2deb.noarch",
+        "Installed: httpd-tools-2.4.37-39.module+el8.4.0+9658+b87b2deb.x86_64",
+        "Installed: apr-1.6.3-11.el8.x86_64",
+        "Installed: apr-util-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-bdb-1.6.1-6.el8.x86_64",
+        "Installed: apr-util-openssl-1.6.1-6.el8.x86_64"
+    ]
+}
+2022-02-21 06:23:17,436 p=9034 u=student n=ansible | servera | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "msg": "Nothing to do",
+    "rc": 0,
+    "results": []
+}
+2022-02-21 06:23:17,477 p=9034 u=student n=ansible | serverc | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "msg": "Nothing to do",
+    "rc": 0,
+    "results": []
+}
+2022-02-21 06:23:17,484 p=9034 u=student n=ansible | serverd | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "msg": "Nothing to do",
+    "rc": 0,
+    "results": []
+}
+2022-02-21 06:23:17,554 p=9034 u=student n=ansible | serverb | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "msg": "Nothing to do",
+    "rc": 0,
+    "results": []
+}
+2022-02-21 06:24:49,596 p=9129 u=student n=ansible | servera | CHANGED | rc=0 >>
+uid=1001(devops) gid=1001(devops) groups=1001(devops) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+2022-02-21 06:25:00,126 p=9159 u=student n=ansible | servera | CHANGED | rc=0 >>
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+2022-02-21 06:25:48,621 p=9194 u=student n=ansible | [WARNING]: Consider using the file module with state=directory rather than running 'mkdir'.  If you need to use
+command because file is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in
+ansible.cfg to get rid of this message.
+
+2022-02-21 06:25:48,622 p=9194 u=student n=ansible | servera | CHANGED | rc=0 >>
+
+
+2022-02-21 06:27:42,028 p=9252 u=student n=ansible | [WARNING]: Consider using the file module with state=directory rather than running 'mkdir'.  If you need to use
+command because file is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in
+ansible.cfg to get rid of this message.
+
+2022-02-21 06:27:42,029 p=9252 u=student n=ansible | servera | CHANGED | rc=0 >>
+
+
+2022-02-21 06:27:58,578 p=9283 u=student n=ansible | servera | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0755",
+    "owner": "root",
+    "path": "/foo",
+    "secontext": "unconfined_u:object_r:default_t:s0",
+    "size": 6,
+    "state": "directory",
+    "uid": 0
+}
+2022-02-21 06:28:13,905 p=9310 u=student n=ansible | servera | FAILED! => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "msg": "rmtree failed: [Errno 13] Permission denied: '/foo'"
+}
+2022-02-21 06:28:19,874 p=9337 u=student n=ansible | servera | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "path": "/foo",
+    "state": "absent"
+}
+2022-02-21 06:28:32,512 p=9364 u=student n=ansible | servera | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0755",
+    "owner": "root",
+    "path": "/foo",
+    "secontext": "unconfined_u:object_r:default_t:s0",
+    "size": 6,
+    "state": "directory",
+    "uid": 0
+}

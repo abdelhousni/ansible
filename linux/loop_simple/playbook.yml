@@ -1,18 +1,23 @@
 ---
 - name: Create users
-  hosts: servera.lab.example.com
+  hosts: servera
+  become: true
+
   vars:
+
     myusers:
       - fred
       - barney
       - wilma
       - betty
 
+    mystate: present
+
   tasks:
 
-    - name: Create users
+    - name: Ensure users are {{ mystate }}
+      loop: "{{ myusers }}"
       user:
         name: "{{ item }}"
-        state: absent
-      loop: "{{ myusers }}"
+        state: "{{ mystate }}"
 ...

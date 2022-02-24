@@ -1,0 +1,11 @@
+- name: Setup timesync at HPE
+  hosts: servera
+  become: true
+
+  vars:
+
+    timesync_ntp_servers:
+      - hostname: classroom.example.com
+
+  roles:
+    - rhel-system-roles.timesync

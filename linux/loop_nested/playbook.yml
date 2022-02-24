@@ -1,6 +1,9 @@
 ---
 - name: Create the Beatles users, and give them access to their databases
   hosts: all
+  gather_facts: false
+  become: true
+
   vars:
 
     beatles:
@@ -18,31 +21,32 @@
 
   tasks:
 
-    - name: Create the users
+    - name: Ensure users exist
+      loop: "{{ beatles }}"
       user:
         name: "{{ item }}"
-      loop: "{{ beatles }}"
-
-    - name: Install mariadb-server
-      yum:
-        name:
-        - "{{ '@mariadb' }}"
-        - "{{ '@mariadb-client' }}"
         state: present
 
-    - name: Start and enable the mariadb
+    - name: Ensure software is installed
+      yum:
+        name: 
+          - "{{ '@mariadb' }}"
+          - python3-PyMySQL
+        state: present
+
+    - name: Ensure mariadb is started and enabled
       service:
         name: mariadb
         state: started
-        enabled: yes
+        enabled: true
 
-    - name: Give the Beatles access to their databases
+    - name: Ensure Beatles access to their databases
+      with_nested:
+        - "{{ beatles }}"
+        - "{{ category_db }}"
       mysql_user:
         name: "{{ item[0] }}"
         priv: "{{ item[1] }}.*:ALL"
         append_privs: yes
         password: "{{ db_pass }}"
-      with_nested:
-        - "{{ beatles }}"
-        - "{{ category_db }}"
 ...

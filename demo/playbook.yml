@@ -1,0 +1,60 @@
+- name: Post provision management
+  hosts: servera
+  become: true
+  gather_facts: true
+
+  tasks:
+
+   - name: Ensure play fails when conditions are not met
+     assert:
+       that:
+         - "'RedHat' in ansible_facts['distribution']"
+         - ansible_facts['mounts'] | json_query("[?mount == '/'].size_available") | first > 1073741824
+         - install == 'true'
+       success_msg: We have found that you are using a Red Hat based OS and have sufficient storage 
+       fail_msg: Failing because you are not using a Red Hat based OS and you have insufficienty storage
+
+   - name: Ensure webserver software is installed
+     yum:
+       name: httpd
+       state: installed
+
+   - name: Ensure port is open in firewall
+     firewalld:
+       service: http
+       state: enabled
+       permanent: true
+       immediate: true
+
+   - name: Ensure service is started
+     systemd:
+       name: httpd
+       state: started
+       enabled: true
+
+   - name: Ensure stub content is installed
+     vars:
+       local_file: local_index.html
+     copy:
+       src: "{{ local_file }}" 
+       #content: "{{ lookup('file', local_file) }}"
+       dest: /var/www/html/index.html
+
+   - name: Ensure remote file is read
+     register: output
+     slurp:
+       src: /var/www/html/index.html
+
+   - name: Ensure content is displayed
+     debug:
+       msg: The content of the file is {{ output['content'] | b64decode }}
+
+- name: Test the webserver
+  hosts: localhost
+
+  tasks:
+
+    - name: Ensure webserver connection is tested
+      uri:
+        url: http://servera
+

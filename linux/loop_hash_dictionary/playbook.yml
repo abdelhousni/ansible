@@ -1,31 +1,22 @@
 ---
 - name: Create users in the appropriate groups
   hosts: all
+  become: true
+  no_log: false
 
-  vars:
-    mygroups:
-      - flintstones
-      - rubbles
-
-    myusers:
-       fred:
-          groups: flintstones
-       wilma:
-          groups: flintstones
-       barney:
-          groups: rubbles
-       betty:
-          groups: rubbles
   tasks:
 
-    - name: Create groups
+    - name: Ensure groups are created
+      loop: "{{ mygroups }}"
       group:
         name: "{{ item }}"
-      loop: "{{ mygroups }}"
+        state: present
 
-    - name: Create users in their appropriate groups
-      user:
-        name: "{{ item.key }}"
-        groups: "{{ item.value.groups }}"
+    - name: Ensure users are in their appropriate groups
       loop: "{{ lookup('dict', myusers) }}"
+      user:
+        name: "{{ item['key'] }}"
+        groups: "{{ item['value']['groups'] }}"
+        password: "{{ item['value']['password'] | password_hash('sha512') }}"
+        update_password: on_create
 

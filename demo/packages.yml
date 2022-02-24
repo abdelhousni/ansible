@@ -1,0 +1,12 @@
+- name: pacakge facts
+  hosts: servera
+  become: true
+  gather_facts: true
+
+  tasks: 
+
+    - name: package facts
+      package_facts:
+
+    - debug:
+        var: ansible_facts['packages'] | to_json

@@ -1,0 +1,9 @@
+- name: Demonstrate the user of filters and variables
+  hosts: servera
+  gather_facts: false
+
+  tasks:
+
+    - name: Ensure that the variable my_var is displayed
+      debug:
+        msg: The value of the variable my_var is {{ my_var | default('blue') }}

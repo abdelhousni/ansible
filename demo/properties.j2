@@ -1,0 +1,24 @@
+Hostname: {{ ansible_facts['fqdn'] }}
+
+Operating System: {{ ansible_facts['distribution_file_search_string'] }} {{ ansible_facts['distribution_version'] }}
+
+Network Configuration:
+
+  ipv4: 
+	{% for ips in ansible_facts['all_ipv4_addresses'] %}
+	{{ ips }}
+	{% endfor %}
+
+  ipv6:
+	{% for ips in ansible_facts['all_ipv6_addresses'] %}
+	{{ ips }}
+	{% endfor %}
+
+Here is the big list of software installed on the system:
+
+{% for package in ansible_facts['packages'] | dict2items %}
+==================================================================
+{{ package['value'] | json_query('[*].name') | regex_replace('\'') | regex_replace('\[') | regex_replace('\]') }}
+{{ package['value'] | json_query('[*].version') | regex_replace('\'') | regex_replace('\[') | regex_replace('\]') }}
+{% endfor %}
+

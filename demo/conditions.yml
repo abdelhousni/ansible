@@ -1,0 +1,45 @@
+- name: Conditionals demonstration
+  hosts: servera
+  gather_facts: true
+  become: true
+
+  tasks:
+
+    - name: Verify that we are using a Red Hat based OS
+      when: "'RedHat' in ansible_facts['distribution']"
+      block:
+
+        - name: Ensure message is displayed
+          debug:
+            msg: We have matched RedHat to your distribution
+
+        - name: Ensure httpd is installed
+          yum:
+            name: httpd
+            state: latest
+
+        - name: Ensure service is started
+          systemd:
+            name: httpd
+            state: started
+            enabled: true
+
+
+    - name: Tasks for SUSE
+      when: "'SUSE' in ansible_facts['distribution']"
+      block:
+
+        - name: Ensure message is displayed
+          debug:
+            msg: We have matched SUSE to your distribution
+
+        - name: Ensure apache is installed
+          zypper:
+            name: apache2
+            state: latest
+
+        - name: Ensure service is started
+          systemd:
+            name: apache2
+            state: started
+            enabled: true

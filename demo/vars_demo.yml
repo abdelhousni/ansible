@@ -1,0 +1,27 @@
+- name: Variables demonstration
+  hosts: all
+  become: false
+  gather_facts: false
+
+  vars:
+    my_string: white
+
+  tasks:
+
+    - name: Ensure fact controller learns about my_string
+      set_fact:
+        my_string: lime
+
+    - name: Ensure special vars are included
+      include_vars:
+        file: my_special_vars.yml
+
+    - name: Ensure variable my_string is displayed
+      vars:
+        my_string: yellow
+      debug:
+        msg: The value of the variable my_string is {{ my_string }}
+
+    - name: Another task to display the variable my_string
+      debug:
+        msg: For the other task, the value of the variable my_string is {{ my_string }}
