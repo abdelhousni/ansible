@@ -1,0 +1,10 @@
+[rhel]
+server[a:d]
+
+[webservers]
+servera
+serverc
+
+[dbservers]
+serverb
+serverd

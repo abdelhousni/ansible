@@ -1,0 +1,10 @@
+---
+- hosts: servera
+  become: true
+    
+  collections:
+    - jgoutin.home
+          
+  roles:
+   - common
+   - kodi

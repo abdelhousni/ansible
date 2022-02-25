@@ -1,0 +1,35 @@
+- name: Ensure backups are taken
+  hosts: "{{ backup_host | default('localhost') }}" 
+  become: true
+  gather_facts: true
+
+  vars:
+
+    backup_target: /etc
+    backup_store: /var/tmp/backups/
+    backup_format: xz
+    backup_file: /var/tmp/{{ backup_target | basename }}_{{ ansible_facts['date_time']['iso8601'] }}.tar.{{ backup_format }}
+
+  tasks:
+
+    - name: Ensure {{ backup_store }} exists
+      become: false
+      delegate_to: localhost
+      file:
+        path: "{{ backup_store }}/{{ inventory_hostname }}"
+        owner: student
+        state: directory
+
+    - name: Ensure backup of {{ backup_target }} exists
+      archive:
+        path: "{{ backup_target }}"
+        dest: "{{ backup_file }}" 
+        #force_archive: true
+        #remove: true
+        format: "{{ backup_format }}"
+
+    - name: Ensure backup is stored on controller
+      fetch:
+        src: "{{ backup_file }}" 
+        dest: "{{ backup_store }}/{{ inventory_hostname }}/"
+        flat: true

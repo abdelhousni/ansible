@@ -1,0 +1,38 @@
+- name: Gather common properties of our systems
+  hosts: rhel:!dbservers 
+  gather_facts: true
+  become: false
+
+  vars:
+
+    prop_src: /var/tmp/properties/
+    prop_j2: properties.j2
+    prop_file: /var/tmp/{{ inventory_hostname }}.properties
+
+  tasks:
+
+    - name: Ensure properties directory exists
+      delegate_to: localhost
+      file:
+        path: "{{ prop_src }}"
+        state: directory
+        owner: student
+
+    - name: Ensure software information is gathered
+      package_facts:
+
+    - debug:
+        var: ansible_facts
+
+    - name: Render the properties template
+      template: 
+        src: "{{ prop_j2 }}"
+        dest: "{{ prop_file }}"
+
+    - name: Ensure properties are fetched
+      fetch:
+        src: "{{ prop_file }}"
+        dest: "{{ prop_src }}"
+        flat: true
+
+

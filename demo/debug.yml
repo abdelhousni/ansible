@@ -1,0 +1,19 @@
+- name: Demonstration regarding register and debug
+  hosts: servera
+  gather_facts: true
+  become: true
+
+  vars:
+
+    my_dir: /var/tmp/foo/bar/baz/bongle
+
+  tasks:
+
+    - name: Ensure directory properties are obtained
+      register: properties
+      stat:
+        path: "{{ my_dir }}"
+
+    - name: Assert that directory is in fact a directory
+      assert:
+        that: "'directory' in properties['stat']['mimetype']"
