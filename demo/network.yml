@@ -1,18 +1,18 @@
 - name: Setup network at HPE
-  hosts: servera
+  hosts: rhel
   become: true
 
   vars:
 
     network_connections:
-      - name: static_net
+      - name: datacenter 
         type: ethernet
         interface_name: eth1
         state: up
         ip:
           dhcp4: no
           address:
-          - 192.168.0.1/24
+            - "{{ datacenter_ip }}/24"
 
   roles:
     - rhel-system-roles.network

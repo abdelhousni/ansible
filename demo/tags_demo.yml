@@ -1,0 +1,136 @@
+- name: Manage webservices 
+  hosts: "{{ my_host | mandatory }}"
+  become: true
+  gather_facts: true
+
+  vars:
+
+    my_services:
+      - http
+      - https
+
+    my_content: Hello from {{ inventory_hostname }}
+
+  tasks:
+
+    - name: Ensure needed variables are defined
+      tags:
+        - always
+      assert:
+        that:
+          - (my_package == "httpd") or (my_package == "nginx" )
+        success_msg: |
+
+          The needed variables are set, proceeding
+
+        fail_msg: |
+
+          OH NO! We need to set my_package to either httpd or nginx
+
+    - name: Ensure {{ my_package }} is installed
+      tags:
+        - install
+        - setup
+        - never
+      yum:
+        name: "{{ my_package }}"
+        state: latest 
+
+    - name: Ensure {{ my_package }} is started and enabled 
+      tags:
+        - install
+        - setup
+        - never
+      systemd:
+        name: "{{ my_package }}"
+        enabled: true
+        state: started
+
+    - name: Ensure service is allowed in firewall
+      tags:
+        - install
+        - setup
+        - never
+      loop: "{{ my_services }}"
+      firewalld:
+        service: "{{ item }}"
+        immediate: true
+        permanent: true
+        state: enabled
+
+    - name: Ensure stub content is installed for httpd
+      tags:
+        - install
+        - setup
+        - never
+      when: my_package == "httpd"
+      copy:
+        content: "{{ my_content }}"
+        dest: /var/www/html/index.html
+
+    - name: Ensure stub content is installed for nginx
+      tags:
+        - install
+        - setup
+        - never
+      when: my_package == "nginx"
+      copy:
+        content: "{{ my_content }}"
+        dest: /usr/share/nginx/html/index.html
+        
+    - name: Ensure {{ my_package }} is stopped and disabled 
+      ignore_errors: true
+      tags:
+        - uninstall
+        - remove
+        - teardown
+        - never
+      systemd:
+        name: "{{ my_package }}"
+        enabled: false
+        state: stopped
+
+    - name: Ensure {{ my_package }} is removed
+      tags:
+        - uninstall
+        - remove
+        - teardown
+        - never
+      yum:
+        name: "{{ my_package }}"
+        state: absent 
+
+    - name: Ensure service is removed from firewall
+      tags:
+        - uninstall
+        - remove
+        - teardown
+        - never
+      loop: "{{ my_services }}"
+      firewalld:
+        service: "{{ item }}"
+        immediate: true
+        permanent: true
+        state: disabled
+
+    - name: Ensure stub content is removed from httpd
+      tags:
+        - uninstall
+        - remove
+        - teardown
+        - never
+      when: my_package == "httpd"
+      file:
+        state: absent
+        dest: /var/www/html/index.html
+
+    - name: Ensure stub content is removed from nginx
+      tags:
+        - uninstall
+        - remove
+        - teardown
+        - never
+      when: my_package == "nginx"
+      file:
+        state: absent
+        dest: /usr/share/nginx/html/index.html

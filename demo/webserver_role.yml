@@ -1,0 +1,11 @@
+- name: Manage webserver
+  hosts: servera
+  become: true
+  gather_facts: false
+
+  vars:
+
+    my_package: nginx
+
+  roles:
+    - rgdacosta.webserver

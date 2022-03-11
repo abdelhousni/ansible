@@ -1,0 +1,14 @@
+---
+- name: Setup TLS
+  hosts: rhel
+  become: true
+  gather_facts: true
+
+  vars:
+    certificate_requests:
+      - name: mycert
+        dns: "{{ inventory_hostname }}"
+        ca: self-sign
+
+  roles:
+    - linux-system-roles.certificate

@@ -39,6 +39,7 @@
        src: "{{ local_file }}" 
        #content: "{{ lookup('file', local_file) }}"
        dest: /var/www/html/index.html
+       mode: '0644'
 
    - name: Ensure remote file is read
      register: output

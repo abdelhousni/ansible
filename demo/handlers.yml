@@ -10,7 +10,7 @@
       notify:
         - Ensure server is rebooted
       copy:
-        content: reboot me
+        content: reboot me now
         dest: /var/tmp/reboot
     
     - name: Ensure software is updated
