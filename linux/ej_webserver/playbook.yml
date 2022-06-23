@@ -1,6 +1,8 @@
 ---
 - name: Ensure webservers are installed
-  hosts: webservers
+  hosts: servera
+  become: true 
+
   vars:
     web_pkg: httpd
     web_port: 80
@@ -48,5 +50,5 @@
         url: http://servera.lab.example.com
         return_content: true
       register: web_server_output
-      failed_when: "'Hello world' not in web_server_output.content"
+      #failed_when: "'Hello world' not in web_server_output.content"
 

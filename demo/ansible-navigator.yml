@@ -8,3 +8,6 @@ ansible-navigator:
     pull-policy: missing
 
   mode: stdout
+
+  playbook-artifact:
+    enable: false

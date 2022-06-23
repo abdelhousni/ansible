@@ -783,3 +783,637 @@ ansible.cfg to get rid of this message.
     "state": "directory",
     "uid": 0
 }
+2022-06-21 07:48:04,802 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:48:04,815 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 07:48:05,949 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:48:06,262 p=25 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-21 07:48:06,278 p=25 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:48:07,925 p=25 u=student n=ansible | ok: [serverb]
+2022-06-21 07:48:07,929 p=25 u=student n=ansible | ok: [servera]
+2022-06-21 07:48:07,945 p=25 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-21 07:48:08,931 p=25 u=student n=ansible | fatal: [servera]: FAILED! => {"changed": false, "msg": "This command has to be run under the root user.", "results": []}
+2022-06-21 07:48:08,958 p=25 u=student n=ansible | fatal: [serverb]: FAILED! => {"changed": false, "msg": "This command has to be run under the root user.", "results": []}
+2022-06-21 07:48:08,960 p=25 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-21 07:48:08,960 p=25 u=student n=ansible | servera                    : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:48:08,960 p=25 u=student n=ansible | serverb                    : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:50:23,725 p=19 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:50:23,738 p=19 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 07:50:24,874 p=26 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:50:25,166 p=26 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-21 07:50:25,180 p=26 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:50:26,737 p=26 u=student n=ansible | ok: [serverb]
+2022-06-21 07:50:26,754 p=26 u=student n=ansible | ok: [servera]
+2022-06-21 07:50:26,771 p=26 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-21 07:50:32,854 p=26 u=student n=ansible | changed: [serverb]
+2022-06-21 07:50:32,954 p=26 u=student n=ansible | changed: [servera]
+2022-06-21 07:50:32,967 p=26 u=student n=ansible | TASK [Ensure webserver is enabled] *********************************************
+2022-06-21 07:50:34,239 p=26 u=student n=ansible | changed: [serverb]
+2022-06-21 07:50:34,240 p=26 u=student n=ansible | changed: [servera]
+2022-06-21 07:50:34,252 p=26 u=student n=ansible | TASK [Ensure port open in firewall] ********************************************
+2022-06-21 07:50:35,135 p=26 u=student n=ansible | changed: [serverb]
+2022-06-21 07:50:35,139 p=26 u=student n=ansible | changed: [servera]
+2022-06-21 07:50:35,149 p=26 u=student n=ansible | TASK [Ensure stub content is deployed] *****************************************
+2022-06-21 07:50:36,399 p=26 u=student n=ansible | changed: [serverb]
+2022-06-21 07:50:36,404 p=26 u=student n=ansible | changed: [servera]
+2022-06-21 07:50:36,423 p=26 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-21 07:50:36,429 p=26 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:50:37,001 p=26 u=student n=ansible | ok: [localhost]
+2022-06-21 07:50:37,016 p=26 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-21 07:50:37,685 p=26 u=student n=ansible | fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello devops\nI am a web server running on servera\"\n", "content_length": "52", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Tue, 21 Jun 2022 07:50:37 GMT", "elapsed": 0, "etag": "\"34-5e1f079d2a82b\"", "failed_when_result": true, "last_modified": "Tue, 21 Jun 2022 07:50:35 GMT", "msg": "OK (52 bytes)", "redirected": false, "server": "Apache/2.4.37 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2022-06-21 07:50:37,687 p=26 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-21 07:50:37,687 p=26 u=student n=ansible | localhost                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:50:37,687 p=26 u=student n=ansible | servera                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:50:37,687 p=26 u=student n=ansible | serverb                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:51:11,486 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:51:11,497 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 07:51:12,654 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:51:12,968 p=25 u=student n=ansible | [WARNING]: Could not match supplied host pattern, ignoring:
+servera.lab.example.com
+
+2022-06-21 07:51:12,969 p=25 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-21 07:51:12,970 p=25 u=student n=ansible | skipping: no hosts matched
+2022-06-21 07:51:12,975 p=25 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-21 07:51:12,987 p=25 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:51:13,879 p=25 u=student n=ansible | ok: [localhost]
+2022-06-21 07:51:13,893 p=25 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-21 07:51:14,523 p=25 u=student n=ansible | fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello devops\nI am a web server running on servera\"\n", "content_length": "52", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Tue, 21 Jun 2022 07:51:14 GMT", "elapsed": 0, "etag": "\"34-5e1f079d2a82b\"", "failed_when_result": true, "last_modified": "Tue, 21 Jun 2022 07:50:35 GMT", "msg": "OK (52 bytes)", "redirected": false, "server": "Apache/2.4.37 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2022-06-21 07:51:14,525 p=25 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-21 07:51:14,525 p=25 u=student n=ansible | localhost                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:51:57,523 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:51:57,535 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 07:51:58,734 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:51:59,059 p=25 u=student n=ansible | [WARNING]: Could not match supplied host pattern, ignoring:
+servera.lab.example.com
+
+2022-06-21 07:51:59,060 p=25 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-21 07:51:59,060 p=25 u=student n=ansible | skipping: no hosts matched
+2022-06-21 07:51:59,065 p=25 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-21 07:51:59,080 p=25 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:51:59,991 p=25 u=student n=ansible | ok: [localhost]
+2022-06-21 07:52:00,009 p=25 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-21 07:52:00,641 p=25 u=student n=ansible | ok: [localhost]
+2022-06-21 07:52:00,658 p=25 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-21 07:52:00,658 p=25 u=student n=ansible | localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:52:52,224 p=19 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:52:52,236 p=19 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 07:52:53,485 p=26 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:52:53,788 p=26 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-21 07:52:53,804 p=26 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:52:55,351 p=26 u=student n=ansible | ok: [servera]
+2022-06-21 07:52:55,370 p=26 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-21 07:52:57,026 p=26 u=student n=ansible | ok: [servera]
+2022-06-21 07:52:57,038 p=26 u=student n=ansible | TASK [Ensure webserver is enabled] *********************************************
+2022-06-21 07:52:57,904 p=26 u=student n=ansible | ok: [servera]
+2022-06-21 07:52:57,913 p=26 u=student n=ansible | TASK [Ensure port open in firewall] ********************************************
+2022-06-21 07:52:58,720 p=26 u=student n=ansible | ok: [servera]
+2022-06-21 07:52:58,731 p=26 u=student n=ansible | TASK [Ensure stub content is deployed] *****************************************
+2022-06-21 07:52:59,964 p=26 u=student n=ansible | ok: [servera]
+2022-06-21 07:52:59,984 p=26 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-21 07:52:59,991 p=26 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:53:00,562 p=26 u=student n=ansible | ok: [localhost]
+2022-06-21 07:53:00,578 p=26 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-21 07:53:01,180 p=26 u=student n=ansible | ok: [localhost]
+2022-06-21 07:53:01,195 p=26 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-21 07:53:01,195 p=26 u=student n=ansible | localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:53:01,195 p=26 u=student n=ansible | servera                    : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:55:12,775 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:55:12,786 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 07:55:13,932 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 07:55:14,228 p=25 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-21 07:55:14,243 p=25 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:55:15,673 p=25 u=student n=ansible | ok: [servera]
+2022-06-21 07:55:15,691 p=25 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-21 07:55:17,316 p=25 u=student n=ansible | ok: [servera]
+2022-06-21 07:55:17,325 p=25 u=student n=ansible | TASK [Ensure webserver is enabled] *********************************************
+2022-06-21 07:55:18,192 p=25 u=student n=ansible | ok: [servera]
+2022-06-21 07:55:18,202 p=25 u=student n=ansible | TASK [Ensure port open in firewall] ********************************************
+2022-06-21 07:55:18,973 p=25 u=student n=ansible | ok: [servera]
+2022-06-21 07:55:18,984 p=25 u=student n=ansible | TASK [Ensure stub content is deployed] *****************************************
+2022-06-21 07:55:20,054 p=25 u=student n=ansible | ok: [servera]
+2022-06-21 07:55:20,075 p=25 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-21 07:55:20,081 p=25 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-21 07:55:20,661 p=25 u=student n=ansible | ok: [localhost]
+2022-06-21 07:55:20,677 p=25 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-21 07:55:21,324 p=25 u=student n=ansible | ok: [localhost]
+2022-06-21 07:55:21,342 p=25 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-21 07:55:21,342 p=25 u=student n=ansible | localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-21 07:55:21,342 p=25 u=student n=ansible | servera                    : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-21 08:01:01,088 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 08:01:01,100 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 08:01:02,480 p=28 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:01,902 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:01,918 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 09:12:03,194 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names to new standard, use 
+callbacks_enabled instead. This feature will be removed from ansible-core in version 2.15. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,214 p=25 u=student n=ansible | [WARNING]: Collection splunk.es does not support Ansible version 2.11.6
+
+2022-06-21 09:12:03,280 p=25 u=student n=ansible | [WARNING]: Error parsing collection metadata requires_ansible value from collection ansible.network: Invalid
+specifier: '*'
+
+2022-06-21 09:12:03,284 p=25 u=student n=ansible | [WARNING]: Error parsing collection metadata requires_ansible value from collection ansible.security: Invalid
+specifier: '*'
+
+2022-06-21 09:12:03,301 p=25 u=student n=ansible | [WARNING]: Collection ibm.qradar does not support Ansible version 2.11.6
+
+2022-06-21 09:12:03,304 p=25 u=student n=ansible | [WARNING]: Collection frr.frr does not support Ansible version 2.11.6
+
+2022-06-21 09:12:03,312 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.aws_az_facts has been deprecated. aws_az_facts was renamed in Ansible 2.9 to 
+aws_az_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,312 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.aws_caller_facts has been deprecated. aws_caller_facts was renamed in Ansible 
+2.9 to aws_caller_info. Please update your tasks. This feature will be removed from amazon.aws in a release 
+after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,313 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.cloudformation_facts has been deprecated. cloudformation_facts has been 
+deprecated and will be removed. The cloudformation_info module returns the same information, but not as 
+ansible_facts.  See the module documentation for more information. This feature will be removed from amazon.aws 
+in a release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:12:03,314 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_ami_facts has been deprecated. ec2_ami_facts was renamed in Ansible 2.9 to
+ ec2_ami_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,314 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_eni_facts has been deprecated. ec2_eni_facts was renamed in Ansible 2.9 to
+ ec2_eni_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,315 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_group_facts has been deprecated. ec2_group_facts was renamed in Ansible 
+2.9 to ec2_group_info. Please update your tasks. This feature will be removed from amazon.aws in a release after
+ 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,315 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_snapshot_facts has been deprecated. ec2_snapshot_facts was renamed in 
+Ansible 2.9 to ec2_snapshot_info. Please update your tasks. This feature will be removed from amazon.aws in a 
+release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:12:03,316 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vol_facts has been deprecated. ec2_vol_facts was renamed in Ansible 2.9 to
+ ec2_vol_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,316 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vpc_dhcp_option_facts has been deprecated. ec2_vpc_dhcp_option_facts was 
+renamed in Ansible 2.9 to ec2_vpc_dhcp_option_info.  Please update your tasks. This feature will be removed from
+ amazon.aws in a release after 2021-12-01. Deprecation warnings can be disabled by setting 
+deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,317 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vpc_net_facts has been deprecated. ec2_vpc_net_facts was renamed in 
+Ansible 2.9 to ec2_vpc_net_info. Please update your tasks. This feature will be removed from amazon.aws in a 
+release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:12:03,317 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vpc_subnet_facts has been deprecated. ec2_vpc_subnet_facts was renamed in 
+Ansible 2.9 to ec2_vpc_subnet_info.  Please update your tasks. This feature will be removed from amazon.aws in a
+ release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:12:03,334 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_banner has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,334 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_interface has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,334 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_l2_interface has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,335 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_l3_interface has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,335 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,335 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_lldp has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,335 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_lldp_interface has been deprecated. See the plugin documentation 
+for more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation
+ warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,336 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_logging has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,336 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_static_route has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,336 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_system has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,337 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_user has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,337 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_vlan has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,337 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_vrf has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,344 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,344 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_l2_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,345 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,345 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,346 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,347 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_vlan has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,348 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.asa.asa_acl has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.asa in a release after 2022-06-01. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,348 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.asa.asa_og has been deprecated. See the plugin documentation for more details. This
+ feature will be removed from cisco.asa in a release after 2022-06-01. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,350 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,350 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_l2_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,350 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,352 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,352 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_vlan has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,354 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.iosxr.iosxr_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.iosxr in a release after 2022-06-01. Deprecation warnings can 
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,356 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_acl has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,356 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_acl_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,357 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2023-01-27. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,357 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp_af has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2023-02-24. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,358 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp_neighbor has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2023-01-27. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,358 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp_neighbor_af has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from cisco.nxos in a release after 2023-02-24. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,360 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,360 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_interface_ospf has been deprecated. See the plugin documentation for more
+ details. This feature will be removed from cisco.nxos in a release after 2022-10-26. Deprecation warnings can 
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,361 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_l2_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,361 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,362 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,362 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_lldp has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,363 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_ospf has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,363 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_ospf_vrf has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-10-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,364 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_smu has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-10-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,365 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,365 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_vlan has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,370 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_interface has been deprecated. See the plugin documentation 
+for more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. 
+Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,371 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_l2_interface has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,371 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_l3_interface has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,372 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_linkagg has been deprecated. See the plugin documentation for
+ more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. 
+Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,372 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_lldp has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. Deprecation
+ warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,372 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_lldp_interface has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,373 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_static_route has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,374 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_vlan has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. Deprecation
+ warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,404 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,405 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,405 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,405 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_lldp has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,406 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_lldp_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:12:03,406 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:02,353 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:02,366 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 09:13:03,474 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names to new standard, use 
+callbacks_enabled instead. This feature will be removed from ansible-core in version 2.15. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,493 p=25 u=student n=ansible | [WARNING]: Collection splunk.es does not support Ansible version 2.11.6
+
+2022-06-21 09:13:03,555 p=25 u=student n=ansible | [WARNING]: Error parsing collection metadata requires_ansible value from collection ansible.network: Invalid
+specifier: '*'
+
+2022-06-21 09:13:03,559 p=25 u=student n=ansible | [WARNING]: Error parsing collection metadata requires_ansible value from collection ansible.security: Invalid
+specifier: '*'
+
+2022-06-21 09:13:03,574 p=25 u=student n=ansible | [WARNING]: Collection ibm.qradar does not support Ansible version 2.11.6
+
+2022-06-21 09:13:03,575 p=25 u=student n=ansible | [WARNING]: Collection frr.frr does not support Ansible version 2.11.6
+
+2022-06-21 09:13:03,583 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.aws_az_facts has been deprecated. aws_az_facts was renamed in Ansible 2.9 to 
+aws_az_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,583 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.aws_caller_facts has been deprecated. aws_caller_facts was renamed in Ansible 
+2.9 to aws_caller_info. Please update your tasks. This feature will be removed from amazon.aws in a release 
+after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,584 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.cloudformation_facts has been deprecated. cloudformation_facts has been 
+deprecated and will be removed. The cloudformation_info module returns the same information, but not as 
+ansible_facts.  See the module documentation for more information. This feature will be removed from amazon.aws 
+in a release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:13:03,584 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_ami_facts has been deprecated. ec2_ami_facts was renamed in Ansible 2.9 to
+ ec2_ami_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,585 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_eni_facts has been deprecated. ec2_eni_facts was renamed in Ansible 2.9 to
+ ec2_eni_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,585 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_group_facts has been deprecated. ec2_group_facts was renamed in Ansible 
+2.9 to ec2_group_info. Please update your tasks. This feature will be removed from amazon.aws in a release after
+ 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,586 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_snapshot_facts has been deprecated. ec2_snapshot_facts was renamed in 
+Ansible 2.9 to ec2_snapshot_info. Please update your tasks. This feature will be removed from amazon.aws in a 
+release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:13:03,586 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vol_facts has been deprecated. ec2_vol_facts was renamed in Ansible 2.9 to
+ ec2_vol_info. Please update your tasks. This feature will be removed from amazon.aws in a release after 
+2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,587 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vpc_dhcp_option_facts has been deprecated. ec2_vpc_dhcp_option_facts was 
+renamed in Ansible 2.9 to ec2_vpc_dhcp_option_info.  Please update your tasks. This feature will be removed from
+ amazon.aws in a release after 2021-12-01. Deprecation warnings can be disabled by setting 
+deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,587 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vpc_net_facts has been deprecated. ec2_vpc_net_facts was renamed in 
+Ansible 2.9 to ec2_vpc_net_info. Please update your tasks. This feature will be removed from amazon.aws in a 
+release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:13:03,588 p=25 u=student n=ansible | [DEPRECATION WARNING]: amazon.aws.ec2_vpc_subnet_facts has been deprecated. ec2_vpc_subnet_facts was renamed in 
+Ansible 2.9 to ec2_vpc_subnet_info.  Please update your tasks. This feature will be removed from amazon.aws in a
+ release after 2021-12-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2022-06-21 09:13:03,595 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_banner has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,596 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_interface has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,596 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_l2_interface has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,596 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_l3_interface has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,597 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,597 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_lldp has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,597 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_lldp_interface has been deprecated. See the plugin documentation 
+for more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation
+ warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,597 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_logging has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,598 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_static_route has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,598 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_system has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,598 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_user has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,598 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_vlan has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,599 p=25 u=student n=ansible | [DEPRECATION WARNING]: ansible.netcommon.net_vrf has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from ansible.netcommon in a release after 2022-06-01. Deprecation warnings
+ can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,605 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,606 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_l2_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,606 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,606 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,607 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,608 p=25 u=student n=ansible | [DEPRECATION WARNING]: arista.eos.eos_vlan has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from arista.eos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,609 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.asa.asa_acl has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.asa in a release after 2022-06-01. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,609 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.asa.asa_og has been deprecated. See the plugin documentation for more details. This
+ feature will be removed from cisco.asa in a release after 2022-06-01. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,610 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,611 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_l2_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,611 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,612 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,613 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.ios.ios_vlan has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.ios in a release after 2022-06-01. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,614 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.iosxr.iosxr_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.iosxr in a release after 2022-06-01. Deprecation warnings can 
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,616 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_acl has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,616 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_acl_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,617 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2023-01-27. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,617 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp_af has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2023-02-24. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,617 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp_neighbor has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2023-01-27. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,618 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_bgp_neighbor_af has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from cisco.nxos in a release after 2023-02-24. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,619 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,619 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_interface_ospf has been deprecated. See the plugin documentation for more
+ details. This feature will be removed from cisco.nxos in a release after 2022-10-26. Deprecation warnings can 
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,620 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_l2_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,620 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,621 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,621 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_lldp has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,622 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_ospf has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,622 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_ospf_vrf has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-10-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,623 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_smu has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-10-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,624 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be
+ disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,624 p=25 u=student n=ansible | [DEPRECATION WARNING]: cisco.nxos.nxos_vlan has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from cisco.nxos in a release after 2022-06-01. Deprecation warnings can be disabled
+ by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,630 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_interface has been deprecated. See the plugin documentation 
+for more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. 
+Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,630 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_l2_interface has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,630 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_l3_interface has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,631 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_linkagg has been deprecated. See the plugin documentation for
+ more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. 
+Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,631 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_lldp has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. Deprecation
+ warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,632 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_lldp_interface has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,632 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_static_route has been deprecated. See the plugin 
+documentation for more details. This feature will be removed from junipernetworks.junos in a release after 
+2022-06-01. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,633 p=25 u=student n=ansible | [DEPRECATION WARNING]: junipernetworks.junos.junos_vlan has been deprecated. See the plugin documentation for 
+more details. This feature will be removed from junipernetworks.junos in a release after 2022-06-01. Deprecation
+ warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,663 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,664 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_l3_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,664 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_linkagg has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,664 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_lldp has been deprecated. See the plugin documentation for more details. 
+This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,665 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_lldp_interface has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:13:03,665 p=25 u=student n=ansible | [DEPRECATION WARNING]: vyos.vyos.vyos_static_route has been deprecated. See the plugin documentation for more 
+details. This feature will be removed from vyos.vyos in a release after 2022-06-01. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:15:29,197 p=18 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names 
+to new standard, use callbacks_enabled instead. This feature will be removed 
+from ansible-core in version 2.15. Deprecation warnings can be disabled by 
+setting deprecation_warnings=False in ansible.cfg.
+2022-06-21 09:15:29,209 p=18 u=student n=ansible | {"/usr/share/ansible/collections/ansible_collections": {"arista.eos": {"version": "2.2.0"}, "splunk.es": {"version": "1.0.2"}, "cloud.common": {"version": "2.0.3"}, "vmware.vmware_rest": {"version": "2.0.0"}, "cisco.iosxr": {"version": "2.3.0"}, "cisco.nxos": {"version": "2.4.0"}, "cisco.asa": {"version": "2.0.2"}, "cisco.ios": {"version": "2.3.0"}, "servicenow.itsm": {"version": "1.1.0"}, "redhat.rhv": {"version": "1.4.4"}, "redhat.rhel_system_roles": {"version": "1.0.1"}, "redhat.insights": {"version": "1.0.5"}, "redhat.openshift": {"version": "2.0.1"}, "redhat.satellite": {"version": "2.0.1"}, "trendmicro.deepsec": {"version": "1.1.0"}, "junipernetworks.junos": {"version": "2.2.0"}, "openvswitch.openvswitch": {"version": "2.0.0"}, "ansible.windows": {"version": "1.5.0"}, "ansible.utils": {"version": "2.3.0"}, "ansible.network": {"version": "1.0.1"}, "ansible.netcommon": {"version": "2.2.0"}, "ansible.posix": {"version": "1.2.0"}, "ansible.security": {"version": "1.0.0"}, "ansible.controller": {"version": "4.0.0"}, "amazon.aws": {"version": "1.5.1"}, "kubernetes.core": {"version": "2.1.1"}, "ibm.qradar": {"version": "1.0.3"}, "frr.frr": {"version": "1.0.3"}, "vyos.vyos": {"version": "2.3.1"}}}
+2022-06-21 09:15:30,289 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names to new standard, use 
+callbacks_enabled instead. This feature will be removed from ansible-core in version 2.15. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.

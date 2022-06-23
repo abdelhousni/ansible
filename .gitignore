@@ -1,1 +1,3 @@
 *.retry
+*artifact*.json
+ansible-navigator.log

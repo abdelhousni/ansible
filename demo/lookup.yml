@@ -1,0 +1,36 @@
+- name: Demonstration of various lookup plugins
+  become: true
+  gather_facts: true
+  hosts: servera
+
+  tasks:
+
+    - name: Ensure the variable is displayed on {{ inventory_hostname }}
+      ansible.builtin.debug:
+        msg: The value of the variable COUNTRY is {{ lookup('env', 'COUNTRY') }}
+
+    - name: Ensure the contents of /etc/fstab are displayed
+      ansible.builtin.debug:
+        msg: |
+
+          "{{ lookup('file', '/etc/fstab' ) }}"
+
+    - name: Display a variable
+      ansible.builtin.debug:
+        msg: The value of the variable name is {{ name | default('Ricardo da Costa') }}. If you see 'Ricardo da Costa' then the user did not explicitly set a value.
+
+    - name: Display 2 files
+      ansible.builtin.debug:
+        msg: "{{ query('file', '/etc/fstab', '/etc/issue' ) }}"
+
+
+    - name: Display who is logged in
+      ansible.builtin.debug:
+        msg: "{{ query('lines', 'w') }}"
+
+
+    - name: Retrieve data from webserver
+      ansible.builtin.debug:
+        msg: |
+
+          "{{ lookup('url', 'http://servera') }}"
