@@ -17,7 +17,7 @@
 
     - name: Display a variable
       ansible.builtin.debug:
-        msg: The value of the variable name is {{ name | default('Ricardo da Costa') }}. If you see 'Ricardo da Costa' then the user did not explicitly set a value.
+        msg: The value of the variable my_name is {{ my_name | default('Ricardo da Costa') }}. If you see 'Ricardo da Costa' then the user did not explicitly set a value.
 
     - name: Display 2 files
       ansible.builtin.debug:
@@ -26,7 +26,7 @@
 
     - name: Display who is logged in
       ansible.builtin.debug:
-        msg: "{{ query('lines', 'w') }}"
+        msg: "{{ lookup('pipe', 'w') }}"
 
 
     - name: Retrieve data from webserver

@@ -1,5 +1,15 @@
 - name: Gather common properties of our systems
-  hosts: rhel:!dbservers 
+  hosts: 
+    - rhel:&dbservers 
+    - servera
+    - serverb
+    - rhel:!webservers
+  serial:
+    - 1
+    - 2
+    - 50%
+    - 100%
+  max_fail_percentage: 30
   gather_facts: true
   become: false
 
@@ -20,9 +30,6 @@
 
     - name: Ensure software information is gathered
       package_facts:
-
-    - debug:
-        var: ansible_facts
 
     - name: Render the properties template
       template: 

@@ -18,6 +18,6 @@ Here is the big list of software installed on the system:
 
 {% for package in ansible_facts['packages'] | dict2items %}
 ==================================================================
-{{ package['value'] | json_query('[*].name') | regex_replace('\'') | regex_replace('\[') | regex_replace('\]') }} slash or colon or anything {{ package['value'] | json_query('[*].version') | regex_replace('\'') | regex_replace('\[') | regex_replace('\]') }}
+{{ package['value'] | json_query('[*].name') | regex_replace('\'') | regex_replace('\[') | regex_replace('\]') }} : {{ package['value'] | json_query('[*].version') | regex_replace('\'') | regex_replace('\[') | regex_replace('\]') }}
 {% endfor %}
 

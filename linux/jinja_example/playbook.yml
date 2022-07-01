@@ -1,0 +1,10 @@
+- name: Play to demonstrate the basics of jinja2
+  hosts: rhel8
+  become: false
+
+  tasks:
+
+    - name: Ensure j2 is rendered and installed
+      template:
+        src: foo.j2
+        dest: /var/tmp/foo

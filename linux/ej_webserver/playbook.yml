@@ -35,7 +35,7 @@
     - name: Ensure stub content is deployed
       copy:
         content: >
-          "Hello {{ web_user }}
+          "Hello world
           
           I am a web server running on {{ inventory_hostname }}"
         dest: /var/www/html/index.html
@@ -46,9 +46,8 @@
   tasks:
 
     - name: Ensure content is received
+      register: output
+      failed_when: "'Hello world' not in output['content']"
       uri:
         url: http://servera.lab.example.com
         return_content: true
-      register: web_server_output
-      #failed_when: "'Hello world' not in web_server_output.content"
-

@@ -1417,3 +1417,190 @@ setting deprecation_warnings=False in ansible.cfg.
 2022-06-21 09:15:30,289 p=25 u=student n=ansible | [DEPRECATION WARNING]: [defaults]callback_whitelist option, normalizing names to new standard, use 
 callbacks_enabled instead. This feature will be removed from ansible-core in version 2.15. Deprecation warnings 
 can be disabled by setting deprecation_warnings=False in ansible.cfg.
+2022-06-27 14:57:54,099 p=9552 u=student n=ansible | ERROR! conflicting action statements: hosts, tasks
+
+The error appears to be in '/home/student/ansible/linux/ej_webserver/playbook.yml': line 13, column 7, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+    - name: Test web server deployment
+      ^ here
+
+2022-06-27 14:58:55,169 p=9566 u=student n=ansible | playbook: playbook.yml
+2022-06-27 15:01:10,738 p=9613 u=student n=ansible | PLAY [Ensure webservers are installed] ******************************************************************************************************************
+2022-06-27 15:01:10,750 p=9613 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:01:12,741 p=9613 u=student n=ansible | ok: [servera]
+2022-06-27 15:01:12,766 p=9613 u=student n=ansible | TASK [Ensure httpd is installed] ************************************************************************************************************************
+2022-06-27 15:01:17,641 p=9613 u=student n=ansible | changed: [servera]
+2022-06-27 15:01:17,649 p=9613 u=student n=ansible | TASK [Ensure webserver is enabled] **********************************************************************************************************************
+2022-06-27 15:01:18,759 p=9613 u=student n=ansible | changed: [servera]
+2022-06-27 15:01:18,767 p=9613 u=student n=ansible | TASK [Ensure port open in firewall] *********************************************************************************************************************
+2022-06-27 15:01:19,472 p=9613 u=student n=ansible | changed: [servera]
+2022-06-27 15:01:19,481 p=9613 u=student n=ansible | TASK [Ensure stub content is deployed] ******************************************************************************************************************
+2022-06-27 15:01:20,402 p=9613 u=student n=ansible | changed: [servera]
+2022-06-27 15:01:20,406 p=9613 u=student n=ansible | PLAY [Test web server deployment] ***********************************************************************************************************************
+2022-06-27 15:01:20,410 p=9613 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:01:21,019 p=9613 u=student n=ansible | ok: [localhost]
+2022-06-27 15:01:21,027 p=9613 u=student n=ansible | TASK [Ensure content is received] ***********************************************************************************************************************
+2022-06-27 15:01:21,512 p=9613 u=student n=ansible | ok: [localhost]
+2022-06-27 15:01:21,514 p=9613 u=student n=ansible | PLAY RECAP **********************************************************************************************************************************************
+2022-06-27 15:01:21,514 p=9613 u=student n=ansible | localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-27 15:01:21,514 p=9613 u=student n=ansible | servera                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-27 15:03:01,298 p=9767 u=student n=ansible | PLAY [Ensure webservers are installed] ******************************************************************************************************************
+2022-06-27 15:03:01,308 p=9767 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:03:03,284 p=9767 u=student n=ansible | ok: [servera]
+2022-06-27 15:03:03,310 p=9767 u=student n=ansible | TASK [Ensure httpd is installed] ************************************************************************************************************************
+2022-06-27 15:03:04,951 p=9767 u=student n=ansible | ok: [servera]
+2022-06-27 15:03:04,960 p=9767 u=student n=ansible | TASK [Ensure webserver is enabled] **********************************************************************************************************************
+2022-06-27 15:03:05,660 p=9767 u=student n=ansible | ok: [servera]
+2022-06-27 15:03:05,668 p=9767 u=student n=ansible | TASK [Ensure port open in firewall] *********************************************************************************************************************
+2022-06-27 15:03:06,321 p=9767 u=student n=ansible | ok: [servera]
+2022-06-27 15:03:06,330 p=9767 u=student n=ansible | TASK [Ensure stub content is deployed] ******************************************************************************************************************
+2022-06-27 15:03:07,269 p=9767 u=student n=ansible | changed: [servera]
+2022-06-27 15:03:07,272 p=9767 u=student n=ansible | PLAY [Test web server deployment] ***********************************************************************************************************************
+2022-06-27 15:03:07,277 p=9767 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:03:07,849 p=9767 u=student n=ansible | ok: [localhost]
+2022-06-27 15:03:07,858 p=9767 u=student n=ansible | TASK [Ensure content is received] ***********************************************************************************************************************
+2022-06-27 15:03:08,341 p=9767 u=student n=ansible | fatal: [localhost]: FAILED! => {"msg": "The conditional check ''Hello world' not in content.output' failed. The error was: error while evaluating conditional ('Hello world' not in content.output): 'dict object' has no attribute 'output'"}
+2022-06-27 15:03:08,342 p=9767 u=student n=ansible | PLAY RECAP **********************************************************************************************************************************************
+2022-06-27 15:03:08,342 p=9767 u=student n=ansible | localhost                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-06-27 15:03:08,342 p=9767 u=student n=ansible | servera                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-27 15:05:15,286 p=9934 u=student n=ansible | PLAY [Ensure webservers are installed] ******************************************************************************************************************
+2022-06-27 15:05:15,296 p=9934 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:05:17,217 p=9934 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:17,241 p=9934 u=student n=ansible | TASK [Ensure httpd is installed] ************************************************************************************************************************
+2022-06-27 15:05:18,825 p=9934 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:18,833 p=9934 u=student n=ansible | TASK [Ensure webserver is enabled] **********************************************************************************************************************
+2022-06-27 15:05:19,559 p=9934 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:19,567 p=9934 u=student n=ansible | TASK [Ensure port open in firewall] *********************************************************************************************************************
+2022-06-27 15:05:20,208 p=9934 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:20,216 p=9934 u=student n=ansible | TASK [Ensure stub content is deployed] ******************************************************************************************************************
+2022-06-27 15:05:21,101 p=9934 u=student n=ansible | changed: [servera]
+2022-06-27 15:05:21,104 p=9934 u=student n=ansible | PLAY [Test web server deployment] ***********************************************************************************************************************
+2022-06-27 15:05:21,107 p=9934 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:05:22,628 p=9934 u=student n=ansible | ok: [localhost]
+2022-06-27 15:05:22,635 p=9934 u=student n=ansible | TASK [Ensure content is received] ***********************************************************************************************************************
+2022-06-27 15:05:23,118 p=9934 u=student n=ansible | ok: [localhost]
+2022-06-27 15:05:23,119 p=9934 u=student n=ansible | PLAY RECAP **********************************************************************************************************************************************
+2022-06-27 15:05:23,119 p=9934 u=student n=ansible | localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-27 15:05:23,120 p=9934 u=student n=ansible | servera                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-27 15:05:45,976 p=10078 u=student n=ansible | PLAY [Ensure webservers are installed] ******************************************************************************************************************
+2022-06-27 15:05:45,986 p=10078 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:05:47,089 p=10078 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:47,112 p=10078 u=student n=ansible | TASK [Ensure httpd is installed] ************************************************************************************************************************
+2022-06-27 15:05:48,763 p=10078 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:48,771 p=10078 u=student n=ansible | TASK [Ensure webserver is enabled] **********************************************************************************************************************
+2022-06-27 15:05:49,459 p=10078 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:49,467 p=10078 u=student n=ansible | TASK [Ensure port open in firewall] *********************************************************************************************************************
+2022-06-27 15:05:50,118 p=10078 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:50,127 p=10078 u=student n=ansible | TASK [Ensure stub content is deployed] ******************************************************************************************************************
+2022-06-27 15:05:50,944 p=10078 u=student n=ansible | ok: [servera]
+2022-06-27 15:05:50,947 p=10078 u=student n=ansible | PLAY [Test web server deployment] ***********************************************************************************************************************
+2022-06-27 15:05:50,951 p=10078 u=student n=ansible | TASK [Gathering Facts] **********************************************************************************************************************************
+2022-06-27 15:05:51,526 p=10078 u=student n=ansible | ok: [localhost]
+2022-06-27 15:05:51,535 p=10078 u=student n=ansible | TASK [Ensure content is received] ***********************************************************************************************************************
+2022-06-27 15:05:52,022 p=10078 u=student n=ansible | fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello world\nI am a web server running on servera\"\n", "content_length": "51", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Mon, 27 Jun 2022 19:05:51 GMT", "elapsed": 0, "etag": "\"33-5e27299f4f2ce\"", "failed_when_result": true, "last_modified": "Mon, 27 Jun 2022 19:05:20 GMT", "msg": "OK (51 bytes)", "redirected": false, "server": "Apache/2.4.37 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2022-06-27 15:05:52,024 p=10078 u=student n=ansible | PLAY RECAP **********************************************************************************************************************************************
+2022-06-27 15:05:52,024 p=10078 u=student n=ansible | localhost                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-06-27 15:05:52,024 p=10078 u=student n=ansible | servera                    : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:04:03,900 p=22222 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-28 11:04:03,910 p=22222 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:04:05,865 p=22222 u=student n=ansible | ok: [servera]
+2022-06-28 11:04:05,890 p=22222 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-28 11:04:07,488 p=22222 u=student n=ansible | ok: [servera]
+2022-06-28 11:04:07,495 p=22222 u=student n=ansible | TASK [Ensure webserver is enabled] *********************************************
+2022-06-28 11:04:08,163 p=22222 u=student n=ansible | ok: [servera]
+2022-06-28 11:04:08,170 p=22222 u=student n=ansible | TASK [Ensure port open in firewall] ********************************************
+2022-06-28 11:04:08,791 p=22222 u=student n=ansible | ok: [servera]
+2022-06-28 11:04:08,799 p=22222 u=student n=ansible | TASK [Ensure stub content is deployed] *****************************************
+2022-06-28 11:04:09,618 p=22222 u=student n=ansible | ok: [servera]
+2022-06-28 11:04:09,622 p=22222 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-28 11:04:09,626 p=22222 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:04:10,151 p=22222 u=student n=ansible | ok: [localhost]
+2022-06-28 11:04:10,159 p=22222 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-28 11:04:10,623 p=22222 u=student n=ansible | ok: [localhost]
+2022-06-28 11:04:10,624 p=22222 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-28 11:04:10,624 p=22222 u=student n=ansible | localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:04:10,624 p=22222 u=student n=ansible | servera                    : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:05:34,543 p=22363 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-28 11:05:34,553 p=22363 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:05:36,489 p=22363 u=student n=ansible | ok: [servera]
+2022-06-28 11:05:36,513 p=22363 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-28 11:05:38,257 p=22363 u=student n=ansible | ok: [servera]
+2022-06-28 11:05:38,265 p=22363 u=student n=ansible | TASK [Ensure webserver is enabled] *********************************************
+2022-06-28 11:05:38,976 p=22363 u=student n=ansible | ok: [servera]
+2022-06-28 11:05:38,983 p=22363 u=student n=ansible | TASK [Ensure port open in firewall] ********************************************
+2022-06-28 11:05:39,590 p=22363 u=student n=ansible | ok: [servera]
+2022-06-28 11:05:39,597 p=22363 u=student n=ansible | TASK [Ensure stub content is deployed] *****************************************
+2022-06-28 11:05:40,423 p=22363 u=student n=ansible | ok: [servera]
+2022-06-28 11:05:40,426 p=22363 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-28 11:05:40,430 p=22363 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:05:40,942 p=22363 u=student n=ansible | ok: [localhost]
+2022-06-28 11:05:40,950 p=22363 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-28 11:05:41,406 p=22363 u=student n=ansible | ok: [localhost]
+2022-06-28 11:05:41,413 p=22363 u=student n=ansible | TASK [Temp debug task to show contents of output dictionary] *******************
+2022-06-28 11:05:41,432 p=22363 u=student n=ansible | ok: [localhost] => {
+    "output": {
+        "accept_ranges": "bytes",
+        "changed": false,
+        "connection": "close",
+        "content": "\"Hello world\nI am a web server running on servera\"\n",
+        "content_length": "51",
+        "content_type": "text/html; charset=UTF-8",
+        "cookies": {},
+        "cookies_string": "",
+        "date": "Tue, 28 Jun 2022 15:05:41 GMT",
+        "elapsed": 0,
+        "etag": "\"33-5e27299f4f2ce\"",
+        "failed": false,
+        "last_modified": "Mon, 27 Jun 2022 19:05:20 GMT",
+        "msg": "OK (51 bytes)",
+        "redirected": false,
+        "server": "Apache/2.4.37 (Red Hat Enterprise Linux)",
+        "status": 200,
+        "url": "http://servera.lab.example.com"
+    }
+}
+2022-06-28 11:05:41,433 p=22363 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-28 11:05:41,434 p=22363 u=student n=ansible | localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:05:41,434 p=22363 u=student n=ansible | servera                    : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:07:32,260 p=22513 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-28 11:07:32,270 p=22513 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:07:34,221 p=22513 u=student n=ansible | ok: [servera]
+2022-06-28 11:07:34,244 p=22513 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-28 11:07:35,927 p=22513 u=student n=ansible | ok: [servera]
+2022-06-28 11:07:35,935 p=22513 u=student n=ansible | TASK [Ensure webserver is enabled] *********************************************
+2022-06-28 11:07:36,590 p=22513 u=student n=ansible | ok: [servera]
+2022-06-28 11:07:36,598 p=22513 u=student n=ansible | TASK [Ensure port open in firewall] ********************************************
+2022-06-28 11:07:37,225 p=22513 u=student n=ansible | ok: [servera]
+2022-06-28 11:07:37,233 p=22513 u=student n=ansible | TASK [Ensure stub content is deployed] *****************************************
+2022-06-28 11:07:38,053 p=22513 u=student n=ansible | ok: [servera]
+2022-06-28 11:07:38,056 p=22513 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-28 11:07:38,060 p=22513 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:07:38,594 p=22513 u=student n=ansible | ok: [localhost]
+2022-06-28 11:07:38,601 p=22513 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-28 11:07:39,068 p=22513 u=student n=ansible | fatal: [localhost]: FAILED! => {"accept_ranges": "bytes", "changed": false, "connection": "close", "content": "\"Hello world\nI am a web server running on servera\"\n", "content_length": "51", "content_type": "text/html; charset=UTF-8", "cookies": {}, "cookies_string": "", "date": "Tue, 28 Jun 2022 15:07:39 GMT", "elapsed": 0, "etag": "\"33-5e27299f4f2ce\"", "failed_when_result": true, "last_modified": "Mon, 27 Jun 2022 19:05:20 GMT", "msg": "OK (51 bytes)", "redirected": false, "server": "Apache/2.4.37 (Red Hat Enterprise Linux)", "status": 200, "url": "http://servera.lab.example.com"}
+2022-06-28 11:07:39,069 p=22513 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-28 11:07:39,069 p=22513 u=student n=ansible | localhost                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:07:39,069 p=22513 u=student n=ansible | servera                    : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:07:58,900 p=22652 u=student n=ansible | PLAY [Ensure webservers are installed] *****************************************
+2022-06-28 11:07:58,910 p=22652 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:07:59,920 p=22652 u=student n=ansible | ok: [servera]
+2022-06-28 11:07:59,944 p=22652 u=student n=ansible | TASK [Ensure httpd is installed] ***********************************************
+2022-06-28 11:08:01,470 p=22652 u=student n=ansible | ok: [servera]
+2022-06-28 11:08:01,478 p=22652 u=student n=ansible | TASK [Ensure webserver is enabled] *********************************************
+2022-06-28 11:08:02,172 p=22652 u=student n=ansible | ok: [servera]
+2022-06-28 11:08:02,180 p=22652 u=student n=ansible | TASK [Ensure port open in firewall] ********************************************
+2022-06-28 11:08:02,853 p=22652 u=student n=ansible | ok: [servera]
+2022-06-28 11:08:02,862 p=22652 u=student n=ansible | TASK [Ensure stub content is deployed] *****************************************
+2022-06-28 11:08:03,671 p=22652 u=student n=ansible | ok: [servera]
+2022-06-28 11:08:03,677 p=22652 u=student n=ansible | PLAY [Test web server deployment] **********************************************
+2022-06-28 11:08:03,681 p=22652 u=student n=ansible | TASK [Gathering Facts] *********************************************************
+2022-06-28 11:08:04,206 p=22652 u=student n=ansible | ok: [localhost]
+2022-06-28 11:08:04,214 p=22652 u=student n=ansible | TASK [Ensure content is received] **********************************************
+2022-06-28 11:08:04,680 p=22652 u=student n=ansible | ok: [localhost]
+2022-06-28 11:08:04,685 p=22652 u=student n=ansible | PLAY RECAP *********************************************************************
+2022-06-28 11:08:04,685 p=22652 u=student n=ansible | localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2022-06-28 11:08:04,686 p=22652 u=student n=ansible | servera                    : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

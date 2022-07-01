@@ -1,5 +1,7 @@
-- name: Setup network at HPE
-  hosts: rhel
+- name: Setup networking
+  hosts: 
+    - servera
+    - serverb
   become: true
 
   vars:

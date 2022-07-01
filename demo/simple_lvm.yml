@@ -1,0 +1,58 @@
+- name: Manage LVM
+  hosts: 
+    - serverb
+    - serverc
+    - serverd
+  become: true
+  gather_facts: true
+
+
+  vars:
+
+    my_disks:
+      - /dev/vdb
+
+    my_vg: vg_db
+
+    my_lv: lv_mysql
+
+    my_dev: /dev/{{ my_vg }}/{{ my_lv }}
+
+    my_mount: /var/lib/mysql
+
+    my_size: 512
+
+    my_fs: ext4
+
+  tasks:
+
+    - name: Ensure VG exists with PVs defined
+      lvg:
+        vg: "{{ my_vg }}"
+        pvs: "{{ my_disks }}"
+
+    - name: Ensure LV exists
+      lvol:
+        vg: "{{ my_vg }}"
+        lv: "{{ my_lv }}"
+        size: "{{ my_size | int }}"
+
+    - name: Ensure Filesystem exists
+      filesystem:
+        fstype: "{{ my_fs }}"
+        dev: "{{ my_dev }}"
+
+    - name: Ensure mountpoint exists
+      file:
+        path: "{{ my_mount }}"
+        state: directory
+
+    - name: Ensure LV is mounted
+      mount:
+        path: "{{ my_mount }}"
+        src: "{{ my_dev }}"
+        fstype: "{{ my_fs }}" 
+        state: mounted
+
+
+
