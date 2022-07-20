@@ -5,8 +5,8 @@
 
   tasks:
 
-    - name: Ensure v*rc file contents are listed
-      loop: "{{ query('fileglob', '/etc/v*rc') }}"
+    - name: Ensure f*.conf file contents are listed
+      loop: "{{ query('fileglob', '/etc/f*.conf') }}"
       debug:
         msg: "{{ query('file', item) }}"
 

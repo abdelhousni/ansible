@@ -19,11 +19,9 @@
       debug:
         msg: "{{ query('file', '/etc/fstab', '/etc/issue' ) }}"
 
-
     - name: Display who is logged in
       debug:
         msg: "{{ lookup('pipe', 'w') }}"
-
 
     - name: Retrieve data from webserver
       debug:

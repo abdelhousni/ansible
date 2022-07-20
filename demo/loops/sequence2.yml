@@ -6,6 +6,6 @@
   tasks:
 
   - name: Ensure sequence is displayed
-    loop: "{{ range(24, 42 +1, 6) }}"
+    loop: "{{ range(24, 42 + 1, 6) }}"
     debug:
       msg: my current sequence number is {{ item }}

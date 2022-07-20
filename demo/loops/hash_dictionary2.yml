@@ -15,7 +15,7 @@
         state: present
 
     - name: Ensure users are in their appropriate groups
-      loop: "{{ lookup('dict', myusers) }}"
+      loop: "{{ myusers | dict2items }}"
       user:
         name: "{{ item['key'] }}"
         state: present

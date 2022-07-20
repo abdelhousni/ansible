@@ -1,4 +1,3 @@
----
 - name: Create the Beatles users, and give them access to their databases
   hosts: servera
   gather_facts: false
@@ -49,4 +48,3 @@
         priv: "{{ item[1] }}.*:ALL"
         append_privs: yes
         password: "{{ db_pass }}"
-...
