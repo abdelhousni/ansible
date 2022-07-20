@@ -1,0 +1,15 @@
+- name: Read a remote file 
+  hosts: servera
+  become: false
+  gather_facts: true
+
+  tasks:
+
+    - name: Ensure remote file is read 
+      register: my_data
+      slurp:
+        src: "{{ my_file | default('/etc/fstab') }}"
+
+    - name: Ensure content is displayed
+      debug:
+        var: my_data['content'] | b64decode | trim

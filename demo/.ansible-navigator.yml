@@ -1,0 +1,15 @@
+---
+ansible-navigator:
+  ansible:
+    config: ./ansible.cfg
+    inventories:
+      - ~/inventory/
+
+  execution-environment:
+    image: ee-supported-rhel8:2.0
+    pull-policy: missing
+
+  mode: stdout
+
+  playbook-artifact:
+    enable: false

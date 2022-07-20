@@ -1,0 +1,22 @@
+- name: Create users
+  hosts: servera
+  become: true
+  gather_facts: false
+
+  vars:
+
+    my_users:
+      - fred
+      - barney
+      - wilma
+      - betty
+
+  tasks:
+
+    - name: Ensure users are at expected state
+      loop: "{{ my_users }}"
+      user:
+        name: "{{ item }}"
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create

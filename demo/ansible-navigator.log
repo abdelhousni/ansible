@@ -430,3 +430,4 @@
 220622080008.078 INFO 'ansible_navigator.main' Try again with '-m stdout' or '-m interactive'
 220622080008.078 ERROR 'ansible_navigator.main' Configuration failed, using default log file location: /home/student/ansible/demo/ansible-navigator.log. Log level set to debug
 220622080008.078 INFO 'ansible_navigator.main' Review the hints and log file to see what went wrong: /home/student/ansible/demo/ansible-navigator.log
+220719130931.130 ERROR 'ansible_navigator.image_manager.puller._log_message' Execution environment pull failed

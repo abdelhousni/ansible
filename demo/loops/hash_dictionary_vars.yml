@@ -1,0 +1,23 @@
+mygroups:
+  - flintstones
+  - rubbles
+
+myusers:
+
+   fred:
+      groups: 
+        - flintstones
+        - wheel
+      password: yabadabadoo
+
+   wilma:
+      groups: flintstones
+      password: yabadabadoo
+
+   barney:
+      groups: rubbles
+      password: flimflom
+
+   betty:
+      groups: rubbles
+      password: flimflom

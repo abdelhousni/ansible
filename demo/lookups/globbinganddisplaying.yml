@@ -1,0 +1,12 @@
+- name: Demonstrate globbing
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  tasks:
+
+    - name: Ensure v*rc file contents are listed
+      loop: "{{ query('fileglob', '/etc/v*rc') }}"
+      debug:
+        msg: "{{ query('file', item) }}"
+

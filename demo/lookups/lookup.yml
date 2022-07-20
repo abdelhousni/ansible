@@ -1,0 +1,32 @@
+- name: Demonstration of various lookup plugins
+  become: false
+  gather_facts: true
+  hosts: servera
+
+  tasks:
+
+    - name: Ensure the variable is displayed on {{ inventory_hostname }}
+      debug:
+        msg: The value of the variable COUNTRY is {{ lookup('env', 'COUNTRY') }}
+
+    - name: Ensure the contents of /etc/fstab are displayed
+      debug:
+        msg: |
+
+          "{{ lookup('file', '/etc/fstab' ) }}"
+
+    - name: Display 2 files
+      debug:
+        msg: "{{ query('file', '/etc/fstab', '/etc/issue' ) }}"
+
+
+    - name: Display who is logged in
+      debug:
+        msg: "{{ lookup('pipe', 'w') }}"
+
+
+    - name: Retrieve data from webserver
+      debug:
+        msg: |
+
+          "{{ lookup('url', 'http://classroom.example.com') }}"

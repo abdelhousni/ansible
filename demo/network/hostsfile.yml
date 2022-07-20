@@ -1,0 +1,14 @@
+- name: Consistent network data
+  hosts: servera
+  become: true
+  gather_facts: false
+
+  vars_files:
+    - network_vars.yml
+
+  tasks:
+
+    - name: Ensure /etc/hosts is correctly set
+      template:
+        dest: /etc/hosts
+        src: hosts.j2

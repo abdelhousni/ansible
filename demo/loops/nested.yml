@@ -1,0 +1,52 @@
+---
+- name: Create the Beatles users, and give them access to their databases
+  hosts: servera
+  gather_facts: false
+  become: true
+
+  vars:
+
+    beatles:
+      - john
+      - paul
+      - george
+      - ringo
+
+    category_db:
+      - lyrics
+      - concerts
+      - instruments
+
+    db_pass: redhat
+
+  tasks:
+
+    - name: Ensure users exist
+      loop: "{{ beatles }}"
+      user:
+        name: "{{ item }}"
+        state: present
+
+    - name: Ensure software is installed
+      yum:
+        name: 
+          - "{{ '@mariadb' }}"
+          - python3-PyMySQL
+        state: present
+
+    - name: Ensure mariadb is started and enabled
+      service:
+        name: mariadb
+        state: started
+        enabled: true
+
+    - name: Ensure Beatles access to their databases
+      with_nested:
+        - "{{ beatles }}"
+        - "{{ category_db }}"
+      mysql_user:
+        name: "{{ item[0] }}"
+        priv: "{{ item[1] }}.*:ALL"
+        append_privs: yes
+        password: "{{ db_pass }}"
+...

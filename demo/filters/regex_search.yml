@@ -1,0 +1,31 @@
+- name: regex_search filter demonstration
+  hosts: servera
+  gather_facts: false
+  become: true
+
+  vars:
+
+    grpcurl: https://github.com/fullstorydev/grpcurl/releases/download/v1.8.5/grpcurl_1.8.5_linux_x86_64.tar.gz
+    opm: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/opm-linux-4.10.22.tar.gz 
+    oc: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/openshift-client-linux-4.10.22.tar.gz 
+
+  tasks:
+
+    - name: Ensure required binaries are downloaded
+      loop:
+        - "{{ grpcurl }}"
+        - "{{ opm }}"
+        - "{{ oc }}"
+      get_url:
+        url: "{{ item }}"
+        dest: /var/tmp/
+
+    - name: Ensure binaries are extracted
+      loop:
+        - "{{ grpcurl }}"
+        - "{{ opm }}"
+        - "{{ oc }}"
+      unarchive:
+        remote_src: true
+        src: "{{ item | regex_search('[a-z]+.*\\.tar\\.gz') }}"
+        dest: /usr/local/bin

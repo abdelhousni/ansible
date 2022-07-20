@@ -1,0 +1,77 @@
+network_data:
+  - sname: classroom
+    lname: classroom.example.com
+    ipv4: 172.25.254.254/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: controller
+    lname: controller.lab.example.com
+    ipv4: 172.25.250.7/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: utility
+    lname: utility.lab.example.com
+    ipv4: 172.25.250.8/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: workstation
+    lname: workstation.lab.example.com
+    ipv4: 172.25.250.9/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: servera
+    lname: servera.lab.example.com
+    ipv4: 172.25.250.10/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: serverb
+    lname: serverb.lab.example.com
+    ipv4: 172.25.250.11/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: serverc
+    lname: serverc.lab.example.com
+    ipv4: 172.25.250.12/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: serverd
+    lname: serverd.lab.example.com
+    ipv4: 172.25.250.13/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: servere
+    lname: servera.lab.example.com
+    ipv4: 172.25.250.14/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: serverf
+    lname: serverf.lab.example.com
+    ipv4: 172.25.250.15/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
+
+  - sname: bastion
+    lname: bastion.lab.example.com
+    ipv4: 172.25.250.254/24
+    gw4: 172.25.250.254
+    mtu: 1500
+    dns: 172.25.250.254
