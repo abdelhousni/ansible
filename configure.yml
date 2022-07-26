@@ -1,0 +1,18 @@
+- name: Configure student machines for training
+  hosts: localhost
+  
+  tasks:
+
+    - name: Ensure ~/.vimrc is configured
+      copy:
+        dest: ~/.vimrc
+        content: autocmd FileType yaml setlocal ai et ts=2 sw=2 nu cuc
+
+    - name: Ensure packages are installed
+      become: true
+      yum:
+        name:
+          - git
+          - tmux
+        state: latest
+

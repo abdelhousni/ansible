@@ -10,8 +10,8 @@
         file: encrypted_data.yml
 
     - name: Ensure users are created
-      user:
-        name: "{{ item.username }}"
-        password: "{{ item.userpass | password_hash('sha512') }}"
-        update_password: on_create
       loop: "{{ bedrockers }}"
+      user:
+        name: "{{ item['username'] }}"
+        password: "{{ item['userpass'] | password_hash('sha512') }}"
+        update_password: on_create
