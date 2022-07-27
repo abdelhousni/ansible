@@ -1,5 +1,5 @@
 - name: Facts demo
-  hosts: servera
+  hosts: "{{ my_host | default('localhost') }}" 
   gather_facts: true
   become: false
 

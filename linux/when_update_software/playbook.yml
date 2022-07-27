@@ -1,12 +1,12 @@
-- name: Update all software packages on RHEL6 and RHEL7 systems
+- name: Update all software packages on RHEL systems
   hosts: all
+  gather_facts: true
+
   tasks:
 
-    - name: Run only on RHEL6 or RHEL7 machines
-      assert:
-        that:  ( ansible_distribution  == "RedHat" and ansible_distribution_major_version == 6 ) or ( ansible_distribution == "RedHat" and ansible_distribution_major_version == 7 )
-
     - name: Update software
+      when: ansible_facts['distribution']  == "RedHat" and ansible_facts['distribution_major_version'] | int >= 6
+      become: true
       yum:
         name: '*'
         state: latest

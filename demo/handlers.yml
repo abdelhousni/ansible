@@ -1,5 +1,5 @@
 - name: Handler demonstration
-  hosts: servera
+  hosts: "{{ my_host | default('servera') }}"
   become: true
   gather_facts: true
   force_handlers: true
@@ -10,7 +10,7 @@
       notify:
         - Ensure server is rebooted
       copy:
-        content: reboot me now
+        content: Reboot me now
         dest: /var/tmp/reboot
     
     - name: Ensure software is updated

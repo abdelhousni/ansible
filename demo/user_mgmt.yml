@@ -1,0 +1,18 @@
+- name: Manage users
+  hosts: servera
+  become: true
+  gather_facts: false
+
+  vars:
+    my_user: bobby
+
+  tasks:
+
+    - name: Ensure user is at state
+      user:
+        name: "{{ my_user }}"
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_pass | password_hash('sha512') }}"
+        update_password: on_create
+
+
