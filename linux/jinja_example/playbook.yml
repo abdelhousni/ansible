@@ -1,5 +1,5 @@
 - name: Play to demonstrate the basics of jinja2
-  hosts: rhel8
+  hosts: servera 
   become: false
 
   tasks:

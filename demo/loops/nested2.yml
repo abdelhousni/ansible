@@ -28,7 +28,7 @@
 
     - name: Ensure software is installed
       yum:
-        name: 
+        name:
           - "{{ '@mariadb' }}"
           - python3-PyMySQL
         state: present

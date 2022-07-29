@@ -1,4 +1,4 @@
-- name: Setup timesync at HPE
+- name: Setup timesync
   hosts: servera
   become: true
 

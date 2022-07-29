@@ -1,4 +1,3 @@
----
 - name: Setup TLS
   hosts: rhel
   become: true
@@ -6,7 +5,7 @@
 
   vars:
     certificate_requests:
-      - name: mycert
+      - name: "{{ mycert | default(inventory_hostname) }}"
         dns: "{{ inventory_hostname }}"
         ca: self-sign
 

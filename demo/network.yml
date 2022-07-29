@@ -1,5 +1,5 @@
 - name: Setup networking
-  hosts: 
+  hosts:
     - servera
     - serverb
   become: true
@@ -7,7 +7,7 @@
   vars:
 
     network_connections:
-      - name: datacenter 
+      - name: datacenter
         type: ethernet
         interface_name: eth1
         state: up

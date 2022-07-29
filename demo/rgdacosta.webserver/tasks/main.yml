@@ -13,17 +13,4 @@
       OH NO! We need to set my_package to either httpd or nginx
 
 - name: Ensure setup tasks are included
-  tags:
-    - setup
-    - install
-    - never
   include_tasks: setup_tasks.yml
-
-- name: Ensure teardown tasks are included
-  tags:
-    - teardown
-    - uninstall
-    - remove
-    - never
-  include_tasks: teardown_tasks.yml
-  
