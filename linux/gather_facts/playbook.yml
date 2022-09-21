@@ -5,7 +5,7 @@
 
     - name: Ensure facts gathered for Linux
       setup:
-      when: ansible_system == "Linux"
+      when: ansible_system == "Linux" or ansible_system == "Windows"
 
     - name: Ensure facts gathered for ios
       ios_facts:
