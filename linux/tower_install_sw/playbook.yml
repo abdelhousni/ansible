@@ -3,15 +3,7 @@
   become: true
   hosts: "{{ my_host }}"
   
-  vars:
-    - pkgname: foo
-    - pkgstatus: present
-
   tasks:
-
-    - name: Ensure Red Hat based OS is used
-      assert:
-        that: ansible_os_family == "RedHat"
 
     - name: Manage software on Red Hat based system
       yum:
