@@ -1,6 +1,7 @@
 ---
 - name: Ensure webservers are installed
   hosts: servera
+  gather_facts: false
   become: true 
 
   vars:
