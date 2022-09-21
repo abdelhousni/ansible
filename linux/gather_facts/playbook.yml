@@ -1,8 +1,4 @@
 - name: Multi-vendor fact gathering for caching in Ansible Tower
   hosts: all
-
-  tasks:
-
-    - name: Ensure facts gathered for Linux
-      setup:
-
+  become: false
+  gather_facts: true
