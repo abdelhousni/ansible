@@ -1,5 +1,7 @@
 - name: Manage software
-  hosts: all
+  gather_facts: false
+  become: true
+  hosts: "{{ my_host }}"
   
   vars:
     - pkgname: foo
@@ -7,12 +9,12 @@
 
   tasks:
 
-    - name: Make sure that we're running on a Red Hat based machine
+    - name: Ensure Red Hat based OS is used
       assert:
         that: ansible_os_family == "RedHat"
 
     - name: Manage software on Red Hat based system
       yum:
-        name: "{{ pkgname }}"
-        state: "{{ pkgstatus }}"
+        name: "{{ my_pkgname }}"
+        state: "{{ my_pkgstatus }}"
 
