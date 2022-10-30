@@ -20,17 +20,11 @@
         key: "{{ lookup('file', 'id_rsa.pub') }}" 
 
     - name: Limit ssh usage to members of the group wheel
-      vars:
-        my_lines:
-          - AllowGroups wheel
-          - PasswordAuthentication no
-      notify: Restart the ssh daemon
-      loop: "{{ my_lines }}"
-      lineinfile:
-        state: present
+      copy:
+        src: sshd_config
         dest: /etc/ssh/sshd_config
-        line: "{{ item }}" 
-
+      notify: Restart the ssh daemon
+      
   handlers:
 
     - name: Restart the ssh daemon
