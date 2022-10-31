@@ -1,0 +1,40 @@
+---
+- name: Ensure webservers are installed
+  hosts: servera
+  become: true 
+
+  tasks:
+
+    - name: Ensure httpd is installed
+      ansible.builtin.dnf:
+        name: httpd
+        state: latest
+
+    - name: Ensure webserver is enabled
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Ensure port open in firewall
+      ansible.posix.firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Ensure stub content is deployed
+      ansible.builtin.copy:
+        content: >
+          "Hello world,          
+           I am a web server"
+        dest: /var/www/html/index.html
+
+- name: Test web server deployment
+  hosts: localhost
+  become: false
+  tasks:
+
+      ansible.builtin.uri:
+        url: http://servera.lab.example.com
+        return_content: true
