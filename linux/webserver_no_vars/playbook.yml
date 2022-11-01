@@ -35,6 +35,7 @@
   become: false
   tasks:
 
-      ansible.builtin.uri:
-        url: http://servera.lab.example.com
-        return_content: true
+      - name: Test webserver
+        ansible.builtin.uri:
+          url: http://servera.lab.example.com
+          return_content: true
