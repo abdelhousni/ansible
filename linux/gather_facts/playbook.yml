@@ -1,20 +1,5 @@
-- name: Multi-vendor fact gathering for caching in Ansible Tower
+- name: Fact gathering for caching in Ansible Tower
   hosts: all
+  gather_facts: true
 
-  tasks:
 
-    - name: Ensure facts gathered for Linux
-      setup:
-      when: ansible_system == "Linux"
-
-    - name: Ensure facts gathered for ios
-      ios_facts:
-      when: ansible_network_os == "ios"
-
-    - name: Ensure facts gathered for junos
-      junos_facts:
-      when: ansible_network_os == "junos"
-
-    - name: Ensure facts gathered for eos
-      eos_facts:
-      when: ansible_network_os == "eos"
