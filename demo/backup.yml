@@ -1,5 +1,5 @@
 - name: Ensure backups are taken
-  hosts: "{{ backup_host | default('localhost') }}" 
+  hosts: "{{ backup_host | default('localhost') }}"
   become: true
   gather_facts: true
 
@@ -15,21 +15,23 @@
     - name: Ensure {{ backup_store }} exists
       become: false
       delegate_to: localhost
-      file:
+      ansible.builtin.file:
         path: "{{ backup_store }}/{{ inventory_hostname }}"
         owner: student
         state: directory
+        mode: "0755"
 
     - name: Ensure backup of {{ backup_target }} exists
-      archive:
+      ansible.builtin.archive:
         path: "{{ backup_target }}"
-        dest: "{{ backup_file }}" 
-        #force_archive: true
-        #remove: true
+        dest: "{{ backup_file }}"
+        # force_archive: true
+        # remove: true
         format: "{{ backup_format }}"
+        mode: "0755"
 
     - name: Ensure backup is stored on controller
-      fetch:
-        src: "{{ backup_file }}" 
+      ansible.builtin.fetch:
+        src: "{{ backup_file }}"
         dest: "{{ backup_store }}/{{ inventory_hostname }}/"
         flat: true
