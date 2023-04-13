@@ -1,0 +1,17 @@
+- name: List Organizations
+  hosts: localhost
+
+  tasks:
+
+    - name: List Satellite Organizations
+      register: sat_orgs
+      redhat.satellite.organization_info:
+        server_url: "{{ sat_api }}"
+        username: "{{ sat_user }}"
+        password: "{{ sat_pass }}"
+        validate_certs: "{{ cert_validate }}"
+        search: " "
+
+    - name: Print List of Satellite Organizations
+      ansible.builtin.debug:
+        msg: "{{ sat_orgs['organizations'] | map(attribute='name') | list }}"
