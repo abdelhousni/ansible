@@ -1,8 +1,8 @@
 ---
 - name: Setup the support infrastructure to manage systems
-  hosts: all 
+  hosts: all
   tasks:
-  
+
     - name: Create the user support as a member of the group wheel
       user:
         groups: wheel
@@ -17,14 +17,14 @@
       authorized_key:
         manage_dir: yes
         user: support
-        key: "{{ lookup('file', 'id_rsa.pub') }}" 
+        key: "{{ lookup('file', 'id_rsa.pub') }}"
 
     - name: Limit ssh usage to members of the group wheel
       copy:
         src: sshd_config
         dest: /etc/ssh/sshd_config
       notify: Restart the ssh daemon
-      
+
   handlers:
 
     - name: Restart the ssh daemon
