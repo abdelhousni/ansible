@@ -6,7 +6,7 @@
     - name: Ensure ~/.vimrc is configured
       copy:
         dest: ~/.vimrc
-        content: autocmd FileType yaml setlocal ai et ts=2 sw=2 nu cuc
+        content: autocmd FileType yaml setlocal ai et ts=2 sw=2 nu cuc foldmethod=indent
 
     - name: Ensure packages are installed
       become: true
