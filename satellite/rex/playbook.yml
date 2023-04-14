@@ -1,0 +1,36 @@
+- name: Setup Remote Execution
+  hosts: localhost
+  gather_facts: false
+  remote_user: root
+
+  vars:
+
+    ssh_key_file: id_rsa_foreman_proxy.pub
+    ssh_key_dir: ~foreman-proxy/.ssh
+
+  tasks:
+
+    - name: Ensure workstation has a copy of {{ ssh_key_file }}
+      delegate_to: satellite
+      become: false
+      ansible.builtin.fetch:
+        src: "{{ ssh_key_dir }}/{{ ssh_key_file }}"
+        dest: "{{ ssh_key_file }}"
+
+- name: Setup Remote Execution
+  hosts: localhost
+  become: true
+  gather_facts: false
+
+  vars:
+
+    ssh_key_file: id_rsa_foreman_proxy.pub
+    ssh_key_dir: ~foreman-proxy/.ssh
+
+  tasks:
+
+    - name: Install {{ ssh_key_file }} onto satellite clients
+      ansible.posix.authorized_key:
+        user: foreman-proxy
+        state: present
+        key: "{{ lookup('file', ssh_key_file) }}"

@@ -1,0 +1,4 @@
+sat_api: https://satellite.lab.example.com
+sat_user: admin
+sat_pass: redhat
+cert_validate: false
