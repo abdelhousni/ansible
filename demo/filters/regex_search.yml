@@ -5,27 +5,17 @@
 
   vars:
 
-    grpcurl: https://github.com/fullstorydev/grpcurl/releases/download/v1.8.5/grpcurl_1.8.5_linux_x86_64.tar.gz
-    opm: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/opm-linux-4.10.23.tar.gz 
-    oc: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/openshift-client-linux-4.10.23.tar.gz 
+    url_oc: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/openshift-client-linux.tar.gz 
 
   tasks:
 
-    - name: Ensure required binaries are downloaded
-      loop:
-        - "{{ grpcurl }}"
-        - "{{ opm }}"
-        - "{{ oc }}"
-      get_url:
-        url: "{{ item }}"
+    - name: Ensure OpenShift client is downloaded 
+      ansible.builtin.get_url:
+        url: "{{ url_oc }}"
         dest: /var/tmp/
 
-    - name: Ensure binaries are extracted
-      loop:
-        - "{{ grpcurl }}"
-        - "{{ opm }}"
-        - "{{ oc }}"
-      unarchive:
+    - name: Ensure OpenShift client is extracted
+      ansible.builtin.unarchive:
         remote_src: true
-        src: "{{ item | regex_search('[a-z]+.*\\.tar\\.gz') }}"
+        src: "{{ url_oc | regex_search('[a-z]+.*\\.tar\\.gz') }}"
         dest: /usr/local/bin

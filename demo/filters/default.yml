@@ -5,5 +5,5 @@
   tasks:
 
     - name: Ensure that the variable my_var is displayed
-      debug:
+      ansible.builtin.debug:
         msg: The value of the variable my_var is {{ my_var | default('blue') }}

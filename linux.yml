@@ -1,0 +1,21 @@
+all:
+  children:
+    dbservers:
+      hosts:
+        serverb:
+        serverd:
+    rhel:
+      hosts:
+        loadbalancer:
+          ansible_host: servera
+        serverb: {}
+        serverc:
+        serverd: {}
+    ungrouped: {}
+    webservers:
+      hosts:
+        web_1:
+          ansible_host: servera
+        web_2:
+          ansible_host: serverb
+

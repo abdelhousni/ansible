@@ -7,7 +7,7 @@
 
     - name: Ensure remote file is read 
       register: my_data
-      slurp:
+      ansible.builtin.slurp:
         src: "{{ my_file | default('/etc/fstab') }}"
 
     - name: Ensure content is displayed

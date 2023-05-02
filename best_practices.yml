@@ -1,19 +1,19 @@
 - name: Ricardo's best practices for automation with Ansible
-  
+
   recommendations:
 
     - keep it simple, complexity kills productivity
 
     - optimize for readability, if something is easy to read then it's easy to understand and easy to troubleshoot
 
-    - use a good editor like VSCode, VSCodium, Sublime Text Editor etc and even try vim-ansible 
+    - use a good editor like VSCode, VSCodium, Sublime Text Editor etc and even try vim-ansible
 
-    - think declaratively understanding that your playbooks aren't code but the declared state that ansible will synchronize your inventory hosts to 
+    - think declaratively understanding that your playbooks aren't code but the declared state that ansible will synchronize your inventory hosts to
 
     - stay organized and use version control
 
-    - adopt a style guide or create one yourself for your own needs 
-  
+    - adopt a style guide or create one yourself for your own needs
+
     - don't reinvent the wheel and use roles where you can and pick trusted or well known authors and even better use Red Hat Certified Collections
 
     - use variables and while there are 22 different ways to use variables, you should use them in a way that makes sense for your solution
@@ -37,10 +37,3 @@
     - run your playbooks from a centralized controller
 
     - use execution evironments for frequently executed Ansible operations which require customiations in the form of collections, python dependencies, and system executables
-
-    
-
-
-
-
-

@@ -10,7 +10,7 @@
 
     - name: Ensure space available
       ansible.builtin.assert:
-        that: (ansible_facts['mounts'] | json_query('[?mount==`/`].size_available'))[0] | int > my_vm_disk_size | int
+        that: (ansible_facts['mounts'] | json_query('[?mount==`/`].size_available'))[0] | int > my_request | human_to_bytes  
         success_msg: |
           Hooray! You have enough space for your vm
 
