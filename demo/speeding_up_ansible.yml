@@ -1,0 +1,39 @@
+- don't gather facts unless you need them
+
+- if you do need facts, consider caching them for future use and refresh the fact cache using scheduling
+
+- Increase forks (but monitor performance)
+
+- Consider ansible.builtin.copy and ansible.builtin.synchronize
+
+- Size your controller with callback plugins
+
+- avoid loops with package management
+
+- consider jinja2 templates instead of complex use of lineinfile or blockinfile modules
+
+- name: Ensure software is installed
+  ansible.builtin.dnf:
+    name:
+      - tmux
+      - git
+      - procps-ng
+      - vim-enhanced
+    state: installed
+
+  The above is the same as "dnf install -y tmux git procps-ng vim-enhanced"
+
+- name: Ensure software is installed
+  loop:
+    - tmux
+    - git
+    - procps-ng
+    - vim-enhanced
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: installed
+
+  The above is the same as "dnf install -y tmux; dnf install -y git; dnf install -y procps-ng; dnf install -y vim-enhanced"
+
+
+ 

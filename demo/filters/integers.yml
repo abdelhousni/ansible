@@ -1,21 +1,21 @@
-- name: integer filter demonstration
-  hosts: localhost
+- name: Integer filter demonstration
+  hosts: servera
   gather_facts: true
   become: false
   tasks:
 
     - name: Determine requested size 
-      set_fact:
+      ansible.builtin.set_fact:
         my_request: "{{ my_vm_disk_size | default('20') }} GB" 
 
     - name: Ensure space available
-      assert:
-        that: "{{ ansible_facts['mounts'][0]['size_available'] > my_request | human_to_bytes }}"
+      ansible.builtin.assert:
+        that: (ansible_facts['mounts'] | json_query('[?mount==`/`].size_available'))[0] | int > my_vm_disk_size | int
         success_msg: |
           Hooray! You have enough space for your vm
 
-          You asked for {{ my_request }} and we have {{ ansible_facts['mounts'][0]['size_available'] | human_readable }} available
+          You asked for {{ my_request }} and we have {{ (ansible_facts['mounts'] | json_query('[?mount == `/`].size_available'))[0] | human_readable }} available
         fail_msg: |
           Bah! You don't have enough space for your vm
 
-          You asked for {{ my_request }} but we only have {{ ansible_facts['mounts'][0]['size_available'] | human_readable }} available
+          You asked for {{ my_request }} and we have {{ (ansible_facts['mounts'] | json_query('[?mount == `/`].size_available'))[0] | human_readable }} available

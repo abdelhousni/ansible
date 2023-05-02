@@ -1,7 +1,7 @@
-- name: Manage webservices 
+- name: Manage webservices
   hosts: "{{ my_host | mandatory }}"
-  become: true
   gather_facts: true
+  become: false
 
   vars:
 
@@ -19,7 +19,7 @@
     - name: Ensure needed variables are defined
       tags:
         - always
-      assert:
+      ansible.builtin.assert:
         that:
           - my_package is defined
           - (my_package == "httpd") or (my_package == "nginx" )
@@ -32,6 +32,7 @@
           OH NO! We need to set my_package to either httpd or nginx
 
     - name: Ensure webserver is setup
+      become: true
       tags:
         - install
         - setup
@@ -39,11 +40,11 @@
       block:
 
       - name: Ensure {{ my_package }} is installed
-        ansible.builtin.yum:
+        ansible.builtin.dnf:
           name: "{{ my_package }}"
-          state: latest 
+          state: installed
 
-      - name: Ensure {{ my_package }} is started and enabled 
+      - name: Ensure {{ my_package }} is started and enabled
         ansible.builtin.systemd:
           name: "{{ my_package }}"
           enabled: true
@@ -68,8 +69,9 @@
         ansible.builtin.copy:
           content: "{{ my_content }}"
           dest: /usr/share/nginx/html/index.html
-        
+
     - name: Ensure webserver is uninstalled
+      become: true
       tags:
         - uninstall
         - remove
@@ -77,7 +79,7 @@
         - never
       block:
 
-      - name: Ensure {{ my_package }} is stopped and disabled 
+      - name: Ensure {{ my_package }} is stopped and disabled
         ignore_errors: true
         ansible.builtin.systemd:
           name: "{{ my_package }}"
@@ -85,9 +87,9 @@
           state: stopped
 
       - name: Ensure {{ my_package }} is removed
-        ansible.builtin.yum:
+        ansible.builtin.dnf:
           name: "{{ my_package }}"
-          state: absent 
+          state: absent
 
       - name: Ensure service is removed from firewall
         loop: "{{ my_services }}"

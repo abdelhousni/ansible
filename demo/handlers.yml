@@ -12,7 +12,7 @@
       copy:
         content: Reboot me now
         dest: /var/tmp/reboot
-    
+
     - name: Ensure software is updated
       yum:
         name: "*"

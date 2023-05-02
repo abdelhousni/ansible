@@ -1,0 +1,9 @@
+collections:
+
+  - name: ansible.netcommon
+
+  - name: ansible.controller
+    version: 4.3.0
+
+  - name: kubernetes.core
+    version: 2.2.0

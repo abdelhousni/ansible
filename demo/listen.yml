@@ -1,0 +1,25 @@
+- name: Demonstrate the listen directive
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  tasks:
+
+    - name: Ensure directory is created
+      notify: Post configuration
+      ansible.builtin.file:
+        path: /var/tmp/foo
+        state: directory
+
+  handlers:
+
+    - name: Capture directory info
+      listen: Post configuration
+      register: output
+      ansible.builtin.stat:
+        path: /var/tmp/foo
+
+    - name: Display directory info
+      listen: Post configuration
+      ansible.builtin.debug:
+        var: output

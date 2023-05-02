@@ -6,56 +6,56 @@
   tasks:
 
    - name: Ensure play fails when conditions are not met
-     assert:
+     ansible.builtin.assert:
        that:
          - "'RedHat' in ansible_facts['distribution']"
-         - ansible_facts['mounts'] | json_query("[?mount == '/'].size_available") | first > 1073741824
+         - ansible_facts['mounts'] | json_query("[?mount == '/']['size_available']") | first | int > 1073741824
          - install == 'true'
-       success_msg: We have found that you are using a Red Hat based OS and have sufficient storage 
-       fail_msg: Failing because you are not using a Red Hat based OS and you have insufficienty storage
+       success_msg: We have found that you are using a Red Hat based OS and have sufficient storage
+       fail_msg: Failing because you are not using a Red Hat based OS and you have insufficient storage
 
-   - name: Ensure webserver software is installed
-     yum:
+   - name: Ensure software is installed
+     ansible.builtin.dnf:
        name: httpd
        state: installed
 
-   - name: Ensure port is open in firewall
-     firewalld:
+   - name: Ensure firewall is configured
+     ansible.posix.firewalld:
        service: http
        state: enabled
        permanent: true
        immediate: true
 
    - name: Ensure service is started
-     systemd:
+     ansible.builtin.systemd:
        name: httpd
        state: started
        enabled: true
 
-   - name: Ensure stub content is installed
+   - name: Ensure stub content installed
      vars:
        local_file: local_index.html
-     copy:
-       src: "{{ local_file }}" 
-       #content: "{{ lookup('file', local_file) }}"
+     ansible.builtin.copy:
+       src: "{{ local_file }}"
        dest: /var/www/html/index.html
        mode: '0644'
 
    - name: Ensure remote file is read
      register: output
-     slurp:
+     ansible.builtin.slurp:
        src: /var/www/html/index.html
 
    - name: Ensure content is displayed
-     debug:
+     ansible.builtin.debug:
        msg: The content of the file is {{ output['content'] | b64decode }}
 
 - name: Test the webserver
   hosts: localhost
+  become: false
 
   tasks:
 
     - name: Ensure webserver connection is tested
-      uri:
+      ansible.builtin.uri:
         url: http://servera
 

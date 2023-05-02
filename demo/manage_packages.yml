@@ -1,0 +1,16 @@
+- name: Manage software
+  hosts: "{{ my_host | default('localhost') }}"
+  become: true
+  gather_facts: false
+
+  vars:
+
+    my_package: bash
+    my_state: installed
+
+  tasks:
+
+    - name: Ensure {{ my_package }} is at state {{ my_state }}
+      ansible.builtin.dnf:
+        name: "{{ my_package }}"
+        state: "{{ my_state }}"

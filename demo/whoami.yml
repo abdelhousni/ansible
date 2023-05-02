@@ -1,0 +1,11 @@
+- name: Privilege escalation demo
+  hosts: servera
+  gather_facts: true
+
+  tasks:
+
+    - name: Display the user we are connecting as
+      become: true
+      ansible.builtin.debug:
+        msg: Automation is being performed as {{ ansible_user_id }}
+
