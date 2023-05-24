@@ -15,22 +15,22 @@
       become: false
       ansible.builtin.fetch:
         src: "{{ ssh_key_dir }}/{{ ssh_key_file }}"
-        dest: "{{ ssh_key_file }}"
+        dest: ./
+        flat: true
 
 - name: Setup Remote Execution
-  hosts: localhost
+  hosts: clients
   become: true
   gather_facts: false
 
   vars:
 
     ssh_key_file: id_rsa_foreman_proxy.pub
-    ssh_key_dir: ~foreman-proxy/.ssh
 
   tasks:
 
     - name: Install {{ ssh_key_file }} onto satellite clients
       ansible.posix.authorized_key:
-        user: foreman-proxy
+        user: root 
         state: present
         key: "{{ lookup('file', ssh_key_file) }}"
