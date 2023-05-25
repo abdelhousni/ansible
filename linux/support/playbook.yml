@@ -20,10 +20,18 @@
         key: "{{ lookup('file', 'id_rsa.pub') }}"
 
     - name: Limit ssh usage to members of the group wheel
-      copy:
-        src: sshd_config
-        dest: /etc/ssh/sshd_config
       notify: Restart the ssh daemon
+      lineinfile:
+        line: AllowGroups wheel
+        state: present
+        path: /etc/ssh/sshd_config
+
+    - name: Ensure root login is disabled
+      notify: Restart the ssh daemon
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        line: PermitRootLogin no
+        state: present
 
   handlers:
 
