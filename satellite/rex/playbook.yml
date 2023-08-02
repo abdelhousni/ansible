@@ -1,4 +1,4 @@
-- name: Setup Remote Execution
+- name: Setup Remote Execution - part 1
   hosts: localhost
   gather_facts: false
   remote_user: root
@@ -18,7 +18,7 @@
         dest: ./
         flat: true
 
-- name: Setup Remote Execution
+- name: Setup Remote Execution - part 2
   hosts: clients
   become: true
   gather_facts: false
@@ -31,6 +31,6 @@
 
     - name: Install {{ ssh_key_file }} onto satellite clients
       ansible.posix.authorized_key:
-        user: root 
+        user: "{{ ssh_user | default('root') }}"          
         state: present
         key: "{{ lookup('file', ssh_key_file) }}"
