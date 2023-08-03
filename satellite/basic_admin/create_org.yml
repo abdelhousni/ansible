@@ -9,7 +9,7 @@
         username: "{{ sat_user }}"
         password: "{{ sat_pass }}"
         validate_certs: "{{ cert_validate }}"
-        name: "My Cool New Organization"
+        name: "{{ sat_org | mandatory }}"
         state: present
 
     - name: List Satellite Organizations
