@@ -1,14 +1,3 @@
 [webservers]
-server[a:b]
-
-[dbservers]
-serverc
-
-[lb]
-serverd
-
-[rhel9]
 server[a:d]
 
-[linux:children]
-rhel8
