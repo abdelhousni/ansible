@@ -1,0 +1,18 @@
+- name: Kernel updater
+  hosts: servera
+  become: true
+  force_handlers: true
+  
+  tasks:
+
+    - name: Ensure kernel is updated
+      notify: Ensure system is rebooted
+      ansible.builtin.dnf:
+        name: kernel
+        state: latest
+
+  handlers:
+
+    - name: Ensure system is rebooted
+      ansible.builtin.reboot:
+        msg: Rebooting due to a kernel update

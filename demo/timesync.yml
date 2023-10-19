@@ -1,11 +1,11 @@
 - name: Setup timesync
-  hosts: servera
+  hosts: all
   become: true
 
   vars:
 
     timesync_ntp_servers:
-      - hostname: classroom.example.com
+      - hostname: 0.rhel.pool.ntp.org 
 
   roles:
     - rhel-system-roles.timesync

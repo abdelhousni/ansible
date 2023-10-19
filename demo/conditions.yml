@@ -10,16 +10,16 @@
       block:
 
         - name: Ensure message is displayed
-          debug:
+          ansible.builtin.debug:
             msg: We have matched RedHat to your distribution
 
         - name: Ensure httpd is installed
-          yum:
+          ansible.builtin.dnf:
             name: httpd
             state: latest
 
         - name: Ensure service is started
-          systemd:
+          ansible.builtin.service:
             name: httpd
             state: started
             enabled: true
@@ -30,16 +30,16 @@
       block:
 
         - name: Ensure message is displayed
-          debug:
+          ansible.builtin.debug:
             msg: We have matched SUSE to your distribution
 
         - name: Ensure apache is installed
-          zypper:
+          community.general.zypper:
             name: apache2
             state: latest
 
         - name: Ensure service is started
-          systemd:
+          ansible.builtin.service:
             name: apache2
             state: started
             enabled: true

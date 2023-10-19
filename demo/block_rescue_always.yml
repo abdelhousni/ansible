@@ -1,0 +1,27 @@
+- name: Demonstrate block, rescue, and always
+  hosts: serverd 
+  become: true
+
+  tasks:
+
+    - name: Ensure snapshot of system packages are created 
+      ansible.builtin.command: /usr/bin/dnf snapshot create pre-update
+
+    - name: Attempt to update the system
+      block:
+        - name: Ensure update of all packages
+          ansible.builtin.dnf:
+            name: '*'
+            state: latest
+
+      rescue:
+        - name: Rollback system to snapshot if update fails
+          ansible.builtin.command: /usr/bin/dnf snapshot rollback pre-update
+
+        - name: Ensure failure is logged
+          ansible.builtin.shell: echo "System update failed at $(date)" >> /var/log/update_fail.log
+
+      always:
+        - name: Ensure packages snapshot is removed whether we succeed or fail
+          ansible.builtin.command: /usr/bin/dnf snapshot remove pre-update
+
