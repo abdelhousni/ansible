@@ -4,16 +4,16 @@
 
   tasks:
 
-    - name: Ensure fact is set 
+    - name: Ensure fact is set
       set_fact:
         my_fact: I am a delegated fact
       delegate_to: servera
       delegate_facts: true
 
-    - name: Ensure fact is displayed from delegated host 
+    - name: Ensure fact is displayed from delegated host
       debug:
         msg: "{{ hostvars['servera']['my_fact'] }}"
-    
+
     - name: Ensure fact is displayed from {{ inventory_hostname }}
       debug:
         msg: "{{ my_fact }}"
