@@ -1,0 +1,10 @@
+course: 
+  sku: do457
+  title: {}
+  instructor:
+    ricardodacosta:
+      name: Ricardo da Costa
+      email: 
+        - rdacosta@redhat.com
+        - rgdacosta@redhat.com
+  location: https://rol.redhat.com

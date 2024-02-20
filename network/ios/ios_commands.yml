@@ -3,18 +3,20 @@
   hosts: ios
   become: true
   gather_facts: false
-  tasks:
-    - name: Gather facts using the 'cisco.ios.ios_facts' module
-      cisco.ios.ios_facts:
-      when: ansible_network_os == 'ios'
 
-    - name: Grab info from commands
+  tasks:
+
+    - name: Ensure IOS facts are gathered
+      when: ansible_network_os == 'ios'
+      cisco.ios.ios_facts:
+
+    - name: Ensure specified commands are run
+      register: ios_output
       cisco.ios.ios_command:
         commands:
           - show version
           - show ip int brief
-      register: ios_output
 
-    - name: Show Output
-      debug: 
+    - name: Ensure output is displayed
+      ansible.builtin.debug: 
         var: ios_output
