@@ -1,4 +1,8 @@
 **.swp
-*.log
-*-artifact-*
+**.log
+**-artifact-*
 .ssh
+roles/**
+collections/**
+!roles/requirements.yml
+!collections/requirements.yml
