@@ -5,18 +5,32 @@
 
   vars:
 
-    ssh_key_file: id_rsa_foreman_proxy.pub
+    satellite_fqdn: satellite.lab.example.com
+    capsule_fqdn: capsule.lab.example.com
+    ssh_files:
+      - id_rsa_foreman_proxy
+      - id_rsa_foreman_proxy.pub
     ssh_key_dir: ~foreman-proxy/.ssh
 
   tasks:
 
-    - name: Ensure workstation has a copy of {{ ssh_key_file }}
-      delegate_to: satellite
+    - name: Ensure controller has a copy of satellite ssh files
+      delegate_to: "{{ satellite_fqdn }}"
       become: false
+      loop: "{{ ssh_files }}"
       ansible.builtin.fetch:
-        src: "{{ ssh_key_dir }}/{{ ssh_key_file }}"
+        src: "{{ ssh_key_dir }}/{{ item }}"
         dest: ./
         flat: true
+
+  # Turn this into another play for multiple capsules         
+    - name: Ensure capsules have the same ssh files
+      delegate_to: "{{ capsule_fqdn }}"
+      loop: "{{ ssh_files }}"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ ssh_key_dir }}"
+        owner: foreman-proxy
 
 - name: Setup Remote Execution - part 2
   hosts: clients
@@ -29,8 +43,8 @@
 
   tasks:
 
-    - name: Install {{ ssh_key_file }} onto satellite clients
+    - name: Ensure {{ ssh_key_file }} installed to content hosts
       ansible.posix.authorized_key:
-        user: "{{ ssh_user | default('root') }}"          
+        user: "{{ ssh_user | default('root') }}"
         state: present
         key: "{{ lookup('file', ssh_key_file) }}"
