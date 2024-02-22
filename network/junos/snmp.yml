@@ -1,0 +1,38 @@
+- name: Configure SNMP on Juniper managed nodes
+  hosts: junos
+  gather_facts: false
+
+  tasks:
+
+    - name: Ensure netconf service enabled
+      vars:
+        ansible_connection: ansible.netcommon.network_cli
+      junipernetworks.junos.junos_netconf:
+        netconf_port: 830
+        state: present
+
+    - name: Check connectivity
+      ansible.builtin.wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 830
+        timeout: 5
+
+    - name: Verify connectivity between the managed nodes
+      vars:
+        ansible_connection: ansible.netcommon.network_cli
+      junipernetworks.junos.junos_ping:
+        dest: "{{ inventory_hostname }}"
+        count: 5
+
+    - name: Ensure SNMP is configured 
+      junipernetworks.junos.junos_snmp_server:
+        state: merged
+        config:
+          location: 'Raleigh, NC'
+          contact: 'Network Engineering | neteng@company.com'
+          description: "SNMP Server"
+          communities:
+            - name: rocommunity2n4g!
+              authorization: read-only
+            - name: rwcommunityd7g$v
+              authorization: read-write

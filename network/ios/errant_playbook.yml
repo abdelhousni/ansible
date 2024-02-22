@@ -1,0 +1,17 @@
+- name: Display Cisco IOS XE information
+  host: ios
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: Ensure commands are run
+      cisco.ios.ioscommand:
+        commands:
+          - show version
+          - show ip int brief
+        register: ios_output
+
+    - name: Ensure captured info is displayed
+      debug:
+        var: ios_output

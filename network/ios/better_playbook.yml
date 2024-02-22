@@ -1,0 +1,17 @@
+- name: Display Cisco IOS XE information
+  hosts: ios
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: Ensure commands are run
+      register: ios_output
+      cisco.ios.ios_command:
+        commands:
+          - show version
+          - show ip int brief
+
+    - name: Ensure captured info is displayed
+      ansible.builtin.debug:
+        var: ios_output

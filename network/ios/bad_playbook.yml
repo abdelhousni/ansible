@@ -1,0 +1,12 @@
+- hosts: ios
+  become: true
+  tasks:
+    - cisco.ios.ios_facts:
+      when: ansible_network_os == 'ios'
+    - ios_command:
+        commands:
+          - show version
+          - show ip int brief
+      register: ios_output
+    - debug:
+        var: ios_output
