@@ -1,6 +1,10 @@
 - name: Configure login banners
   hosts: ios
   gather_facts: false
+  
+  vars:
+
+    login_banner: !!! This system is managed by Ansible and local changes are subject to being replaced !!!
 
   tasks:
 
@@ -8,7 +12,7 @@
       notify: Ensure changes are saved 
       cisco.ios.ios_banner:
         banner: login
-        text: Managed by Ansible Automation Platform
+        text: "{{ login_banner }}" 
         state: present
 
   handlers:

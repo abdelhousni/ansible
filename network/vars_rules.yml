@@ -1,0 +1,32 @@
+Good examples:
+
+  - example1:
+
+      my_interface: GigabitEthernet1
+
+
+    To reference this variable use: {{ my_interface }}
+
+  - example2:
+
+      my_interfaces:
+        - GigabitEthernet1
+        - GigabitEthernet2
+        - GigabitEthernet3
+        - GigabitEthernet4
+
+    This is an array of values and is good for looping, to reference GigabitEthernet2 use: {{ my_interfaces[1] }}
+
+  - example3:
+
+      my_interfaces:
+        - name: GigabitEthernet1
+          description: Managed by Ansible
+          enabled: true
+          ipv4: 172.25.150.10/24
+
+    This is a dictionary with a hash table, to access ipv4 use: {{ my_interfaces[0]['ipv4'] }}
+
+Bad example:
+
+  port: 443
