@@ -2,10 +2,6 @@
   hosts: ios
   gather_facts: false
   
-  vars:
-
-    login_banner: !!! This system is managed by Ansible and local changes are subject to being replaced !!!
-
   tasks:
 
     - name: Ensure banner is configured on IOS devices
