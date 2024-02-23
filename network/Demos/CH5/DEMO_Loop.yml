@@ -23,24 +23,23 @@
       when: item == inventory_hostname
 
     - name: Display Variable for single element (Data Value)
+      when: item == inventory_hostname
+      loop: "{{ interfaces | list }}"
       ansible.builtin.debug:
         var: interfaces[item] 
-      loop: "{{ interfaces | list }}"
-      when: item == inventory_hostname
 
     - name: Accessing Values for Configuration from a List
+      when: item == inventory_hostname
+      loop: "{{ interfaces | list }}"
       ansible.builtin.debug:
         msg: |
-          "I'm configuring an interface on {{ inventory_hostname }}.
-          The interface names are - {{ interfaces[item]| map(attribute='name') }}.
-          The IP Configured IP Addresses are - {{ interfaces[item]| map (attribute='ipv4') }}."
-      loop: "{{ interfaces | list }}"
-      when: item == inventory_hostname
+          "Inventory host: {{ inventory_hostname }}
+         Interfaces available: {{ interfaces[item]| map(attribute='name') }}.
+        IP addresses: {{ interfaces[item]| map (attribute='ipv4') }}."
 
     - name: Accessing a specific Value for Configuration from a List
+      loop: "{{ interfaces[inventory_hostname] }}"
       ansible.builtin.debug:
         msg: |
-          "I'm configuring an interface on {{ inventory_hostname }}.
-          I'm configuring the interface named {{ item['name'] }},
-          with the IP Address {{ item['ipv4'] }}.
-      loop: "{{ interfaces[inventory_hostname] }}"
+          "Inventory host: {{ inventory_hostname }}
+          Interface {{ item['name'] }} will have IP Address {{ item['ipv4'] }}."
