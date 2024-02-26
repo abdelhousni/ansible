@@ -1,0 +1,15 @@
+- name: Configure DNS
+  ansible.builtin.import_playbook: configure_dns.yml
+
+- name: Configure NTP
+  ansible.builtin.import_playbook: configure_ntp.yml
+
+- name: Configure SNMP
+  ansible.builtin.import_playbook: configure_snmp.yml
+
+- name: Configure L3 interfaces
+  ansible.builtin.import_playbook: configure_l3.yml
+
+- name: Configure Backup
+  ansible.builtin.import_playbook: configure_backup.yml
+

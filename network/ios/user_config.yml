@@ -1,0 +1,32 @@
+- name: Configure IOS XE Users 
+  hosts: ios
+  gather_facts: false
+  become: true
+  no_log: true
+
+  vars:
+
+    my_users:
+
+      ansible:
+        hash_type: 5
+        hashed_password: "$IjvDh1wt$O6ceAhpuYesiPJh.s2weQ1"
+        user_state: present
+
+      netops:
+        hash_type: 5
+        hashed_password: "$/bqwREWG$0zUXcphlYOll0anjs/tEs1"
+        user_state: present
+
+  tasks:
+
+    - name: Ensure user is managed
+      when: my_users is defined
+      loop: "{{ lookup('dict', my_users) }}"
+      cisco.ios.ios_user:
+        name: "{{ item['key'] }}"
+        hashed_password:
+          type: "{{ item['value']['hash_type'] }}"
+          value: "{{ item['value']['hashed_password'] }}"
+        update_password: always
+        state: "{{ item['value']['user_state'] }}"

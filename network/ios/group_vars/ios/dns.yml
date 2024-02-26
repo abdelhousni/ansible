@@ -1,0 +1,5 @@
+my_search:
+  - lab.example.com
+  - example.com
+my_dns:
+  - 172.25.250.220

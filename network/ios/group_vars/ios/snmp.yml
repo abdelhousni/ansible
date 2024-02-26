@@ -1,0 +1,7 @@
+my_location: Westford, MA 
+my_contact: 'Network Engineering | neteng@example.com'
+my_communities:
+  - name: rocommunity2n4g!
+    ro: true
+  - name: rwcommunityd7g$v
+    rw: true

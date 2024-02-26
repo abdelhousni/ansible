@@ -1,0 +1,37 @@
+- name: Jinja Filters and Processing
+  hosts: localhost
+  gather_facts: true
+
+  vars:
+    ip_addresses:
+      - 192.168.0.1
+      - 192.168.55.256
+      - 192.5.6.aa
+      - 172.25.250.9/24
+
+  tasks:
+    - name: Display variable types
+      ansible.builtin.debug:
+        var: ip_addresses | type_debug
+
+    - name: Display variable values
+      ansible.builtin.debug:
+        var: ip_addresses
+
+    - name: Display Valid IP Addresses 
+      when: item | ansible.utils.ipaddr('host')
+      loop: "{{ ip_addresses }}"
+      ansible.builtin.debug:
+        msg: "{{ item | ansible.utils.ipaddr('host') }} is a valid IP Address"
+
+    - name: Display Non-Valid IP Addresses 
+      when: item | ansible.utils.ipaddr('host') == false
+      loop: "{{ ip_addresses }}"
+      ansible.builtin.debug:
+        msg: "{{ item }} is not a valid IP Address"
+
+    - name: Display Valid IP Addresses and Netmask
+      when: item | ansible.utils.ipaddr('host')
+      loop: "{{ ip_addresses }}"
+      ansible.builtin.debug:
+        msg: "{{ item | ansible.utils.ipaddr('host') }} is a valid IP Address and has a netmask of {{ item | ansible.utils.ipaddr('netmask') }}"
