@@ -1,0 +1,27 @@
+galaxy_info:
+  author: Ricardo da Costa 
+  description: Backup network devices 
+  company: Red Hat
+
+  issue_tracker_url: https://gitlab.com/rgdacosta/ansible
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.9
+
+  platforms:
+   - name: IOS XE
+     versions:
+       - all
+   - name: Junos
+     versions:
+       - all
+
+  galaxy_tags:
+    - backup
+    - cisco
+    - ios
+    - junipernetworks
+    - junos
+
+dependencies: []

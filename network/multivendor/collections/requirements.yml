@@ -1,0 +1,9 @@
+collections:
+
+  - name: network.ospf 
+
+  - name: network.bgp
+    version: 2.0.0
+
+  - name: network.vpn
+    version: 1.3.0
