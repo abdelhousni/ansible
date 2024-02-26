@@ -1,4 +1,0 @@
----
-- name: Create IOS backup files
-  ansible.builtin.include_tasks:
-    file: tasks/backup_ios.yml
