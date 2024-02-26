@@ -1,4 +1,3 @@
----
 - name: Juniper Junos ACL configuration
   junipernetworks.junos.junos_acls:
     state: overridden
