@@ -1,6 +1,6 @@
 - name: Ensure DNS is configured
   loop: "{{ my_dns }}"
   loop_control:
-    loop_var: my_dns
+    loop_var: my_dns_item
   junipernetworks.junos.junos_system:
-    name_servers: "{{ item }}" 
+    name_servers: "{{ my_dns_item }}"

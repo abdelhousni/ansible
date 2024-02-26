@@ -3,17 +3,17 @@
   gather_facts: false
 
   tasks:
-
-    - name: Ensure variables are included
-      when: ansible_network_os == 'junipernetworks.junos.junos'
-      ansible.builtin.include_vars:
+    - name: Ensure variables are included for junos
+      loop:
         - vars/dns.yml
         - vars/snmp.yml
+      when: ansible_network_os == 'junipernetworks.junos.junos'
+      ansible.builtin.include_vars: "{{ item }}"
 
-    - name: Ensure tasks are included
+    - name: Ensure tasks are included for junos
+      when: ansible_network_os == 'junipernetworks.junos.junos'
       loop:
         - tasks/enable_netconf.yml
         - tasks/enable_dns.yml
         - tasks/enable_snmp.yml
-      when: ansible_network_os == 'junipernetworks.junos.junos'
       ansible.builtin.include_tasks: "{{ item }}"
