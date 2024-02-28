@@ -1,0 +1,8 @@
+- name: Ensure tasks are included for junos
+  when: ansible_network_os == 'junipernetworks.junos.junos'
+  loop:
+    - tasks/enable_netconf.yml
+    - tasks/enable_dns.yml
+    - tasks/enable_snmp.yml
+    - tasks/enable_acl.yml
+  ansible.builtin.include_tasks: "{{ item }}"

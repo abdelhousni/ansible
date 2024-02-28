@@ -4,12 +4,11 @@
 
   tasks:
     - name: Ensure variables are included for junos
-      loop:
-        - vars/dns.yml
-        - vars/snmp.yml
-        - vars/acl.yml
       when: ansible_network_os == 'junipernetworks.junos.junos'
-      ansible.builtin.include_vars: "{{ item }}"
+      ansible.builtin.include_vars:
+        dir: vars/
+        extensions:
+          - 'yml'
 
     - name: Ensure tasks are included for junos
       when: ansible_network_os == 'junipernetworks.junos.junos'

@@ -1,0 +1,7 @@
+- name: Configure junos devices
+  hosts: junos
+  gather_facts: true
+
+  roles:
+    - role: setup_junos
+      

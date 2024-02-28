@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 6484 bytes
+Current configuration : 6542 bytes
 !
-! Last configuration change at 12:25:13 UTC Mon Feb 26 2024 by student
+! Last configuration change at 10:15:20 UTC Tue Feb 27 2024 by student
 !
 version 17.6
 service timestamps debug datetime msec
@@ -32,6 +32,8 @@ no aaa new-model
 !
 !
 ip name-server 172.25.250.220
+ip domain list lab.example.com
+ip domain list example.com
 ip domain name lab.example.com
 !
 !
@@ -120,7 +122,7 @@ crypto pki certificate chain SLA-TrustPoint
   D697DF7F 28
   	quit
 !
-license udi pid C8000V sn 9GSX0HU51WL
+license udi pid C8000V sn 97HGKZG151S
 diagnostic bootup level minimal
 memory free low-watermark processor 68460
 !

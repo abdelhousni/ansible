@@ -1,0 +1,45 @@
+- name: Configure junos devices
+  hosts: junos
+  gather_facts: true
+
+  pre_tasks:
+
+    - name: This task runs before roles and tasks
+      notify: pre_tasks handler
+      changed_when: true
+      ansible.builtin.debug:
+        msg: I am the very first task to run
+
+  roles:
+
+    - role: setup_junos
+
+  tasks:
+
+    - name: This task runs after pre_tasks and roles
+      notify: tasks handler
+      changed_when: true
+      ansible.builtin.debug:
+        msg: I run after pre_tasks, pre_tasks' handlers, roles, and the handlers for roles
+
+  post_tasks:
+
+    - name: This task runs after pre_tasks, roles, and the handlers for roles and tasks
+      notify: post_tasks handler
+      changed_when: true
+      ansible.builtin.debug:
+        msg: I run after pre_tasks, pre_tasks' handlers, roles, handlers for roles, and post_tasks
+
+  handlers:
+
+    - name: pre_tasks handler
+      ansible.builtin.debug:
+        msg: I am a pre_tasks handler
+
+    - name: tasks handler:
+      ansible.builtin.debug:
+        msg: I am a tasks handler
+      
+    - name: post_tasks handler
+      ansible.builtin.debug:
+        msg: I am a post_tasks handler
