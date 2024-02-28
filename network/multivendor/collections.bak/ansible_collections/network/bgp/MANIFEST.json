@@ -1,0 +1,31 @@
+{
+ "collection_info": {
+  "namespace": "network",
+  "name": "bgp",
+  "version": "2.0.0",
+  "authors": [
+   "Rohit Thakur (rohitthakur2590)"
+  ],
+  "readme": "README.md",
+  "tags": [],
+  "description": "Ansible Network BGP enables user to manage the BGP resources independent of platforms and perform BGP health checks.",
+  "license": [],
+  "license_file": "LICENSE",
+  "dependencies": {
+   "ansible.netcommon": ">=4.1.0",
+   "ansible.utils": ">=2.7.0"
+  },
+  "repository": "https://github.com/redhat-cop/network.bgp",
+  "documentation": null,
+  "homepage": null,
+  "issues": "https://github.com/redhat-cop/network.bgp/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "aa10636e22e313c97e7075da710e0ceb958ffd63b5437e21511c41c125dba332",
+  "format": 1
+ },
+ "format": 1
+}

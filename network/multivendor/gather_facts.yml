@@ -1,0 +1,19 @@
+- name: Gather ios facts
+  ansible.builtin.import_playbook: ios_facts.yml
+
+- name: Gather junos facts
+  ansible.builtin.import_playbook: junos_facts.yml
+
+- name: Gather eos facts
+  ansible.builtin.import_playbook: eos_facts.yml
+
+- name: Build network report
+  hosts: workstation.lab.example.com
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: Build the report
+      ansible.builtin.include_role:
+        name: build_report_network

@@ -1,0 +1,45 @@
+download_url: https://hub.lab.example.com/api/galaxy/v3/plugin/ansible/content/rh-certified/collections/artifacts/ansible-utils-2.11.0.tar.gz
+format_version: 1.0.0
+name: utils
+namespace: ansible
+server: https://hub.lab.example.com/api/galaxy/content/rh-certified/
+signatures:
+- pubkey_fingerprint: 39B5D759361A97464C564A8FE1A4BD708A828AAD
+  pulp_created: '2023-10-27T09:36:04.812871Z'
+  signature: '-----BEGIN PGP SIGNATURE-----
+
+    Version: GnuPG v1
+
+
+    iQIcBAABCAAGBQJk+gSiAAoJEOGkvXCKgoqtdjMP/jKxUw6sjzr6zDcoOl96HcB6
+
+    F2VaUF6w9U/UjqHgpxncWMfZqQdu+9N+bfJ4BdWv8KdQ4uYBGmia4admY4ZcWiPz
+
+    qc5Tdc0GGQikkUt6ySNLhyNwY/HOyMrRbCw3uNPKBeR4qBEFAw7bXxyLjOuDTLgL
+
+    nk1nQADcLIX5oInaBp+vmZRyfVB3UflKUMYI8Ku5uaaGg3/iojGSLU7VHRZfBJkn
+
+    8/WtIwgQjQ906aQQYc0jV1HEn1TezSNqhqpQEXAOgs+lcaAOsV4UxwYwJNV+CzXl
+
+    riTBj6hBXofGYtmdRtqbEvZx2WerCBewQ5DDtlDm1Icgj6xuK8x87OTMKOyeq5Bi
+
+    DnZVztr/sFaNFaRcBlC+HkhO7IS1ErgHJZAPZR/qXlGAQC7kv/T4wyRn9mJg19yP
+
+    NVmH91hK6A4wZkp4ZpLu7jBvWt0do4aMxNKVygOsGO5xF+ezmnA1CEJzJ5lE5JeN
+
+    dicp+ACWcv8iDxThC39yOm2PvYorR7NHWZCdTpEmA8gSLd+dTCccYGM2ilnmcDkc
+
+    Koj9xCiIeKkHLRWfTQgqXNI+5Pvqdxvi7so1s4uqg74LXDs7e97b01Co4x1eDF/L
+
+    nyW7qilrapAn1U61Nz2kMeyXRkWe1TFAXuy7EdknO6oUeNK8lLuX8JpAHi9d/m+/
+
+    jdEQXlggyb0GihtEQTH9
+
+    =xoPZ
+
+    -----END PGP SIGNATURE-----
+
+    '
+  signing_service: null
+version: 2.11.0
+version_url: /api/galaxy/content/rh-certified/v3/plugin/ansible/content/rh-certified/collections/index/ansible/utils/versions/2.11.0/

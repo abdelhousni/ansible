@@ -1,0 +1,432 @@
+{
+ "files": [
+  {
+   "name": ".",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": ".github",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": ".github/workflows",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": ".github/workflows/tests.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "43dfd60b2f7eda29d2096ef385388046fe40e918f31e9ea7b4dbed56dedc88e2",
+   "format": 1
+  },
+  {
+   "name": "LICENSE",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+   "format": 1
+  },
+  {
+   "name": "bindep.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1aa5441ef7888dcf64d764d2623b68548dad690f16a7fdae2f9d0cab1edca201",
+   "format": 1
+  },
+  {
+   "name": "changelogs",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "changelogs/config.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "6202d7464c7e3fe997ebba79572c58bc08627055fceca3244e5348c07295bc20",
+   "format": 1
+  },
+  {
+   "name": "changelogs/changelog.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e12fa486598314cb050a336c99c396a96d66a53e287f028f164235cdc822fc23",
+   "format": 1
+  },
+  {
+   "name": "cspell.config.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2f8f178f2283c35b7f5cf0d3a7078e8c5f27b8ded30b78b2a01b589d3e0d92d3",
+   "format": 1
+  },
+  {
+   "name": "meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "meta/runtime.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "55777ab8e0b3e1ebb562adb9442b08f1b70374e6d2e62edc711f596403444a50",
+   "format": 1
+  },
+  {
+   "name": "pyproject.toml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3fabace21f09ea3f72b88db830a98fa97a5c8b10872590aef05ec32a1d283656",
+   "format": 1
+  },
+  {
+   "name": "requirements.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "format": 1
+  },
+  {
+   "name": "roles",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/.travis.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "78d857103340db3d01f6ef7c14f6d269f6d34c48097adcea49736b17b80b1389",
+   "format": 1
+  },
+  {
+   "name": "roles/run/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "76b718a8228f917e533dcd902ed9aa329ce54abc95f2f067110b2e1a8e2cfa76",
+   "format": 1
+  },
+  {
+   "name": "roles/run/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "08f4cb2f09de3d84c3e6b4b71cc79b6da1137b2343cb270a2646f8bc30747b86",
+   "format": 1
+  },
+  {
+   "name": "roles/run/handlers",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/handlers/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a8a84f7575d4f9631025acfd17ce2d0b9d2a97b8dc7e50a9b4ff05eef7347d65",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/deploy.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1d29dfeea9b62bda03e1b938a4910c70cc56e85c2046742932824017cb146840",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/detect.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "d959132bdc2610f43f57e7f25630774e8fc6fc12852dadfe3bb9d442522a3ab9",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/gather.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "41bd3d70ed1a635dc366eba6ae99ff3abb686df939809c135402b1f1a382050f",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/eos.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "40cba8a7dbe8fdb2fa406d292dde8ee4b9f1cf791c49ef4ab73f2a8b71c6fc76",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/ios.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "40cba8a7dbe8fdb2fa406d292dde8ee4b9f1cf791c49ef4ab73f2a8b71c6fc76",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/iosxr.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "5b7472cb51e41ff5970cc792e5d5dee3f047a77147c62de472115a23a4bdd26f",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/junos.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "18f4f7b77e3f32655a69f3330352589f119ff8de4ab92d314c500d1ff8f9484e",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/nxos.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "847a7d23324ee4b4b78bc61c68a1c4085a65ccfaeb78513bd5a6d81fe0cb5220",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/eos_show_ip_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "52b8ac8e567c080f5f9516d89c3499ce016e05ec16a60957d63ab434568be944",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/eos_show_ipv6_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "52b8ac8e567c080f5f9516d89c3499ce016e05ec16a60957d63ab434568be944",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/ios_show_ip_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "62a09b1c75e75e00ad9bc9cc6517c2ad5aa212ed6cdf3d85a824db8b69400aab",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/ios_show_ipv6_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "46350fdb2557ad31691f3f7729edafbaedf9b2af8ddb3fc754930847e03f7083",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/iosxr_show_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "dc0e0fe75d84433d70bfc167c57427dc0a9c761434e1469a5a0f8b617a2a1450",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/iosxr_show_ospfv3_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "d63a450175297563d1dff85465341fc99d78b60135db4695b66df582338cbd4d",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/junos_show_ospf3_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f6bc2502549ca2686cf2488cabd21ddeb9002e835514bed9c62ba0ce9a8e987f",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/junos_show_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f6bc2502549ca2686cf2488cabd21ddeb9002e835514bed9c62ba0ce9a8e987f",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/nxos_show_ip_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "62a09b1c75e75e00ad9bc9cc6517c2ad5aa212ed6cdf3d85a824db8b69400aab",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/nxos_show_ipv6_ospfv3_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "62a09b1c75e75e00ad9bc9cc6517c2ad5aa212ed6cdf3d85a824db8b69400aab",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/vyos_show_ip_ospf_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "dc0e0fe75d84433d70bfc167c57427dc0a9c761434e1469a5a0f8b617a2a1450",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/templates/vyos_show_ipv6_ospfv3_neighbor.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "7796ce5839aa1d52cb6b3d61102fa23ff3bdef21ea08b214bac35e8a640a797b",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_checks/vyos.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "847a7d23324ee4b4b78bc61c68a1c4085a65ccfaeb78513bd5a6d81fe0cb5220",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/list.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0bec28185b5a73f63f970a99c8f1e8cd86a72976d1ae4d5afa2bddc34423b687",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/persist.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "868f4ce02df536af21eebd9018272654054de3c83a6685a88e560a0d076d4253",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/remediate.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c16add6d486680b470d6e95b979c290c8ad09a43bb5463abc04b1cacd7b05c82",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/includes/health_check.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2127b63863700bfb00f9559651dfd4fc2a78d0b7fb5f6b3e3d5927f8d9d07bf1",
+   "format": 1
+  },
+  {
+   "name": "roles/run/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "84a171eb6a6b7b847f99d8f83c24d488ea30855b5b9f07199bf29a8a8aff6608",
+   "format": 1
+  },
+  {
+   "name": "roles/run/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/run/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e3223b20ae1fcfa50431e8c7b5003fbb73aa30c56137eabd97e136428570d20d",
+   "format": 1
+  },
+  {
+   "name": "test-requirements.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "252dc496236f786a9c503a0e569eff6990316b93d55bd58bf4a34cde2404c59a",
+   "format": 1
+  },
+  {
+   "name": "tox.ini",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9039261a0f29438fd967a63979a9d2dd8fadd3632bc775a7ff98ca2c6a8a7f4a",
+   "format": 1
+  },
+  {
+   "name": "CHANGELOG.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "d2e2ae39fab8faa89e2f1a13d1010c6e569e4878b9c8e08ff2741786b55a55af",
+   "format": 1
+  },
+  {
+   "name": "README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "eb8a7ffeb0afb02e9e579834323e756e92954013443e6f786439f77bff3a5549",
+   "format": 1
+  },
+  {
+   "name": "filter_plugins",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "filter_plugins/health_check_view.py",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "60478e324b5840ea69e3a2abf5d45205f9b68d17734555e86710b6c6507085b6",
+   "format": 1
+  },
+  {
+   "name": "site.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f72ca7cef7caeb7a70ed0b87783c25f3a7e4c5e45ab271eebfa25b5293ec4715",
+   "format": 1
+  }
+ ],
+ "format": 1
+}

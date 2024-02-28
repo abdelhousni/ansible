@@ -1,0 +1,6 @@
+collections:
+
+  - name: network.ospf 
+
+  - name: network.bgp
+    version: 2.0.0

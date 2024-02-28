@@ -1,0 +1,27 @@
+- name: Collect and Store Network Device Facts
+  hosts: eos
+  gather_facts: false
+
+  tasks:
+
+    - name: Gather EOS facts
+      when: ansible_network_os == "arista.eos.eos"
+      register: device_facts
+      arista.eos.eos_facts:
+        gather_subset:
+          - all
+        gather_network_resources:
+          - all
+
+    - name: Ensure device_properties/ exists
+      run_once: true
+      ansible.builtin.file:
+        path: device_properties
+        state: directory
+
+    - name: Ensure facts are stored
+      ansible.builtin.copy:
+        dest: "device_properties/{{ inventory_hostname }}.yml"
+        content: "{{ device_facts | to_nice_yaml }}"
+
+

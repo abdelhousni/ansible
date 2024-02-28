@@ -1,0 +1,14 @@
+[defaults]
+inventory = ./my_inventory/
+#collections_paths = ./collections/
+
+[galaxy]
+server_list = validated_repo, rh-certified_repo
+
+[galaxy_server.validated_repo]
+url=https://hub.lab.example.com/api/galaxy/content/validated/
+token=566d920eb889dba5e4eea4f67cc55b5747dd3ebf
+
+[galaxy_server.rh-certified_repo]
+url=https://hub.lab.example.com/api/galaxy/content/rh-certified/
+token=566d920eb889dba5e4eea4f67cc55b5747dd3ebf

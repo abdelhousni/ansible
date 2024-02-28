@@ -1,0 +1,8 @@
+download_url: https://hub.lab.example.com/api/galaxy/v3/plugin/ansible/content/validated/collections/artifacts/network-bgp-2.0.0.tar.gz
+format_version: 1.0.0
+name: bgp
+namespace: network
+server: https://hub.lab.example.com/api/galaxy/content/validated/
+signatures: []
+version: 2.0.0
+version_url: /api/galaxy/content/validated/v3/plugin/ansible/content/validated/collections/index/network/bgp/versions/2.0.0/

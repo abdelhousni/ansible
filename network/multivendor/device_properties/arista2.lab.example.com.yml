@@ -1,0 +1,117 @@
+ansible_facts:
+    ansible_net_all_ipv4_addresses:
+    - 172.25.250.25
+    ansible_net_all_ipv6_addresses: []
+    ansible_net_api: cliconf
+    ansible_net_config: "! Command: show running-config\n! device: arista2.lab.example.com
+        (vEOS-lab, EOS-4.30.1F)\n!\n! boot system flash:/vEOS-lab.swi\n!\nno aaa root\n!\nusername
+        student privilege 15 role network-admin nopassword\nusername student ssh-key
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGtUW3ismHyuCW4CDdTVOOOq6aySdtYenXFWWx7HJa4VTepkG00aaLId9ocra10hc+MB0GTJMCyabDv3i8NKdi6GDH/aOLVsp/Ewy8DEzZMBlJDCt4v2i4/wU4liw6KgEFkZs+5hnqU8d4QzldyGJ5onr+AGvFOKG68CS0BBl40Z1twf1HhCyx8k6nzD2ovlkxWRFZKPAFrtPCBVvQDkOfVFZF+lwzaSztgAjbFZ4A9jqQyUYx4kOJ5DtRef36ucdUdVQale0+8lICl7/gb142SPpYfhxe88/BJScLPRjvVNeu1TxRmoHtVazqnAoRxQYAn2MoI6AG+w6QuZf8f7aL
+        LabGradingKey\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing
+        protocols model multi-agent\n!\nhostname arista2.lab.example.com\nip name-server
+        vrf default 172.25.250.220\n!\nspanning-tree mode mstp\n!\nsystem l1\n   unsupported
+        speed action error\n   unsupported error-correction action error\n!\ninterface
+        Ethernet1\n!\ninterface Management1\n   ip address 172.25.250.25/24\n!\nno
+        ip routing\n!\nend"
+    ansible_net_filesystems:
+    - 'file:'
+    - 'flash:'
+    - 'system:'
+    ansible_net_fqdn: arista2.lab.example.com
+    ansible_net_gather_network_resources:
+    - l3_interfaces
+    - lldp_global
+    - interfaces
+    - lag_interfaces
+    - lldp_interfaces
+    - acls
+    - bgp_address_family
+    - logging_global
+    - prefix_lists
+    - acl_interfaces
+    - ospfv2
+    - l2_interfaces
+    - hostname
+    - lacp
+    - route_maps
+    - ospfv3
+    - ntp_global
+    - ospf_interfaces
+    - static_routes
+    - vlans
+    - bgp_global
+    - lacp_interfaces
+    - snmp_server
+    ansible_net_gather_subset:
+    - interfaces
+    - config
+    - hardware
+    - default
+    ansible_net_hostname: arista2.lab.example.com
+    ansible_net_image: flash:/vEOS-lab.swi
+    ansible_net_interfaces:
+        Ethernet1:
+            bandwidth: 1000000000
+            description: ''
+            duplex: duplexFull
+            ipv4: {}
+            lineprotocol: up
+            macaddress: 52:54:00:a5:fd:f5
+            mtu: 9214
+            operstatus: connected
+            type: bridged
+        Management1:
+            bandwidth: 1000000000
+            description: ''
+            duplex: duplexFull
+            ipv4:
+                address: 172.25.250.25
+                masklen: 24
+            lineprotocol: up
+            macaddress: 52:54:00:97:dd:06
+            mtu: 1500
+            operstatus: connected
+            type: routed
+    ansible_net_memfree_mb: 10564.01171875
+    ansible_net_memtotal_mb: 11862.55859375
+    ansible_net_model: vEOS-lab
+    ansible_net_neighbors: {}
+    ansible_net_python_version: 3.9.13
+    ansible_net_serialnum: 3B471310D0D0A907C763FAC300559B3A
+    ansible_net_system: eos
+    ansible_net_version: 4.30.1F
+    ansible_network_resources:
+        acl_interfaces:
+        -   name: Ethernet1
+        -   name: Management1
+        bgp_address_family: []
+        bgp_global: []
+        hostname:
+            hostname: arista2.lab.example.com
+        interfaces:
+        -   enabled: true
+            name: Ethernet1
+        -   enabled: true
+            name: Management1
+        l2_interfaces:
+        -   name: Ethernet1
+        -   name: Management1
+        l3_interfaces:
+        -   name: Ethernet1
+        -   ipv4:
+            -   address: 172.25.250.25/24
+            name: Management1
+        lacp: {}
+        lag_interfaces: []
+        lldp_global: {}
+        logging_global: {}
+        ntp_global: {}
+        ospf_interfaces:
+        -   name: Ethernet1
+        -   name: Management1
+        ospfv2: {}
+        ospfv3: []
+        prefix_lists: []
+        snmp_server: {}
+changed: false
+failed: false

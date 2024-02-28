@@ -1,0 +1,31 @@
+{
+ "collection_info": {
+  "namespace": "network",
+  "name": "ospf",
+  "version": "1.0.0",
+  "authors": [
+   "Rohit Thakur (rohitthakur2590)"
+  ],
+  "readme": "README.md",
+  "tags": [],
+  "description": "Ansible Network OSPF enables user to manage the OSPF resources independent of platforms and perform OSPF health checks.",
+  "license": [],
+  "license_file": "LICENSE",
+  "dependencies": {
+   "ansible.netcommon": ">=4.1.0",
+   "ansible.utils": ">=2.7.0"
+  },
+  "repository": "https://github.com/redhat-cop/network.ospf",
+  "documentation": null,
+  "homepage": null,
+  "issues": "https://github.com/redhat-cop/network.ospf/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "60a197f9908868e1e3189a71e374bd0a0872368bba3a221fcc2a63fd273851bc",
+  "format": 1
+ },
+ "format": 1
+}

@@ -9,6 +9,9 @@ ansible-navigator:
     image: hub.lab.example.com/ee-supported-rhel8:latest
     pull:
       policy: missing
+    environment-variables:
+      set:
+        ANSIBLE_STDOUT_CALLBACK: debug
   
   mode: stdout
 

@@ -1,30 +1,10 @@
-[vms]
-controller
-utility
-workstation
-hub
-git
-
-[vms:vars]
-ansible_network_os=none
+workstation.lab.example.com
 
 [ios]
 iosxe[1:2].lab.example.com
 
-[ios:vars]
-ansible_network_os=ios
-ansible_connection=ansible.netcommon.network_cli
-ansible_become=true
-ansible_become_method=enable
-ansible_user=student
-ansible_ssh_private_key_file=~/.ssh/lab_rsa
+[eos]
+arista[1:2].lab.example.com
 
 [junos]
-junos1.lab.example.com
-junos2.lab.example.com
-
-[junos:vars]
-ansible_user=student
-ansible_connection=ansible.netcommon.netconf
-ansible_network_os=junipernetworks.junos.junos
-ansible_ssh_private_key_file=~/.ssh/lab_rsa
+junos[1:2].lab.example.com

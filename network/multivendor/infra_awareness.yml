@@ -1,0 +1,71 @@
+- name: Collect and Store Network Device Facts
+  hosts: 
+    - ios
+    - junos
+    - eos
+  gather_facts: false
+
+  tasks:
+
+    - name: Gather ios facts
+      when: ansible_network_os == "cisco.ios.ios"
+      register: iosfacts
+      cisco.ios.ios_facts:
+        gather_subset: all
+        gather_network_resources: all
+
+    - name: Gather junos facts
+      when: ansible_network_os == "junipernetworks.junos.junos"
+      register: junosfacts
+      junipernetworks.junos.junos_facts:
+        gather_subset: all
+        gather_network_resources:
+          - interfaces
+          - lacp
+          - lacp_interfaces
+          - lag_interfaces
+          - l2_interfaces
+          - l3_interfaces
+          - lldp_global
+          - lldp_interfaces
+          - vlans
+
+    - name: Gather EOS facts
+      when: ansible_network_os == "arista.eos.eos"
+      register: eosfacts
+      arista.eos.eos_facts:
+        gather_subset: all
+        gather_network_resources: all
+
+    - name: Ensure device_properties/ exists
+      run_once: true
+      ansible.builtin.file:
+        path: device_properties
+        state: directory
+
+    - name: Ensure facts are stored
+      loop:
+        - "{{ iosfacts }}"
+        - "{{ junosfacts }}"
+        - "{{ eosfacts }}"
+      ansible.builtin.copy:
+        dest: "device_properties/{{ inventory_hostname }}.yml"
+        content: "{{ item | to_nice_yaml }}"
+
+    - name: Build the report
+      ansible.builtin.include_role:
+        name: build_report_network
+        apply:
+          delegate_to: workstation.lab.example.com 
+          run_once: true
+
+    - name: Print URL
+      run_once: true
+      ansible.builtin.debug:
+        msg: |
+
+          ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅
+
+          ✅    Access your network report at http://workstation.lab.example.com:8080/network.html  ✅
+
+          ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅    ✅
