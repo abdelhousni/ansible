@@ -19,33 +19,33 @@ ansible_facts:
     - 'system:'
     ansible_net_fqdn: arista1.lab.example.com
     ansible_net_gather_network_resources:
-    - l3_interfaces
-    - lldp_global
-    - interfaces
-    - lag_interfaces
-    - lldp_interfaces
-    - acls
-    - bgp_address_family
-    - logging_global
-    - prefix_lists
     - acl_interfaces
-    - ospfv2
-    - l2_interfaces
-    - hostname
-    - lacp
-    - route_maps
     - ospfv3
-    - ntp_global
     - ospf_interfaces
+    - hostname
+    - ntp_global
+    - lag_interfaces
+    - ospfv2
+    - acls
+    - logging_global
+    - l3_interfaces
+    - l2_interfaces
+    - bgp_address_family
+    - route_maps
+    - lldp_global
+    - lldp_interfaces
+    - lacp
     - static_routes
+    - interfaces
     - vlans
-    - bgp_global
     - lacp_interfaces
+    - bgp_global
     - snmp_server
+    - prefix_lists
     ansible_net_gather_subset:
     - interfaces
-    - config
     - hardware
+    - config
     - default
     ansible_net_hostname: arista1.lab.example.com
     ansible_net_image: flash:/vEOS-lab.swi
@@ -72,7 +72,7 @@ ansible_facts:
             mtu: 1500
             operstatus: connected
             type: routed
-    ansible_net_memfree_mb: 10565.28515625
+    ansible_net_memfree_mb: 10575.921875
     ansible_net_memtotal_mb: 11862.55859375
     ansible_net_model: vEOS-lab
     ansible_net_neighbors: {}

@@ -2,7 +2,6 @@
   hosts:
     - junos
     - ios
-
   gather_facts: false
 
   tasks:

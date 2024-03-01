@@ -1,0 +1,35 @@
+- name: Gather common properties of our systems
+  hosts: 
+    - switches:&eos
+    - routers:&ios
+    - loadbalancers:!gtm
+  serial:
+    - 1
+    - 2
+    - 25%
+    - 50%
+  max_fail_percentage: 30
+  gather_facts: true
+
+  tasks:
+
+    - name: General task 1
+      run_once: true
+      ansible.builtin.debug:
+        msg: This is a general task definition for demonstration purporses
+
+    - name: General task 2
+      ansible.builtin.debug:
+        msg: This is a general task definition for demonstration purporses
+
+    - name: General task 3
+      ansible.builtin.debug:
+        msg: This is a general task definition for demonstration purporses
+
+    - name: General task 4
+      ansible.builtin.debug:
+        msg: This is a general task definition for demonstration purporses
+
+    - name: General task 5
+      ansible.builtin.debug:
+        msg: This is a general task definition for demonstration purporses

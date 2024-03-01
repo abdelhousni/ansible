@@ -1,15 +1,17 @@
----
 - name: Configure access lists
   hosts:
     - eos
     - ios
   gather_facts: false
+
   tasks:
-    - name: Deploy Arista configuration
+
+    - name: Ensure Arista configuration is deployed
       when: ansible_network_os == 'arista.eos.eos'
       arista.eos.eos_config:
         src: configs/{{ inventory_hostname }}.cfg
-    - name: Deploy Cisco configuration
+
+    - name: Ensure Cisco configuration is deployed
       when: ansible_network_os == 'cisco.ios.ios'
       cisco.ios.ios_config:
         src: configs/{{ inventory_hostname }}.cfg
