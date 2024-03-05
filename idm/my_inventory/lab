@@ -1,0 +1,24 @@
+[idm]
+idm.lab.example.com
+
+[replicas]
+#replica1.lab.example.com
+replica2.lab.example.com ipareplica_servers=idm.lab.example.com
+
+[clients]
+client.lab.example.com
+
+[idm:vars]
+ipaserver_domain=lab.example.com
+ipaserver_realm=LAB.EXAMPLE.COM
+ipaserver_setup_dns=true
+ipaserver_auto_forwarders=true
+ipaadmin_password=RedHat123^
+ipaadm_password=RedHat123^
+
+[replicas:vars]
+ipareplica_setup_ca=true
+ipareplica_setup_dns=true
+ipareplica_auto_forwarders=true
+ipaadmin_password=RedHat123^
+ipaadm_password=RedHat123^

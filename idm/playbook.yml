@@ -1,0 +1,15 @@
+- name: Certificate request
+  hosts: "{{ my_host }}"
+  become: true
+
+  roles:
+    - rhel-system-roles.certificate
+
+  vars:
+
+    certificate_requests:
+      - name: "{{ my_cert_fqdn }}"
+        dns: "{{ my_cert_fqdn}}"
+        ca: "{{ my_request_type | default('ipa') }}"
+        principal: "{{ my_service | default('HTTP') }}/{{ my_cert_fqdn }}@{{ my_realm | upper }}"
+
