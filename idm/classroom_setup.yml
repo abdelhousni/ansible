@@ -1,0 +1,8 @@
+- name: Setup IDM Server
+  import_playbook: ansible-freeipa/playbooks/install_server.yml
+
+- name: Setup Replicas
+  import_playbook: ansible-freeipa/playbooks/install_replica.yml
+
+- name: Setup Clients
+  import_playbook: ansible-freeipa/playbooks/install_client.yml
