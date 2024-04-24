@@ -9,8 +9,8 @@
      ansible.builtin.assert:
        that:
          - "'RedHat' in ansible_facts['distribution']"
-         - ansible_facts['mounts'] | json_query("[?mount == '/']['size_available']") | first | int > 1073741824
-         - install == 'true'
+         - "ansible_facts['mounts'] | json_query("[?mount == '/']['size_available']") | first | int > 1073741824"
+         - "install == 'true'"
        success_msg: We have found that you are using a Red Hat based OS and have sufficient storage
        fail_msg: Failing because you are not using a Red Hat based OS and you have insufficient storage
 

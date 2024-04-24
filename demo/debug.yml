@@ -3,16 +3,12 @@
   gather_facts: false
   become: false
 
-  vars:
-
-    my_dir: /var/tmp/foo/bar/baz/bongle
-
   tasks:
 
     - name: Ensure directory properties are obtained
       register: properties
       ansible.builtin.stat:
-        path: "{{ my_dir }}"
+        path: "{{ my_dir | default('/var/tmp/foo/bar/baz/bongle') }}"
 
     - name: Assert that directory is in fact a directory
       ansible.builtin.assert:

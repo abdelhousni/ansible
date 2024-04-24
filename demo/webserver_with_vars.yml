@@ -1,0 +1,34 @@
+- name: Ensure webservers are installed
+  hosts: "{{ my_host }}"
+  become: true 
+
+  tasks:
+
+    - name: Ensure software is managed
+      ansible.builtin.dnf:
+        name: "{{ my_webservice }}"
+        state: "{{ my_state }}"
+
+    - name: Ensure webserver is configured with systemd
+      ansible.builtin.service:
+        name: "{{ my_webservice }}"
+        state: "{{ my_systemd_state }}"
+        enabled: "{{ my_systemd_enabled }}"
+
+    - name: Ensure port open in firewall
+      ansible.posix.firewalld:
+        service: "{{ my_fw_service }}"
+        state: "{{ my_fw_state }}"
+        permanent: "{{ my_fw_permanance }}"
+        immediate: "{{ my_fw_immediate }}"
+
+    - name: Ensure stub content is deployed
+      ansible.builtin.copy:
+        content: "{{ my_web_content }}"
+        dest: /var/www/html/index.html
+
+    - name: Ensure fact controller learns
+      ansible.builtin.set_fact:
+        my_webserver: "{{ my_host }}"
+        cacheable: true
+

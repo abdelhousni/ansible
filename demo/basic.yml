@@ -1,0 +1,12 @@
+- name: This is a simple demonstration
+  hosts: all
+
+  tasks:
+
+    - name: This is my first task
+      ansible.builtin.debug:
+        msg: foo
+
+    - name: This is my second task
+      ansible.builtin.debug:
+        var: ansible_hostname

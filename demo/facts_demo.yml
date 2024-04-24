@@ -15,11 +15,13 @@
 
           My Operating System: {{ ansible_facts['distribution'] }}
 
-          My default IPv4 address: {{ ansible_facts['default_ipv4']['address'] }}
+          My default IPv4 address is: {{ ansible_facts['default_ipv4']['address'] }}
 
           My root filesystem has: {{ ansible_facts['mounts'][0]['size_available'] | human_readable }} available
 
           How I am referenced in the inventory is as: {{ inventory_hostname }}
 
           The groups which I am a member of are: {{ group_names | regex_replace("'") | regex_replace("\[") | regex_replace("\]") }}
+
+          The groups which I am a member of are: {{ group_names }}
 
