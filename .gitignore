@@ -1,6 +1,8 @@
 **.swp
 **.log
 **-artifact-*
+**host_vars
+**group_vars
 .ssh
 roles/**
 collections/**

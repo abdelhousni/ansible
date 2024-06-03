@@ -11,3 +11,20 @@ server[a:d]
 
 [rhel:children]
 rhel9
+
+[dev]
+servera
+serverb
+
+[prod]
+serverc
+serverd
+
+[boston]
+servera
+serverc
+
+[london]
+serverb
+serverd
+
