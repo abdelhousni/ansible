@@ -1,0 +1,13 @@
+- name: Update all software packages on RHEL systems
+  hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+
+    - name: Update software
+      when: ansible_facts['distribution']  == "RedHat" and ansible_facts['distribution_major_version'] | int >= 8
+      become: true
+      ansible.builtin.dnf:
+        name: "{{ my_package | default('*') }}"
+        state: latest

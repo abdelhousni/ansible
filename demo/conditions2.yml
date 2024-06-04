@@ -1,0 +1,27 @@
+- name: Conditionals demonstration
+  hosts: servera
+  gather_facts: true
+  become: true
+
+  tasks:
+
+    - name: Ensure fact controller learns for Red Hat
+      when: "'RedHat' in ansible_facts['distribution']"
+      ansible.builtin.set_fact:
+        my_webserver: httpd
+          
+    - name: Ensure fact controller learns for SUSE
+      when: "'SUSE' in ansible_facts['distribution']"
+      ansible.builtin.set_fact:
+        my_webserver: apache2
+
+    - name: Ensure httpd is installed
+      ansible.builtin.package:
+        name: "{{ my_webserver }}"
+        state: latest
+
+    - name: Ensure service is started
+      ansible.builtin.service:
+        name: "{{ my_webserver }}"
+        state: started
+        enabled: true
