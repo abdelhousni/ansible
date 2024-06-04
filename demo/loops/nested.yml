@@ -22,19 +22,19 @@
 
     - name: Ensure users exist
       loop: "{{ beatles }}"
-      user:
+      ansible.builtin.user:
         name: "{{ item }}"
         state: present
 
     - name: Ensure software is installed
-      yum:
+      ansible.builtin.package:
         name: 
-          - "{{ '@mariadb' }}"
+          - mariadb-server
           - python3-PyMySQL
         state: present
 
     - name: Ensure mariadb is started and enabled
-      service:
+      ansible.builtin.service:
         name: mariadb
         state: started
         enabled: true
@@ -43,8 +43,10 @@
       with_nested:
         - "{{ beatles }}"
         - "{{ category_db }}"
-      mysql_user:
+      community.mysql.mysql_user:
         name: "{{ item[0] }}"
         priv: "{{ item[1] }}.*:ALL"
         append_privs: yes
         password: "{{ db_pass }}"
+        login_unix_socket: /var/lib/mysql/mysql.sock
+        host: localhost
