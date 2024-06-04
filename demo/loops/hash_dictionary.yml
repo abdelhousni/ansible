@@ -1,7 +1,7 @@
 - name: Create users in the appropriate groups
-  hosts: servera
+  hosts: "{{ myhosts | default('servera') }}"
   become: true
-  no_log: false
+  no_log: true
 
   vars_files:
     - hash_dictionary_vars.yml
@@ -10,15 +10,15 @@
 
     - name: Ensure groups are created
       loop: "{{ mygroups }}"
-      group:
+      ansible.builtin.group:
         name: "{{ item }}"
-        state: present
+        state: "{{ mystate | default('present') }}"
 
     - name: Ensure users are in their appropriate groups
       loop: "{{ lookup('dict', myusers) }}"
-      user:
+      ansible.builtin.user:
         name: "{{ item['key'] }}"
-        state: present
+        state: "{{ mystate | default('present') }}"
         groups: "{{ item['value']['groups'] }}"
         password: "{{ item['value']['password'] | password_hash('sha512') }}"
         update_password: on_create

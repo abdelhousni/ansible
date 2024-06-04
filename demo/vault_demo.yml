@@ -1,0 +1,20 @@
+---
+- name: Create our bedrock world!
+  hosts: all
+  no_log: true
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: Ensure variables are included 
+      ansible.builtin.include_vars:
+        file: encrypted_data.yml
+
+    - name: Ensure users are created
+      loop: "{{ bedrockers }}"
+      ansible.builtin.user:
+        name: "{{ item['username'] }}"
+        state: present
+        password: "{{ item['userpass'] | password_hash('sha512') }}"
+        update_password: on_create

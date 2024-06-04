@@ -6,7 +6,7 @@
   tasks:
 
     - name: Ensure that important facts are displayed
-      debug:
+      ansible.builtin.debug:
         msg: |
 
           My system name: {{ ansible_facts['hostname'] }}

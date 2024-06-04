@@ -15,7 +15,7 @@
 
     - name: Ensure users are at expected state
       loop: "{{ my_users }}"
-      user:
+      ansible.builtin.user:
         name: "{{ item }}"
         state: "{{ my_state | default('present') }}"
         password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
