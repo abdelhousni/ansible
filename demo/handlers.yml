@@ -7,31 +7,27 @@
   tasks:
 
     - name: Ensure needed content is present
-      notify:
-        - Ensure server is rebooted
-      copy:
-        content: Reboot me now
+      notify: Reboot server
+      ansible.builtin.copy:
+        content: Restart
         dest: /var/tmp/reboot
 
-    - name: Ensure software is updated
-      yum:
-        name: "*"
-        state: latest
-
-    - name: Deliberately fail
-      ignore_errors: true
-      fail:
-
-    - name: Force any notified handlers to execute now
+    - name: Execute handlers now without any delay
       meta: flush_handlers
 
-    - name: Ensure that we can connect to {{ inventory_hostname }}
-      wait_for:
-        port: 22
-        delay: 5
-        timeout: 20 
+    - name: Deliberately fail
+      ignore_errors: false
+      ansible.builtin.fail:
 
   handlers:
 
     - name: Ensure server is rebooted
-      reboot:
+      listen: Reboot server
+      ansible.builtin.reboot:
+
+    - name: Ensure that we can connect to server
+      listen: Reboot server
+      ansible.builtin.wait_for:
+        port: 22
+        delay: 5
+        timeout: 20 

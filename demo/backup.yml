@@ -15,13 +15,13 @@
     - name: Ensure {{ backup_store }} exists
       become: false
       delegate_to: localhost
-      file:
+      ansible.builtin.file:
         path: "{{ backup_store }}/{{ inventory_hostname }}"
         owner: student
         state: directory
 
     - name: Ensure backup of {{ backup_target }} exists
-      archive:
+      ansible.builtin.archive:
         path: "{{ backup_target }}"
         dest: "{{ backup_file }}" 
         #force_archive: true
@@ -29,7 +29,7 @@
         format: "{{ backup_format }}"
 
     - name: Ensure backup is stored on controller
-      fetch:
+      ansible.builtin.fetch:
         src: "{{ backup_file }}" 
         dest: "{{ backup_store }}/{{ inventory_hostname }}/"
         flat: true

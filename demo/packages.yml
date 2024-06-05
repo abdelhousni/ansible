@@ -1,12 +1,16 @@
-- name: pacakge facts
-  hosts: servera
-  become: true
+- name: Package facts
+  hosts: "{{ my_host | default('localhost') }}"
+  become: false
   gather_facts: true
 
   tasks: 
 
-    - name: package facts
-      package_facts:
+    - name: Ensure package facts are gathered
+      register: my_facts
+      ansible.builtin.package_facts:
 
-    - debug:
-        var: ansible_facts['packages'] | to_json
+    - name: Ensure facts are saved
+      ansible.builtin.copy:
+        content: "{{ my_facts }}"
+        dest: /var/tmp/my_facts
+        #        var: ansible_facts['packages'] | to_json

@@ -23,21 +23,21 @@
 
     - name: Ensure properties directory exists
       delegate_to: localhost
-      file:
+      ansible.builtin.file:
         path: "{{ prop_src }}"
         state: directory
         owner: student
 
     - name: Ensure software information is gathered
-      package_facts:
+      ansible.builtin.package_facts:
 
     - name: Render the properties template
-      template: 
+      ansible.builtin.template: 
         src: "{{ prop_j2 }}"
         dest: "{{ prop_file }}"
 
     - name: Ensure properties are fetched
-      fetch:
+      ansible.builtin.fetch:
         src: "{{ prop_file }}"
         dest: "{{ prop_src }}"
         flat: true

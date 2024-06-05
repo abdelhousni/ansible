@@ -1,0 +1,20 @@
+handlers:
+  definition: a dormant task, that executes when a notifying task results in a changed state
+
+  why handlers: there may be a need to execute a task only when required
+
+  execution order:
+    - handlers execute after the tasks for a play
+    - by default, if an error exists in a play, the play will abort and any notified handlers will not execute
+    - while the same handler may be notified by several other tasks, it will only execute once
+
+order of execution for a playbook:
+  - pre_tasks
+  - handlers for pre_tasks
+  - roles
+  - tasks
+  - handlers for roles and tasks
+  - post_tasks
+  - handlers for post_tasks
+
+
