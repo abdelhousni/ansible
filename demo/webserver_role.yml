@@ -1,5 +1,5 @@
 - name: Manage webserver
-  hosts: servera
+  hosts: "{{ my_host }}"
   become: true
   gather_facts: false
 
