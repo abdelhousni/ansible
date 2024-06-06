@@ -13,6 +13,7 @@
   tasks:
 
     - name: Ensure {{ backup_store }} exists
+      run_once: true
       become: false
       delegate_to: localhost
       ansible.builtin.file:
