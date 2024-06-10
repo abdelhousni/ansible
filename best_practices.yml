@@ -36,4 +36,4 @@
 
     - run your playbooks from a centralized controller
 
-    - use execution evironments for frequently executed Ansible operations which require customiations in the form of collections, python dependencies, and system executables
+    - use execution environments for frequently executed Ansible operations which require customizations in the form of collections, python dependencies, and system executables
