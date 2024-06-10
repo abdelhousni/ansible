@@ -18,7 +18,7 @@
 
     - use variables and while there are 22 different ways to use variables, you should use them in a way that makes sense for your solution
 
-    - take advantage of inventory groups and the group_vars/ directory, remembering that hosts can be members of many groups structured by geography, environment, purpose, etc
+    - take advantage of inventory groups and the group_vars/ and host_vars/ directories, remembering that hosts can be members of many groups structured by geography, environment, purpose, etc
 
     - use descriptive variable names and avoid naming your variables in a way that conflicts with module options
 
