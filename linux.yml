@@ -2,15 +2,18 @@ all:
   children:
     dbservers:
       hosts:
-        serverb:
+        serverc:
         serverd:
     rhel:
       hosts:
         loadbalancer:
-          ansible_host: servera
+          ansible_host: servere
+        servera: {}
         serverb: {}
-        serverc:
+        serverc: {}
         serverd: {}
+        servere: {}
+        serverf: {}
     ungrouped: {}
     webservers:
       hosts:
@@ -18,4 +21,8 @@ all:
           ansible_host: servera
         web_2:
           ansible_host: serverb
+    testers:
+      webclient:
+        ansible_host: serverf
+
 
