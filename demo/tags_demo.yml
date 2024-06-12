@@ -1,6 +1,6 @@
 - name: Manage webservices
-  hosts: "{{ my_host | mandatory }}"
-  gather_facts: true
+  hosts: "{{ my_host | mandatory('You must specify a host to target') }}"
+  gather_facts: false
   become: false
 
   vars:
@@ -25,11 +25,11 @@
           - (my_package == "httpd") or (my_package == "nginx" )
         success_msg: |
 
-          The needed variables are set, proceeding
+          ✅ The needed variables are set, proceeding ✅
 
         fail_msg: |
 
-          OH NO! We need to set my_package to either httpd or nginx
+          ❌ OH NO! We need to set my_package to either httpd or nginx ❌
 
     - name: Ensure webserver is setup
       become: true
@@ -50,7 +50,7 @@
           enabled: true
           state: started
 
-      - name: Ensure service is allowed in firewall
+      - name: Ensure service is allowed in firewalld
         loop: "{{ my_services }}"
         ansible.posix.firewalld:
           service: "{{ item }}"

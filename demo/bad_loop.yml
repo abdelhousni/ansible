@@ -1,0 +1,16 @@
+- name: Demonstrate bad use of loops
+  hosts: "{{ my_host | mandatory('You must specify a host to target') }}"
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: "Bad: Ensure that packages are at defined state"
+      loop:
+        - bash
+        - tmux
+        - nmap
+        - ant
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: installed
