@@ -1,0 +1,87 @@
+- name: Play 1 
+  hosts: "{{ my_host | default('servera') }}"
+  become: false
+  gather_facts: false
+
+  pre_tasks:
+
+    - name: pre_task 1
+      notify: pre_task_handler 1
+
+    - name: pre_task 2
+      notify: pre_task_handler 1
+
+    - name: pre_task 3
+      notify: pre_task_handler 1
+
+  roles:
+
+    - role1
+    - role2
+    - role3
+
+  tasks:
+
+    - name: normal task 1
+      notify: normal task handler 1
+
+    - name: normal task 2
+      notify: normal task handler 2
+
+    - name: normal task 3
+      notify: normal task handler 3
+
+  post_tasks:
+
+    - name: post_task 1
+      notify: post_task handler 1
+
+    - name: post_task 2
+      notify: post_task handler 2
+
+    - name: post_task 3
+      notify: post_task handler 3
+
+  handlers:
+
+    - name: pre_tasks handler 1
+
+    - name: pre_tasks handler 2
+
+    - name: pre_tasks handler 3
+
+    - name: roles handler 1
+
+    - name: roles handler 2
+
+    - name: roles handler 3
+
+    - name: tasks handler 1
+
+    - name: tasks handler 2
+
+    - name: tasks handler 3
+
+    - name: post_tasks handler 1
+
+    - name: post_tasks handler 2
+
+    - name: post_tasks handler 3
+
+- name: Play 2
+  hosts: "{{ my_host | default('serverb') }}"
+  become: false
+  gather_facts: false
+
+  roles:
+
+    - role4
+
+  tasks:
+
+    - name: normal task 1
+      notify: normaal task 1 handler
+
+ handlers:
+
+    - name: normal task 1 handler

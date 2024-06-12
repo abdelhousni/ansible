@@ -1,0 +1,25 @@
+- name: Demonstrate privilege escalation
+  hosts: "{{ my_host | default ('servera') }}"
+  become: false
+  gather_facts: false
+
+  tasks:
+
+    - name: Run whoami (1)
+      become: true
+      register: output1
+      changed_when: false
+      ansible.builtin.shell: whoami
+
+    - name: Run whoami (2)
+      register: output2
+      changed_when: false
+      ansible.builtin.shell: whoami
+
+    - name: Display the runs of "Run whoami (1)"
+      ansible.builtin.debug:
+        msg: The "Run whoami (1) command was run as {{ output1['stdout'] }}"
+
+    - name: Display the runs of "Run whoami (2)"
+      ansible.builtin.debug:
+        msg: The "Run whoami (2) command was run as {{ output2['stdout'] }}"
