@@ -1,17 +1,25 @@
 - name: Find free space on root filesystem
-  hosts: localhost
+  hosts: "{{ my_host | default('localhost') }}"
   become: false
   gather_facts: true
 
   tasks:
 
     - name: Ensure fact is set
-      set_fact:
+      ansible.builtin.set_fact:
         my_request: "{{ my_size | default('20') }} GB"
 
     - name: Ensure sufficient space available on root filesystem
-      assert:
+      ansible.builtin.assert:
         that:
           - ansible_facts['mounts'] | json_query("[?mount == '/'].size_available") | first > my_request | human_to_bytes | int
-        success_msg: You have {{ my_request }} available
-        fail_msg: You do not have {{ my_request }} available
+        success_msg: | 
+          
+          You have {{ my_request }} available
+
+          The total amount of space that you have is {{ ansible_facts['mounts'] | json_query("[?mount == '/'].size_available") | first | human_readable }}
+        fail_msg: | 
+          
+          You do not have {{ my_request }} available
+
+          The total amount of space that you have is {{ ansible_facts['mounts'] | json_query("[?mount == '/'].size_available") | first | human_readable }}

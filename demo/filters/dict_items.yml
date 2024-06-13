@@ -1,0 +1,53 @@
+- name: Demonstrate dict2items and items2dict filters
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+
+    team_dict:
+      goalkeeper: Alisson
+      defender: Virgil
+      midfielder: Alexis
+      forward: Mo
+
+    team_items:
+      - key: goalkeeper
+        value: Alisson
+      - key: defender
+        value: Virgil
+      - key: midfielder
+        value: Alexis
+      - key: forward
+        value: mo
+
+  tasks:
+
+    - name: Validate dict2items
+      ansible.builtin.assert:
+        that:
+          - "{{ team_dict | dict2items }} is eq( team_items )"
+        success_msg: The data is the same!
+
+    - name: Print dict2items
+      ansible.builtin.debug:
+        msg: | 
+
+          Here's the dictionary converted to a list of items
+
+          {{ team_dict | dict2items }}
+
+    - name: Convert items2dict
+      ansible.builtin.assert:
+        that:
+          - "{{ team_items | items2dict }} is eq( team_dict )"
+        success_msg: The data is the same!
+
+    - name: Print items2dict
+      ansible.builtin.debug:
+        msg: | 
+
+          Here are the items converted to a dictionary
+
+          {{ team_items | items2dict }}
+

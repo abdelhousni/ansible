@@ -7,3 +7,7 @@
     - name: Ensure that the variable my_var is displayed
       ansible.builtin.debug:
         msg: The value of the variable my_var is {{ my_var | default('blue') }}
+
+    - name: Ensure that the variable my_var is displayed
+      ansible.builtin.debug:
+        msg: The value of the variable my_var is {{ my_var | mandatory('The playbook cannot run without a value for this variable') }}

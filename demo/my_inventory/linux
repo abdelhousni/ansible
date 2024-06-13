@@ -28,3 +28,6 @@ serverc
 serverb
 serverd
 
+[controller]
+localhost
+

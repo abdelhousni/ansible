@@ -1,7 +1,7 @@
 - name: Read a remote file 
-  hosts: servera
+  hosts: "{{ my_host | default('localhost') }}"
   become: false
-  gather_facts: true
+  gather_facts: false
 
   tasks:
 
@@ -11,5 +11,5 @@
         src: "{{ my_file | default('/etc/fstab') }}"
 
     - name: Ensure content is displayed
-      debug:
-        var: my_data['content'] | b64decode | trim
+      ansible.builtin.debug:
+        msg: "{{ my_data['content'] | b64decode | trim }}"
