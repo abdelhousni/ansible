@@ -27,7 +27,3 @@ serverc
 [london]
 serverb
 serverd
-
-[controller]
-localhost
-

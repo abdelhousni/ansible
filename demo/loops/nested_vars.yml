@@ -1,0 +1,12 @@
+beatles:
+  - john
+  - paul
+  - george
+  - ringo
+
+category_db:
+  - lyrics
+  - concerts
+  - instruments
+
+db_pass: redhat

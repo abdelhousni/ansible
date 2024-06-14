@@ -5,7 +5,7 @@
 
   vars:
 
-    team_dict:
+    team_dict:      
       goalkeeper: Alisson
       defender: Virgil
       midfielder: Alexis
@@ -19,7 +19,7 @@
       - key: midfielder
         value: Alexis
       - key: forward
-        value: mo
+        value: Mo
 
   tasks:
 

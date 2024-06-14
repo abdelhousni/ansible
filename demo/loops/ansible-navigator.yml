@@ -1,0 +1,17 @@
+---
+ansible-navigator:
+  ansible:
+    config:
+      path: ./ansible.cfg
+
+  execution-environment:
+    image: ee-supported-rhel8:latest
+    pull:
+      policy: missing
+    environment-variables:
+      set:
+        ANSIBLE_STDOUT_CALLBACK: debug
+
+  mode: stdout
+  playbook-artifact:
+    enable: false

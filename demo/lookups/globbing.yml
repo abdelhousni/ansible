@@ -6,5 +6,5 @@
   tasks:
 
     - name: Ensure v*rc files are listed
-      debug:
+      ansible.builtin.debug:
         msg: "{{ query('fileglob', '/etc/v*rc') }}"

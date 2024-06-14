@@ -3,20 +3,8 @@
   gather_facts: false
   become: true
 
-  vars:
-
-    beatles:
-      - john
-      - paul
-      - george
-      - ringo
-
-    category_db:
-      - lyrics
-      - concerts
-      - instruments
-
-    db_pass: redhat
+  vars_files:
+    - nested_vars.yml
 
   tasks:
 

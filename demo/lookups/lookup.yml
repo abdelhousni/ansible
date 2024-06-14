@@ -6,25 +6,25 @@
   tasks:
 
     - name: Ensure the variable is displayed on {{ inventory_hostname }}
-      debug:
+      ansible.builtin.debug:
         msg: The value of the variable COUNTRY is {{ lookup('env', 'COUNTRY') }}
 
     - name: Ensure the contents of /etc/fstab are displayed
-      debug:
+      ansible.builtin.debug:
         msg: |
 
           "{{ lookup('file', '/etc/fstab' ) }}"
 
     - name: Display 2 files
-      debug:
-        msg: "{{ query('file', '/etc/fstab', '/etc/issue' ) }}"
+      ansible.builtin.debug:
+        msg: "{{ lookup('file', '/etc/fstab', '/etc/issue' ) }}"
 
     - name: Display who is logged in
-      debug:
+      ansible.builtin.debug:
         msg: "{{ lookup('pipe', 'w') }}"
 
     - name: Retrieve data from webserver
-      debug:
+      ansible.builtin.debug:
         msg: |
 
           "{{ lookup('url', 'http://classroom.example.com') }}"

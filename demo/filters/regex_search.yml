@@ -1,5 +1,5 @@
 - name: regex_search filter demonstration
-  hosts: servera
+  hosts: "{{ my_host }}"
   gather_facts: false
   become: true
 
@@ -19,3 +19,9 @@
         remote_src: true
         src: "{{ url_oc | regex_search('[a-z]+.*\\.tar\\.gz') }}"
         dest: /usr/local/bin
+
+    - name: Ensure OpenShift client is deleted from /var/tmp
+      ansible.builtin.file:
+        path: /var/tmp/{{ url_oc | regex_search('[a-z]+.*\\.tar\\.gz') }}
+        state: absent
+
