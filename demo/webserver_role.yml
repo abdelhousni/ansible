@@ -8,4 +8,4 @@
     my_package: nginx
 
   roles:
-    - rgdacosta.webserver
+    - rgdacosta.general.webserver
