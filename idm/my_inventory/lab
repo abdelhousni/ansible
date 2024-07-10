@@ -9,18 +9,17 @@ replica2.lab.example.com ipareplica_servers=idm.lab.example.com
 client.lab.example.com
 
 [all:vars]
-ipaadmin_password=RedHat123^
+ipaadmin_principal=admin
+ipaclient_force_join=true
 ipaserver_domain=lab.example.com
 ipaserver_realm=LAB.EXAMPLE.COM
 
 [ipaserver:vars]
 ipaserver_setup_dns=true
 ipaserver_auto_forwarders=true
-ipaadm_password=RedHat123^
 
 [ipareplicas:vars]
 ipareplica_setup_ca=true
 ipareplica_setup_dns=true
 ipareplica_auto_forwarders=true
-ipaadm_password=RedHat123^
 
