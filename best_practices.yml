@@ -20,6 +20,8 @@
 
     - take advantage of inventory groups and the group_vars/ and host_vars/ directories, remembering that hosts can be members of many groups structured by geography, environment, purpose, etc
 
+    - endeavour to use dynamic inventories to allow Ansible to contact an infrastructure provider to enumerate the latest list of inventory hosts known to that provider (e.g. Satellite knows which clients are currently registered with it)
+
     - use descriptive variable names and avoid naming your variables in a way that conflicts with module options
 
     - name your plays, blocks, tasks, handlers
