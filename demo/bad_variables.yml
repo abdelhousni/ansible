@@ -1,0 +1,14 @@
+- name: permit traffic in default zone for https service
+  ansible.posix.firewalld:
+    service: "{{ service }}"
+    permanent: true
+    state: enabled
+
+- name: permit 8081/tcp traffic
+  ansible.posix.firewalld:
+    port: "{{ port }}"
+    permanent: true
+    state: enabled
+    
+
+

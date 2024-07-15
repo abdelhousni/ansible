@@ -1,0 +1,17 @@
+Truthiness:
+  - true *
+  - True
+  - yes
+  - Yes
+  - on
+  - On
+  - 1
+
+Falsiness:
+  - false *
+  - False
+  - no
+  - No
+  - off
+  - Off
+  - 0
