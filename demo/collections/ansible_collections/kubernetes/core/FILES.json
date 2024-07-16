@@ -85,10 +85,24 @@
    "format": 1
   },
   {
+   "name": "changelogs/fragments",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "changelogs/fragments/20240601-doc-example-of-using-kubectl.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "acbeee48db095704363cbf36ebe110aac77b616c00000619393db7108bcc8327",
+   "format": 1
+  },
+  {
    "name": "changelogs/changelog.yaml",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "9ae657cd5d23b4e799ba3c6290de1c84b9c602dfbc1e5dee76dfb13cea1de356",
+   "chksum_sha256": "d0c4b77f36985ff05af1343b8aac1549f2c830e5c59cd396062094cf93d9c028",
    "format": 1
   },
   {
@@ -263,7 +277,7 @@
    "name": "docs/kubernetes.core.k8s_inventory.rst",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "d518aa57ebae3e32d1f4ede21c53f641e15a8e8a379efeaf88c6b143524cdc2b",
+   "chksum_sha256": "12710bd3a5b8fad92cb40b5932426e8224e0dee466a325ef37a566ac29e19784",
    "format": 1
   },
   {
@@ -326,7 +340,7 @@
    "name": "docs/kubernetes.core.kubectl_connection.rst",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "9286d253650a63d78908c1525a78cca5adacdbbddbd41fc713302d3683724a9a",
+   "chksum_sha256": "f35da72b89833bb15d9791f4f229950749e16673febbc8ebca937abe50398095",
    "format": 1
   },
   {
@@ -347,7 +361,7 @@
    "name": "meta/runtime.yml",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "fbc98beb9979b527db86caa1b3bac1b7d5b108abb3c9e9700ac2f47313d4e9a5",
+   "chksum_sha256": "6fa742855ba1e03207b595e4aa763a59450eb49ef2335de70a6002eaa6414470",
    "format": 1
   },
   {
@@ -487,7 +501,7 @@
    "name": "plugins/connection/kubectl.py",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "08e05362470ad358e2f8336bf2d47bb91e841d4fb070e807b2e675b7a9ffeab2",
+   "chksum_sha256": "f612353a7be29507e8b54dcea222a95341596655e708b3934a092945578f1310",
    "format": 1
   },
   {
@@ -592,7 +606,7 @@
    "name": "plugins/inventory/k8s.py",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "4025469bb7856d9910dec6f19d123d270e639a43885ee11d0e8006f2a761d4bc",
+   "chksum_sha256": "bca7d2163c14bf0f94e61a9338836127ae0cb9b66313b2a78b2ed89f1a830c6c",
    "format": 1
   },
   {
@@ -4803,6 +4817,13 @@
    "format": 1
   },
   {
+   "name": ".ansible-lint-ignore",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "4ac019f513db56ce83fc05ad85a0d5956642ce92c85936f5266dcc901dcb1025",
+   "format": 1
+  },
+  {
    "name": ".gitignore",
    "ftype": "file",
    "chksum_type": "sha256",
@@ -4820,7 +4841,7 @@
    "name": "CHANGELOG.rst",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "245da21f6c6630a94653ead63ad490c6bf8a1bc8b8607c790fe579994632add4",
+   "chksum_sha256": "38fd14ff9810fb9ffabf5141ceb6e26dd3aa4a2a333493f3a7e0a270a6f19533",
    "format": 1
   },
   {
@@ -4841,7 +4862,7 @@
    "name": "Makefile",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "842873f246a7e2861033ff5c39607881ccfc74797df224a85a4f17805b2bf052",
+   "chksum_sha256": "4e0908f4b83f5def8c53aff0baeb112b811898af19743665667fce158c6711de",
    "format": 1
   },
   {
@@ -4855,7 +4876,7 @@
    "name": "README.md",
    "ftype": "file",
    "chksum_type": "sha256",
-   "chksum_sha256": "4f259c1e715e6d1dd75d20785c16c7a99c073e784ebb8ccb5258f62c70a8e87b",
+   "chksum_sha256": "ea8ecd0ad62008d609c0bbdcf93197e0b34a1d9e8cd58eb5abe2cc0668d51904",
    "format": 1
   },
   {

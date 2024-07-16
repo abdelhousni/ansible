@@ -2,7 +2,7 @@
  "collection_info": {
   "namespace": "ansible",
   "name": "netcommon",
-  "version": "6.1.3",
+  "version": "7.0.0",
   "authors": [
    "Ansible Network Community (ansible-network)"
   ],
@@ -31,7 +31,7 @@
   "name": "FILES.json",
   "ftype": "file",
   "chksum_type": "sha256",
-  "chksum_sha256": "e1c37c2702f4d5aa1bfa49cfac4d9ac59e3271cf9b8b93e9c91bd69babc76c49",
+  "chksum_sha256": "d8177a6b9fb4a9df31fec847a2166bc47cd2e6785f60a546f76f0c90f57a16ec",
   "format": 1
  },
  "format": 1
