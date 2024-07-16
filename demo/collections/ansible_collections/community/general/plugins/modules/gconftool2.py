@@ -12,11 +12,18 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: gconftool2
 author:
-    - Kenneth D. Evensen (@kevensen)
+  - Kenneth D. Evensen (@kevensen)
 short_description: Edit GNOME Configurations
 description:
   - This module allows for the manipulation of GNOME 2 Configuration via
     gconftool-2.  Please see the gconftool-2(1) man pages for more details.
+extends_documentation_fragment:
+  - community.general.attributes
+attributes:
+  check_mode:
+    support: full
+  diff_mode:
+    support: none
 options:
   key:
     type: str
@@ -28,20 +35,20 @@ options:
     type: str
     description:
     - Preference keys typically have simple values such as strings,
-      integers, or lists of strings and integers. This is ignored if the state
-      is "get". See man gconftool-2(1).
+      integers, or lists of strings and integers.
+      This is ignored unless O(state=present). See man gconftool-2(1).
   value_type:
     type: str
     description:
-    - The type of value being set. This is ignored if the state is "get".
+    - The type of value being set.
+      This is ignored unless O(state=present). See man gconftool-2(1).
     choices: [ bool, float, int, string ]
   state:
     type: str
     description:
     - The action to take upon the key/value.
-    - State C(get) is deprecated and will be removed in community.general 8.0.0. Please use the module M(community.general.gconftool2_info) instead.
     required: true
-    choices: [ absent, get, present ]
+    choices: [ absent, present ]
   config_source:
     type: str
     description:
@@ -49,8 +56,8 @@ options:
       See man gconftool-2(1).
   direct:
     description:
-    - Access the config database directly, bypassing server.  If direct is
-      specified then the config_source must be specified as well.
+    - Access the config database directly, bypassing server.  If O(direct) is
+      specified then the O(config_source) must be specified as well.
       See man gconftool-2(1).
     type: bool
     default: false
@@ -66,17 +73,26 @@ EXAMPLES = """
 
 RETURN = '''
   key:
-    description: The key specified in the module parameters
+    description: The key specified in the module parameters.
     returned: success
     type: str
     sample: /desktop/gnome/interface/font_name
   value_type:
-    description: The type of the value that was changed
+    description: The type of the value that was changed.
     returned: success
     type: str
     sample: string
   value:
-    description: The value of the preference key after executing the module
+    description:
+      - The value of the preference key after executing the module or V(null) if key is removed.
+      - From community.general 7.0.0 onwards it returns V(null) for a non-existent O(key), and returned V("") before that.
+    returned: success
+    type: str
+    sample: "Serif 12"
+  previous_value:
+    description:
+      - The value of the preference key before executing the module.
+      - From community.general 7.0.0 onwards it returns V(null) for a non-existent O(key), and returned V("") before that.
     returned: success
     type: str
     sample: "Serif 12"
@@ -88,8 +104,7 @@ from ansible_collections.community.general.plugins.module_utils.gconftool2 impor
 
 
 class GConftool(StateModuleHelper):
-    change_params = 'value',
-    diff_params = 'value',
+    diff_params = ('value', )
     output_params = ('key', 'value_type')
     facts_params = ('key', 'value_type')
     facts_name = 'gconftool2'
@@ -98,17 +113,17 @@ class GConftool(StateModuleHelper):
             key=dict(type='str', required=True, no_log=False),
             value_type=dict(type='str', choices=['bool', 'float', 'int', 'string']),
             value=dict(type='str'),
-            state=dict(type='str', required=True, choices=['absent', 'get', 'present']),
+            state=dict(type='str', required=True, choices=['absent', 'present']),
             direct=dict(type='bool', default=False),
             config_source=dict(type='str'),
         ),
         required_if=[
             ('state', 'present', ['value', 'value_type']),
-            ('state', 'absent', ['value']),
             ('direct', True, ['config_source']),
         ],
         supports_check_mode=True,
     )
+    use_old_vardict = False
 
     def __init_module__(self):
         self.runner = gconftool2_runner(self.module, check_rc=True)
@@ -118,6 +133,7 @@ class GConftool(StateModuleHelper):
 
         self.vars.set('previous_value', self._get(), fact=True)
         self.vars.set('value_type', self.vars.value_type)
+        self.vars.set('_value', self.vars.previous_value, output=False, change=True)
         self.vars.set_meta('value', initial_value=self.vars.previous_value)
         self.vars.set('playbook_value', self.vars.value, fact=True)
 
@@ -125,27 +141,29 @@ class GConftool(StateModuleHelper):
         def process(rc, out, err):
             if err and fail_on_err:
                 self.ansible.fail_json(msg='gconftool-2 failed with error: %s' % (str(err)))
-            self.vars.value = out.rstrip()
+            out = out.rstrip()
+            self.vars.value = None if out == "" else out
             return self.vars.value
         return process
 
     def _get(self):
         return self.runner("state key", output_process=self._make_process(False)).run(state="get")
 
-    def state_get(self):
-        self.deprecate(
-            msg="State 'get' is deprecated. Please use the module community.general.gconftool2_info instead",
-            version="8.0.0", collection_name="community.general"
-        )
-
     def state_absent(self):
         with self.runner("state key", output_process=self._make_process(False)) as ctx:
             ctx.run()
+            if self.verbosity >= 4:
+                self.vars.run_info = ctx.run_info
         self.vars.set('new_value', None, fact=True)
+        self.vars._value = None
 
     def state_present(self):
         with self.runner("direct config_source value_type state key value", output_process=self._make_process(True)) as ctx:
-            self.vars.set('new_value', ctx.run(), fact=True)
+            ctx.run()
+            if self.verbosity >= 4:
+                self.vars.run_info = ctx.run_info
+        self.vars.set('new_value', self._get(), fact=True)
+        self.vars._value = self.vars.new_value
 
 
 def main():

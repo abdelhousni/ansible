@@ -68,7 +68,7 @@ DOCUMENTATION = '''
               - section: machinectl_become_plugin
                 key: password
     notes:
-      - When not using this plugin with user C(root), it only works correctly with a polkit rule which will alter
+      - When not using this plugin with user V(root), it only works correctly with a polkit rule which will alter
         the behaviour of machinectl. This rule must alter the prompt behaviour to ask directly for the user credentials,
         if the user is allowed to perform the action (take a look at the examples section).
         If such a rule is not present the plugin only work if it is used in context with the root user,
@@ -78,12 +78,13 @@ DOCUMENTATION = '''
 EXAMPLES = r'''
 # A polkit rule needed to use the module with a non-root user.
 # See the Notes section for details.
-60-machinectl-fast-user-auth.rules: |
-    polkit.addRule(function(action, subject) {
-        if(action.id == "org.freedesktop.machine1.host-shell" && subject.isInGroup("wheel")) {
-            return polkit.Result.AUTH_SELF_KEEP;
-        }
-    });
+/etc/polkit-1/rules.d/60-machinectl-fast-user-auth.rules: |
+  polkit.addRule(function(action, subject) {
+    if(action.id == "org.freedesktop.machine1.host-shell" &&
+      subject.isInGroup("wheel")) {
+        return polkit.Result.AUTH_SELF_KEEP;
+    }
+  });
 '''
 
 from re import compile as re_compile
@@ -102,6 +103,7 @@ class BecomeModule(BecomeBase):
     prompt = 'Password: '
     fail = ('==== AUTHENTICATION FAILED ====',)
     success = ('==== AUTHENTICATION COMPLETE ====',)
+    require_tty = True  # see https://github.com/ansible-collections/community.general/issues/6932
 
     @staticmethod
     def remove_ansi_codes(line):

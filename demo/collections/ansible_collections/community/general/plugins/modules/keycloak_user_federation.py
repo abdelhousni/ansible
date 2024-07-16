@@ -24,16 +24,21 @@ description:
       to your needs and a user having the expected roles.
 
     - The names of module options are snake_cased versions of the camelCase ones found in the
-      Keycloak API and its documentation at U(https://www.keycloak.org/docs-api/15.0/rest-api/index.html).
+      Keycloak API and its documentation at U(https://www.keycloak.org/docs-api/20.0.2/rest-api/index.html).
 
+attributes:
+    check_mode:
+        support: full
+    diff_mode:
+        support: full
 
 options:
     state:
         description:
             - State of the user federation.
-            - On C(present), the user federation will be created if it does not yet exist, or updated with
+            - On V(present), the user federation will be created if it does not yet exist, or updated with
               the parameters you provide.
-            - On C(absent), the user federation will be removed if it exists.
+            - On V(absent), the user federation will be removed if it exists.
         default: 'present'
         type: str
         choices:
@@ -49,7 +54,7 @@ options:
     id:
         description:
             - The unique ID for this user federation. If left empty, the user federation will be searched
-              by its I(name).
+              by its O(name).
         type: str
 
     name:
@@ -59,18 +64,15 @@ options:
 
     provider_id:
         description:
-            - Provider for this user federation.
+            - Provider for this user federation. Built-in providers are V(ldap), V(kerberos), and V(sssd).
+              Custom user storage providers can also be used.
         aliases:
             - providerId
         type: str
-        choices:
-            - ldap
-            - kerberos
-            - sssd
 
     provider_type:
         description:
-            - Component type for user federation (only supported value is C(org.keycloak.storage.UserStorageProvider)).
+            - Component type for user federation (only supported value is V(org.keycloak.storage.UserStorageProvider)).
         aliases:
             - providerType
         default: org.keycloak.storage.UserStorageProvider
@@ -86,10 +88,10 @@ options:
     config:
         description:
             - Dict specifying the configuration options for the provider; the contents differ depending on
-              the value of I(provider_id). Examples are given below for C(ldap), C(kerberos) and C(sssd).
+              the value of O(provider_id). Examples are given below for V(ldap), V(kerberos) and V(sssd).
               It is easiest to obtain valid config values by dumping an already-existing user federation
-              configuration through check-mode in the I(existing) field.
-            - The value C(sssd) has been supported since community.general 4.2.0.
+              configuration through check-mode in the RV(existing) field.
+            - The value V(sssd) has been supported since community.general 4.2.0.
         type: dict
         suboptions:
             enabled:
@@ -106,15 +108,15 @@ options:
 
             importEnabled:
                 description:
-                    - If C(true), LDAP users will be imported into Keycloak DB and synced by the configured
+                    - If V(true), LDAP users will be imported into Keycloak DB and synced by the configured
                       sync policies.
                 default: true
                 type: bool
 
             editMode:
                 description:
-                    - C(READ_ONLY) is a read-only LDAP store. C(WRITABLE) means data will be synced back to LDAP
-                      on demand. C(UNSYNCED) means user data will be imported, but not synced back to LDAP.
+                    - V(READ_ONLY) is a read-only LDAP store. V(WRITABLE) means data will be synced back to LDAP
+                      on demand. V(UNSYNCED) means user data will be imported, but not synced back to LDAP.
                 type: str
                 choices:
                     - READ_ONLY
@@ -131,13 +133,13 @@ options:
             vendor:
                 description:
                     - LDAP vendor (provider).
-                    - Use short name. For instance, write C(rhds) for "Red Hat Directory Server".
+                    - Use short name. For instance, write V(rhds) for "Red Hat Directory Server".
                 type: str
 
             usernameLDAPAttribute:
                 description:
                     - Name of LDAP attribute, which is mapped as Keycloak username. For many LDAP server
-                      vendors it can be C(uid). For Active directory it can be C(sAMAccountName) or C(cn).
+                      vendors it can be V(uid). For Active directory it can be V(sAMAccountName) or V(cn).
                       The attribute should be filled for all LDAP user records you want to import from
                       LDAP to Keycloak.
                 type: str
@@ -146,15 +148,15 @@ options:
                 description:
                     - Name of LDAP attribute, which is used as RDN (top attribute) of typical user DN.
                       Usually it's the same as Username LDAP attribute, however it is not required. For
-                      example for Active directory, it is common to use C(cn) as RDN attribute when
-                      username attribute might be C(sAMAccountName).
+                      example for Active directory, it is common to use V(cn) as RDN attribute when
+                      username attribute might be V(sAMAccountName).
                 type: str
 
             uuidLDAPAttribute:
                 description:
                     - Name of LDAP attribute, which is used as unique object identifier (UUID) for objects
-                      in LDAP. For many LDAP server vendors, it is C(entryUUID); however some are different.
-                      For example for Active directory it should be C(objectGUID). If your LDAP server does
+                      in LDAP. For many LDAP server vendors, it is V(entryUUID); however some are different.
+                      For example for Active directory it should be V(objectGUID). If your LDAP server does
                       not support the notion of UUID, you can use any other attribute that is supposed to
                       be unique among LDAP users in tree.
                 type: str
@@ -162,7 +164,7 @@ options:
             userObjectClasses:
                 description:
                     - All values of LDAP objectClass attribute for users in LDAP divided by comma.
-                      For example C(inetOrgPerson, organizationalPerson). Newly created Keycloak users
+                      For example V(inetOrgPerson, organizationalPerson). Newly created Keycloak users
                       will be written to LDAP with all those object classes and existing LDAP user records
                       are found just if they contain all those object classes.
                 type: str
@@ -246,8 +248,8 @@ options:
             useTruststoreSpi:
                 description:
                     - Specifies whether LDAP connection will use the truststore SPI with the truststore
-                      configured in standalone.xml/domain.xml. C(Always) means that it will always use it.
-                      C(Never) means that it will not use it. C(Only for ldaps) means that it will use if
+                      configured in standalone.xml/domain.xml. V(always) means that it will always use it.
+                      V(never) means that it will not use it. V(ldapsOnly) means that it will use if
                       your connection URL use ldaps. Note even if standalone.xml/domain.xml is not
                       configured, the default Java cacerts or certificate specified by
                       C(javax.net.ssl.trustStore) property will be used.
@@ -292,7 +294,7 @@ options:
             connectionPoolingDebug:
                 description:
                     - A string that indicates the level of debug output to produce. Example valid values are
-                      C(fine) (trace connection creation and removal) and C(all) (all debugging information).
+                      V(fine) (trace connection creation and removal) and V(all) (all debugging information).
                 type: str
 
             connectionPoolingInitSize:
@@ -316,7 +318,7 @@ options:
             connectionPoolingProtocol:
                 description:
                     - A list of space-separated protocol types of connections that may be pooled.
-                      Valid types are C(plain) and C(ssl).
+                      Valid types are V(plain) and V(ssl).
                 type: str
 
             connectionPoolingTimeout:
@@ -337,17 +339,27 @@ options:
                     - Name of kerberos realm.
                 type: str
 
+            krbPrincipalAttribute:
+                description:
+                    - Name of the LDAP attribute, which refers to Kerberos principal.
+                      This is used to lookup appropriate LDAP user after successful Kerberos/SPNEGO authentication in Keycloak.
+                      When this is empty, the LDAP user will be looked based on LDAP username corresponding
+                      to the first part of his Kerberos principal. For instance, for principal C(john@KEYCLOAK.ORG),
+                      it will assume that LDAP username is V(john).
+                type: str
+                version_added: 8.1.0
+
             serverPrincipal:
                 description:
                     - Full name of server principal for HTTP service including server and domain name. For
-                      example C(HTTP/host.foo.org@FOO.ORG). Use C(*) to accept any service principal in the
+                      example V(HTTP/host.foo.org@FOO.ORG). Use V(*) to accept any service principal in the
                       KeyTab file.
                 type: str
 
             keyTab:
                 description:
                     - Location of Kerberos KeyTab file containing the credentials of server principal. For
-                      example C(/etc/krb5.keytab).
+                      example V(/etc/krb5.keytab).
                 type: str
 
             debug:
@@ -446,22 +458,25 @@ options:
 
             providerId:
                 description:
-                    - The mapper type for this mapper (for instance C(user-attribute-ldap-mapper)).
+                    - The mapper type for this mapper (for instance V(user-attribute-ldap-mapper)).
                 type: str
 
             providerType:
                 description:
-                    - Component type for this mapper (only supported value is C(org.keycloak.storage.ldap.mappers.LDAPStorageMapper)).
+                    - Component type for this mapper.
                 type: str
+                default: org.keycloak.storage.ldap.mappers.LDAPStorageMapper
 
             config:
                 description:
                     - Dict specifying the configuration options for the mapper; the contents differ
                       depending on the value of I(identityProviderMapper).
+                    # TODO: what is identityProviderMapper above???
                 type: dict
 
 extends_documentation_fragment:
-- community.general.keycloak
+    - community.general.keycloak
+    - community.general.attributes
 
 author:
     - Laurent Paumier (@laurpaum)
@@ -704,6 +719,9 @@ def sanitize(comp):
         compcopy['config'] = dict((k, v[0]) for k, v in compcopy['config'].items())
         if 'bindCredential' in compcopy['config']:
             compcopy['config']['bindCredential'] = '**********'
+        # an empty string is valid for krbPrincipalAttribute but is filtered out in diff
+        if 'krbPrincipalAttribute' not in compcopy['config']:
+            compcopy['config']['krbPrincipalAttribute'] = ''
     if 'mappers' in compcopy:
         for mapper in compcopy['mappers']:
             if 'config' in mapper:
@@ -756,6 +774,7 @@ def main():
         readTimeout=dict(type='int'),
         searchScope=dict(type='str', choices=['1', '2'], default='1'),
         serverPrincipal=dict(type='str'),
+        krbPrincipalAttribute=dict(type='str'),
         startTls=dict(type='bool', default=False),
         syncRegistrations=dict(type='bool', default=False),
         trustEmail=dict(type='bool', default=False),
@@ -776,7 +795,7 @@ def main():
         name=dict(type='str'),
         parentId=dict(type='str'),
         providerId=dict(type='str'),
-        providerType=dict(type='str'),
+        providerType=dict(type='str', default='org.keycloak.storage.ldap.mappers.LDAPStorageMapper'),
         config=dict(type='dict'),
     )
 
@@ -786,7 +805,7 @@ def main():
         realm=dict(type='str', default='master'),
         id=dict(type='str'),
         name=dict(type='str'),
-        provider_id=dict(type='str', aliases=['providerId'], choices=['ldap', 'kerberos', 'sssd']),
+        provider_id=dict(type='str', aliases=['providerId']),
         provider_type=dict(type='str', aliases=['providerType'], default='org.keycloak.storage.UserStorageProvider'),
         parent_id=dict(type='str', aliases=['parentId']),
         mappers=dict(type='list', elements='dict', options=mapper_spec),
@@ -835,7 +854,7 @@ def main():
 
     # See if it already exists in Keycloak
     if cid is None:
-        found = kc.get_components(urlencode(dict(type='org.keycloak.storage.UserStorageProvider', parent=realm, name=name)), realm)
+        found = kc.get_components(urlencode(dict(type='org.keycloak.storage.UserStorageProvider', name=name)), realm)
         if len(found) > 1:
             module.fail_json(msg='No ID given and found multiple user federations with name `{name}`. Cannot continue.'.format(name=name))
         before_comp = next(iter(found), None)
@@ -922,6 +941,8 @@ def main():
         desired_comp = desired_comp.copy()
         updated_mappers = desired_comp.pop('mappers', [])
         after_comp = kc.create_component(desired_comp, realm)
+
+        cid = after_comp['id']
 
         for mapper in updated_mappers:
             found = kc.get_components(urlencode(dict(parent=cid, name=mapper['name'])), realm)

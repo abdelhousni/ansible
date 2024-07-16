@@ -26,6 +26,15 @@ seealso:
     description: XFCE documentation for the Xfconf configuration system.
     link: 'https://docs.xfce.org/xfce/xfconf/start'
 
+extends_documentation_fragment:
+  - community.general.attributes
+
+attributes:
+  check_mode:
+    support: full
+  diff_mode:
+    support: full
+
 options:
   channel:
     description:
@@ -49,15 +58,15 @@ options:
   value_type:
     description:
       - The type of value being set.
-      - When providing more than one I(value_type), the length of the list must
-        be equal to the length of I(value).
-      - If only one I(value_type) is provided, but I(value) contains more than
-        on element, that I(value_type) will be applied to all elements of I(value).
-      - If the I(property) being set is an array and it can possibly have ony one
-        element in the array, then I(force_array=true) must be used to ensure
+      - When providing more than one O(value_type), the length of the list must
+        be equal to the length of O(value).
+      - If only one O(value_type) is provided, but O(value) contains more than
+        on element, that O(value_type) will be applied to all elements of O(value).
+      - If the O(property) being set is an array and it can possibly have only one
+        element in the array, then O(force_array=true) must be used to ensure
         that C(xfconf-query) will interpret the value as an array rather than a
         scalar.
-      - Support for C(uchar), C(char), C(uint64), and C(int64) has been added in community.general 4.8.0.
+      - Support for V(uchar), V(char), V(uint64), and V(int64) has been added in community.general 4.8.0.
     type: list
     elements: str
     choices: [ string, int, double, bool, uint, uchar, char, uint64, int64, float ]
@@ -65,7 +74,7 @@ options:
     type: str
     description:
       - The action to take upon the property/value.
-      - The state C(get) has been removed in community.general 5.0.0. Please use the module M(community.general.xfconf_info) instead.
+      - The state V(get) has been removed in community.general 5.0.0. Please use the module M(community.general.xfconf_info) instead.
     choices: [ present, absent ]
     default: "present"
   force_array:
@@ -75,13 +84,6 @@ options:
     default: false
     aliases: ['array']
     version_added: 1.0.0
-  disable_facts:
-    description:
-      - The value C(false) is no longer allowed since community.general 4.0.0.
-      - This option is deprecated, and will be removed in community.general 8.0.0.
-    type: bool
-    default: true
-    version_added: 2.1.0
 '''
 
 EXAMPLES = """
@@ -121,9 +123,8 @@ RETURN = '''
     sample: "/Xft/DPI"
   value_type:
     description:
-      - The type of the value that was changed (C(none) for C(reset)
-        state). Either a single string value or a list of strings for array
-        types.
+      - The type of the value that was changed (V(none) for O(state=reset)).
+        Either a single string value or a list of strings for array types.
       - This is a string or a list of strings.
     returned: success
     type: any
@@ -169,10 +170,9 @@ from ansible_collections.community.general.plugins.module_utils.xfconf import xf
 
 
 class XFConfProperty(StateModuleHelper):
-    change_params = 'value',
-    diff_params = 'value',
+    change_params = ('value', )
+    diff_params = ('value', )
     output_params = ('property', 'channel', 'value')
-    facts_params = ('property', 'channel', 'value')
     module = dict(
         argument_spec=dict(
             state=dict(type='str', choices=("present", "absent"), default="present"),
@@ -182,32 +182,22 @@ class XFConfProperty(StateModuleHelper):
                             choices=('string', 'int', 'double', 'bool', 'uint', 'uchar', 'char', 'uint64', 'int64', 'float')),
             value=dict(type='list', elements='raw'),
             force_array=dict(type='bool', default=False, aliases=['array']),
-            disable_facts=dict(
-                type='bool', default=True,
-                removed_in_version='8.0.0',
-                removed_from_collection='community.general'
-            ),
         ),
         required_if=[('state', 'present', ['value', 'value_type'])],
         required_together=[('value', 'value_type')],
         supports_check_mode=True,
     )
+    use_old_vardict = False
 
     default_state = 'present'
-
-    def update_xfconf_output(self, **kwargs):
-        self.update_vars(meta={"output": True, "fact": True}, **kwargs)
 
     def __init_module__(self):
         self.runner = xfconf_runner(self.module)
         self.does_not = 'Property "{0}" does not exist on channel "{1}".'.format(self.vars.property,
                                                                                  self.vars.channel)
-        self.vars.set('previous_value', self._get(), fact=True)
-        self.vars.set('type', self.vars.value_type, fact=True)
-        self.vars.meta('value').set(initial_value=self.vars.previous_value)
-
-        if self.vars.disable_facts is False:
-            self.do_raise('Returning results as facts has been removed. Stop using disable_facts=false.')
+        self.vars.set('previous_value', self._get())
+        self.vars.set('type', self.vars.value_type)
+        self.vars.set_meta('value', initial_value=self.vars.previous_value)
 
     def process_command_output(self, rc, out, err):
         if err.rstrip() == self.does_not:

@@ -10,8 +10,8 @@ __metaclass__ = type
 from contextlib import contextmanager
 
 from ansible_collections.community.general.tests.unit.compat import unittest
-from ansible_collections.community.general.tests.unit.compat.mock import call, patch
-from ansible_collections.community.general.tests.unit.plugins.modules.utils import AnsibleExitJson, AnsibleFailJson, ModuleTestCase, set_module_args
+from ansible_collections.community.general.tests.unit.compat.mock import patch
+from ansible_collections.community.general.tests.unit.plugins.modules.utils import AnsibleExitJson, ModuleTestCase, set_module_args
 
 from ansible_collections.community.general.plugins.modules import keycloak_user_federation
 
@@ -326,6 +326,7 @@ class TestKeycloakUserFederation(ModuleTestCase):
                 'connectionPooling': True,
                 'pagination': True,
                 'allowKerberosAuthentication': False,
+                'krbPrincipalAttribute': 'krbPrincipalName',
                 'debug': False,
                 'useKerberosForPasswordAuthentication': False,
             },
@@ -373,6 +374,9 @@ class TestKeycloakUserFederation(ModuleTestCase):
                     ],
                     "enabled": [
                         "true"
+                    ],
+                    "krbPrincipalAttribute": [
+                        "krb5PrincipalName"
                     ],
                     "usernameLDAPAttribute": [
                         "uid"

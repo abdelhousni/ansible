@@ -19,6 +19,17 @@ description:
 author:
   - Steve Gargan (@sgargan)
   - Colin Nolan (@colin-nolan)
+extends_documentation_fragment:
+  - community.general.attributes
+attributes:
+  check_mode:
+    support: none
+  diff_mode:
+    support: none
+deprecated:
+  removed_in: 10.0.0
+  why: The legacy ACL system was removed from Consul.
+  alternative: Use M(community.general.consul_token) and/or M(community.general.consul_policy) instead.
 options:
   mgmt_token:
     description:
@@ -149,7 +160,7 @@ token:
 rules:
     description: the HCL JSON representation of the rules associated to the ACL, in the format described in the
                  Consul documentation (https://www.consul.io/docs/guides/acl.html#rule-specification).
-    returned: I(status) == "present"
+    returned: when O(state=present)
     type: dict
     sample: {
         "key": {

@@ -24,7 +24,7 @@ DOCUMENTATION = '''
             required: true
         url:
             description:
-                - Environment variable with the url for the etcd server
+                - Environment variable with the URL for the etcd server
             default: 'http://127.0.0.1:4001'
             env:
               - name: ANSIBLE_ETCD_URL
@@ -39,6 +39,10 @@ DOCUMENTATION = '''
                 - toggle checking that the ssl certificates are valid, you normally only want to turn this off with self-signed certs.
             default: true
             type: boolean
+    seealso:
+    - module: community.general.etcd3
+    - plugin: community.general.etcd3
+      plugin_type: lookup
 '''
 
 EXAMPLES = '''
@@ -50,7 +54,7 @@ EXAMPLES = '''
   ansible.builtin.debug:
     msg: "{{ lookup('community.general.etcd', 'foo', 'bar', 'baz') }}"
 
-- name: "since Ansible 2.5 you can set server options inline"
+- name: "you can set server options inline"
   ansible.builtin.debug:
     msg: "{{ lookup('community.general.etcd', 'foo', version='v2', url='http://192.168.0.27:4001') }}"
 '''
@@ -58,7 +62,7 @@ EXAMPLES = '''
 RETURN = '''
     _raw:
         description:
-            - list of values associated with input keys
+            - List of values associated with input keys.
         type: list
         elements: string
 '''

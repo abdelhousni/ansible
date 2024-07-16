@@ -17,6 +17,10 @@ from ansible.module_utils.basic import env_fallback, missing_required_lib
 from ansible.module_utils.urls import fetch_url
 from ansible.module_utils.six.moves.urllib.parse import urlencode
 
+from ansible_collections.community.general.plugins.module_utils.datetime import (
+    now,
+)
+
 SCALEWAY_SECRET_IMP_ERR = None
 try:
     from passlib.hash import argon2
@@ -84,6 +88,10 @@ def parse_pagination_link(header):
 
 
 def filter_sensitive_attributes(container, attributes):
+    '''
+    WARNING: This function is effectively private, **do not use it**!
+    It will be removed or renamed once changing its name no longer triggers a pylint bug.
+    '''
     for attr in attributes:
         container[attr] = "SENSITIVE_VALUE"
 
@@ -299,13 +307,13 @@ class Scaleway(object):
         wait_timeout = self.module.params["wait_timeout"]
         wait_sleep_time = self.module.params["wait_sleep_time"]
 
-        # Prevent requesting the ressource status too soon
+        # Prevent requesting the resource status too soon
         time.sleep(wait_sleep_time)
 
-        start = datetime.datetime.utcnow()
+        start = now()
         end = start + datetime.timedelta(seconds=wait_timeout)
 
-        while datetime.datetime.utcnow() < end:
+        while now() < end:
             self.module.debug("We are going to wait for the resource to finish its transition")
 
             state = self.fetch_state(resource)

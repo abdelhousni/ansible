@@ -13,13 +13,13 @@ DOCUMENTATION = r'''
     type: notification
     short_description: Sends events to Logstash
     description:
-      - This callback will report facts and task events to Logstash https://www.elastic.co/products/logstash
+      - This callback will report facts and task events to Logstash U(https://www.elastic.co/products/logstash).
     requirements:
       - whitelisting in configuration
-      - logstash (python library)
+      - logstash (Python library)
     options:
       server:
-        description: Address of the Logstash server
+        description: Address of the Logstash server.
         env:
           - name: LOGSTASH_SERVER
         ini:
@@ -28,7 +28,7 @@ DOCUMENTATION = r'''
             version_added: 1.0.0
         default: localhost
       port:
-        description: Port on which logstash is listening
+        description: Port on which logstash is listening.
         env:
             - name: LOGSTASH_PORT
         ini:
@@ -37,7 +37,7 @@ DOCUMENTATION = r'''
             version_added: 1.0.0
         default: 5000
       type:
-        description: Message type
+        description: Message type.
         env:
           - name: LOGSTASH_TYPE
         ini:
@@ -54,7 +54,7 @@ DOCUMENTATION = r'''
         env:
           - name: LOGSTASH_PRE_COMMAND
       format_version:
-        description: Logging format
+        description: Logging format.
         type: str
         version_added: 2.0.0
         ini:
@@ -99,7 +99,6 @@ from ansible import context
 import socket
 import uuid
 import logging
-from datetime import datetime
 
 try:
     import logstash
@@ -109,11 +108,15 @@ except ImportError:
 
 from ansible.plugins.callback import CallbackBase
 
+from ansible_collections.community.general.plugins.module_utils.datetime import (
+    now,
+)
+
 
 class CallbackModule(CallbackBase):
 
     CALLBACK_VERSION = 2.0
-    CALLBACK_TYPE = 'aggregate'
+    CALLBACK_TYPE = 'notification'
     CALLBACK_NAME = 'community.general.logstash'
     CALLBACK_NEEDS_WHITELIST = True
 
@@ -126,7 +129,7 @@ class CallbackModule(CallbackBase):
                                   "pip install python-logstash for Python 2"
                                   "pip install python3-logstash for Python 3")
 
-        self.start_time = datetime.utcnow()
+        self.start_time = now()
 
     def _init_plugin(self):
         if not self.disabled:
@@ -185,7 +188,7 @@ class CallbackModule(CallbackBase):
             self.logger.info("ansible start", extra=data)
 
     def v2_playbook_on_stats(self, stats):
-        end_time = datetime.utcnow()
+        end_time = now()
         runtime = end_time - self.start_time
         summarize_stat = {}
         for host in stats.processed.keys():
