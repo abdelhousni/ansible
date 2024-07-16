@@ -4,8 +4,10 @@
 
   vars:
 
+    my_ntp: 0.rhel.pool.ntp.org 
+
     timesync_ntp_servers:
-      - hostname: 0.rhel.pool.ntp.org 
+      - hostname: "{{ my_ntp }}" 
 
   roles:
     - rhel-system-roles.timesync
