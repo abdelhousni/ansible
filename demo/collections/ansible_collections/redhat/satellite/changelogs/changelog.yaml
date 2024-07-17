@@ -143,20 +143,11 @@ releases:
     - description: Manage SCAP Tailoring Files
       name: scap_tailoring_file
       namespace: ''
-    - description: Manage SUSE Customer Center Accounts
-      name: scc_account
-      namespace: ''
-    - description: Subscribe SUSE Customer Center Account Products
-      name: scc_product
-      namespace: ''
     - description: Manage Settings
       name: setting
       namespace: ''
     - description: Manage Smart Class Parameters
       name: smart_class_parameter
-      namespace: ''
-    - description: Manage Snapshots
-      name: snapshot
       namespace: ''
     - description: Manage Subnets
       name: subnet
@@ -559,6 +550,118 @@ releases:
     - explicit-http-warning.yml
     - inventory-facts-batch-size.yml
     release_date: '2022-01-14'
+  3.10.0:
+    changes:
+      bugfixes:
+      - auth_sources_ldap role - don't assume ``account`` and ``account_password``
+        are set, they are documented as optional
+      - auth_sources_ldap role, compute_resources role, repositories role - do not
+        log loop data when it contains sensitive data (https://bugzilla.redhat.com/show_bug.cgi?id=2183357)
+      minor_changes:
+      - content_export_library, content_export_repository, content_export_version
+        - add ``format`` option to control the export format
+      - content_view_filter - add support for creating modulemd filters
+      - content_view_publish role - also accept a list of dicts as the ``content_views``
+        role for publishing (https://github.com/theforeman/foreman-ansible-modules/issues/1436)
+      - setting - document how to obtain valid setting names (https://bugzilla.redhat.com/show_bug.cgi?id=2174367)
+    fragments:
+    - 1436-cv-publish-vars.yml
+    - 1573-cv-filter-modulemd.yml
+    - auth_sources_ldap_role-dont_force_account.yml
+    - bz2174367.yml
+    - bz2183357-role-log.yml
+    - content-export-format.yml
+    release_date: '2023-04-04'
+  3.11.0:
+    changes:
+      bugfixes:
+      - compute_profile, host - properly support nested VMware clusters (https://bugzilla.redhat.com/show_bug.cgi?id=2211394)
+      - content_credential - don't require ``content_type`` and ``content`` parameters
+        when removing credentials (https://github.com/theforeman/foreman-ansible-modules/issues/1588)
+      - content_credentials role - don't require ``content_type`` and ``content``
+        parameters when removing credentials
+      - content_view_filter - don't fail when creating a modulemd filter (https://github.com/theforeman/foreman-ansible-modules/issues/1608,
+        https://bugzilla.redhat.com/show_bug.cgi?id=2208557)
+      - repositories role - don't log repository information when creating products
+        (https://bugzilla.redhat.com/show_bug.cgi?id=2183357)
+      minor_changes:
+      - content_view_promote role - also accept all parameters of the `content_view_version`
+        module (https://github.com/theforeman/foreman-ansible-modules/issues/1591)
+      - content_view_version - include information about the published version in
+        the return value of the module
+      - job-invocation - add ``recurrence purpose`` and ``description_format`` parameters
+      - organizations role - accept ``parameters`` and ``ignore_types`` like the module
+        does
+    fragments:
+    - 1588-content_credential-absent.yml
+    - 1591-cv-promote-parameters.yml
+    - 1608-cv-filter-modulemd.yml
+    - bz2183357-do_not_log_repositories_for_products.yml
+    - bz2211394-nested-vmware-clusters.yml
+    - content_view_version-return_value.yml
+    - job-invocation-parameters.yml
+    - organizations_role-parameters_ignore_types.yml
+    release_date: '2023-06-14'
+  3.12.0:
+    changes:
+      bugfixes:
+      - convert2rhel role - Sync repos before CV publish (https://bugzilla.redhat.com/show_bug.cgi?id=2216907)
+      minor_changes:
+      - content_view_filter - add deb filter type
+      - content_view_filter_rule - add spec for deb filter rules
+      - locations role - New role to manage locations
+    fragments:
+    - 2023-06-26-forgotten-changelogs.yml
+    - content_view_filter_deb_support.yml
+    release_date: '2023-07-10'
+  3.13.0:
+    changes:
+      bugfixes:
+      - repository - don't fail when removing a content credential from a repository
+        (https://bugzilla.redhat.com/show_bug.cgi?id=2224122)
+      - smart_class_parameter - correctly allow setting ``override`` to ``false``
+        (https://github.com/theforeman/foreman-ansible-modules/issues/1644)
+      minor_changes:
+      - compute_resource - add support for OpenStack
+      - repositories role - allow disabling/removing of repositories by setting the
+        ``state`` parameter
+    fragments:
+    - 1641-openstack.yml
+    - 1644-smart_class_parameter-override_false.yml
+    - bz2224122-repo-org-scope.yml
+    - repositories_role-state_override.yml
+    modules:
+    - description: Wait for a task
+      name: wait_for_task
+      namespace: ''
+    release_date: '2023-08-15'
+  3.14.0:
+    changes:
+      bugfixes:
+      - content_view_publish role - correctly pass ``version`` not ``description``
+        to the module (https://bugzilla.redhat.com/show_bug.cgi?id=2234444)
+    fragments:
+    - bz2234444.yaml
+    modules:
+    - description: Manage Smart Class Parameter Override Values
+      name: smart_class_parameter_override_value
+      namespace: ''
+    release_date: '2023-09-08'
+  3.15.0:
+    changes:
+      bugfixes:
+      - content_view_filter_rule - handle multiple rules for the same package but
+        different architectures and versions correctly (https://bugzilla.redhat.com/show_bug.cgi?id=2189687)
+      minor_changes:
+      - content_view_publish role - allow passing ``async`` and ``poll`` to the module
+        (https://github.com/theforeman/foreman-ansible-modules/pull/1676)
+      - convert2rhel role - install ``convert2rhel`` from ``cdn-public.redhat.com``,
+        dropping the requirement of a custom CA cert
+    fragments:
+    - 1672-convert2rhel-cdn-public.yml
+    - 1676-content_view_version-async-poll.yml
+    - bz2189687-content_view_filter_rule-handle-arch-version.yml
+    release_date: '2023-11-15'
   3.2.0:
     changes:
       bugfixes:
@@ -628,7 +731,6 @@ releases:
         backwards compatibility, please use ``entity`` as with any other module
       - smart_proxy - add ``inherit`` to possible values of ``download_policy`` (https://github.com/theforeman/foreman-ansible-modules/issues/1438)
       - smart_proxy - add ``streamed`` download policy
-      - snapshot - add include_ram option when creating VMWare snapshot
     fragments:
     - 1438-smart_proxy-download_policy-inherit.yml
     - setting-return-deprecate.yml
@@ -672,3 +774,71 @@ releases:
     - bz2118790.yml
     - repository-include-exclude-tags.yaml
     release_date: '2022-10-05'
+  3.8.0:
+    changes:
+      bugfixes:
+      - activation_key - properly fetch *all* repositories when managing content overrides
+        (https://bugzilla.redhat.com/show_bug.cgi?id=2134605)
+      - redhat_manifest - properly report http errors (https://github.com/theforeman/foreman-ansible-modules/issues/1497)
+      - repository_sync - report an error instead of syncing the whole product when
+        the repository could not be found
+      minor_changes:
+      - job_template - add ``default`` option to the ``template_inputs`` parameter
+      - location, organization - add ``ignore_types`` parameter to adjust automatic
+        association of resources
+      - redhat_manifest - Search by UUID on the server side if UUID is known. This
+        is faster and allows fetching of manifest in big accounts (>1000 allocations).
+      - redhat_manifest - return the UUID of the manifest so it can be reused later
+      - redhat_manifest - set default ``quantity`` to 1 (https://github.com/theforeman/foreman-ansible-modules/pull/1499)
+    fragments:
+    - 1497-redhat_manifest-report-error.yml
+    - 1509-taxonomy-ignore_types.yaml
+    - 1519-job_template-input-default.yml
+    - 2134605-ak-product_contents-per_page.yml
+    - manifest-uuid-return.yml
+    - redhat_manifest-default_quantity.yml
+    - redhat_manifest-uuid-search.yml
+    - repository_sync-no-failsaife-repository.yml
+    release_date: '2022-12-20'
+  3.9.0:
+    changes:
+      bugfixes:
+      - content_export_* - increase task timeout to 12h as export tasks can be time
+        intensive (https://bugzilla.redhat.com/show_bug.cgi?id=2162678)
+    fragments:
+    - bz2162678-content_export-timeout.yaml
+    modules:
+    - description: Fetch information about a Content View Filter
+      name: content_view_filter_info
+      namespace: ''
+    - description: Manage content view filter rules
+      name: content_view_filter_rule
+      namespace: ''
+    - description: Fetch information about a Content View Filter Rule
+      name: content_view_filter_rule_info
+      namespace: ''
+    - description: Get information about hostgroup(s)
+      name: hostgroup_info
+      namespace: ''
+    release_date: '2023-02-20'
+  4.0.0:
+    changes:
+      breaking_changes:
+      - content_view_filter - stop managing rules from this module, ``content_view_filter_rule``
+        should be used for that
+      - inventory plugin - do not default to ``http://localhost:3000`` as the Foreman
+        URL, providing a URL is now mandatory
+      bugfixes:
+      - compute_profile, host - refer to VMware storage pods by name, not id (https://github.com/theforeman/foreman-ansible-modules/issues/1247)
+    fragments:
+    - 1247-reference_storage_pod_name.yml
+    - content_view_filter-drop-rule-management.yml
+    - inventory-no-default-localhost.yml
+    modules:
+    - description: Manage Registration Command
+      name: registration_command
+      namespace: ''
+    - description: Manage Webhooks
+      name: webhook
+      namespace: ''
+    release_date: '2024-01-12'

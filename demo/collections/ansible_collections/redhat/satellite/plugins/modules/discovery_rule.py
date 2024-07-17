@@ -32,7 +32,7 @@ options:
   name:
     description:
       - Name of the Discovery Rule
-    required: True
+    required: true
     type: str
   search:
     description:
@@ -120,6 +120,7 @@ def main():
             hostgroup=dict(type='entity'),
             hostname=dict(),
             max_count=dict(type='int'),
+            hosts_limit=dict(type='int', invisible=True, flat_name='max_count'),
             priority=dict(type='int'),
             enabled=dict(type='bool'),
         ),

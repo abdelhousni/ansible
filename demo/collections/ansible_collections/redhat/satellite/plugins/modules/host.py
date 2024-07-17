@@ -93,7 +93,7 @@ options:
   owner_group:
     description:
       - Owner (user group) of the host.
-      - Mutually excluside with I(owner).
+      - Mutually exclusive with I(owner).
     type: str
     required: false
   provision_method:
@@ -187,6 +187,11 @@ options:
         description:
           - Should this interface be used for TFTP of PXELinux (or SSH for image-based hosts)?
           - Each managed hosts needs to have one provision interface.
+        type: bool
+      execution:
+        description:
+          - Should this interface be used for Remote Execution?
+          - Each managed hosts should have one remote execution interface.
         type: bool
       username:
         description:
@@ -502,7 +507,7 @@ def main():
                     for volume in module.foreman_params['compute_attributes']['volumes_attributes'].values():
                         if 'storage_pod' in volume:
                             storage_pod = module.find_storage_pod(volume['storage_pod'], compute_resource, cluster)
-                            volume['storage_pod'] = storage_pod['id']
+                            volume['storage_pod'] = storage_pod['name']
                         if 'storage_domain' in volume:
                             storage_domain = module.find_storage_domain(volume['storage_domain'], compute_resource, cluster)
                             volume['storage_domain'] = storage_domain['id']

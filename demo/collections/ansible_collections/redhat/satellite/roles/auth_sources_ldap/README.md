@@ -9,8 +9,6 @@ Role Variables
 
 This role supports the [Common Role Variables](https://github.com/theforeman/foreman-ansible-modules/blob/develop/README.md#common-role-variables).
 
-Role specific variables should be documented as below:
-
 The main data structure for this role is the list of `satellite_auth_sources_ldap`. Each `auth_source_ldap` requires the following fields:
 
 - `name`: The name of the authentication source.
@@ -34,7 +32,7 @@ Configure FreeIPA as an authentication source, with automatic registration:
         satellite_auth_sources_ldap:
           - name: "Example LDAP"
             host: "ldap.example.org"
-            onthefly_register: True
+            onthefly_register: true
             account: uid=ansible,cn=sysaccounts,cn=etc,dc=example,dc=com
             account_password: secret
             base_dn: dc=example,dc=com
@@ -62,7 +60,7 @@ To instead integrate with Active Directory, only allowing users who are member o
         satellite_auth_sources_ldap:
           - name: "Example AD"
             host: "ad.example.org"
-            onthefly_register: True
+            onthefly_register: true
             account: EXAMPLE\ansible
             account_password: secret
             base_dn: cn=Users,dc=example,dc=com

@@ -44,29 +44,15 @@ options:
       - Destination server name; optional parameter to differentiate between exports
     required: false
     type: str
-  chunk_size_gb:
-    description:
-      - Split the exported content into archives no greater than the specified size in gigabytes.
-    required: false
-    type: int
   fail_on_missing_content:
     description:
       - Fails if any of the repositories belonging to this version are unexportable.
     required: false
     type: bool
-  incremental:
-    description:
-      - Export only the content that has changed since the last export.
-    required: false
-    type: bool
-  from_history_id:
-    description:
-      - Export history identifier used for incremental export. If not provided the most recent export history will be used.
-    required: false
-    type: int
 extends_documentation_fragment:
   - redhat.satellite.foreman
   - redhat.satellite.foreman.organization
+  - redhat.satellite.foreman.katelloexport
 '''
 
 EXAMPLES = '''
@@ -126,10 +112,10 @@ EXAMPLES = '''
       from_history_id: 12345
 '''
 
-from ansible_collections.redhat.satellite.plugins.module_utils.foreman_helper import KatelloAnsibleModule, _flatten_entity
+from ansible_collections.redhat.satellite.plugins.module_utils.foreman_helper import KatelloContentExportBaseModule
 
 
-class KatelloContentExportModule(KatelloAnsibleModule):
+class KatelloContentExportModule(KatelloContentExportBaseModule):
     pass
 
 
@@ -139,30 +125,13 @@ def main():
             content_view_version=dict(type='entity', scope=['content_view'], search_by='version', flat_name='id', required=True),
             content_view=dict(type='entity', scope=['organization'], required=True),
             destination_server=dict(required=False, type='str'),
-            chunk_size_gb=dict(required=False, type='int'),
             fail_on_missing_content=dict(required=False, type='bool'),
-            from_history_id=dict(required=False, type='int'),
         ),
-        argument_spec=dict(
-            incremental=dict(required=False, type='bool'),
-        ),
+        export_action='version',
     )
 
-    module.task_timeout = 60 * 30
-
     with module.api_connection():
-        module.auto_lookup_entities()
-
-        incremental = module.params['incremental']
-        endpoint = 'content_export_incrementals' if incremental else 'content_exports'
-
-        if module.params.get('from_history_id') and incremental is not True:
-            module.fail_json(msg='from_history_id is only valid for incremental exports')
-
-        payload = _flatten_entity(module.foreman_params, module.foreman_spec)
-        task = module.resource_action(endpoint, 'version', payload)
-
-        module.exit_json(task=task)
+        module.run()
 
 
 if __name__ == '__main__':

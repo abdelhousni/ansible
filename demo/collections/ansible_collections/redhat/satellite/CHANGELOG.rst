@@ -6,6 +6,160 @@ redhat.satellite Release Notes
 
 This changelog describes changes after version 0.8.1.
 
+v4.0.0
+======
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- content_view_filter - stop managing rules from this module, ``content_view_filter_rule`` should be used for that
+- inventory plugin - do not default to ``http://localhost:3000`` as the Foreman URL, providing a URL is now mandatory
+
+Bugfixes
+--------
+
+- compute_profile, host - refer to VMware storage pods by name, not id (https://github.com/theforeman/foreman-ansible-modules/issues/1247)
+
+New Modules
+-----------
+
+- redhat.satellite.registration_command - Manage Registration Command
+- redhat.satellite.webhook - Manage Webhooks
+
+v3.15.0
+=======
+
+Minor Changes
+-------------
+
+- content_view_publish role - allow passing ``async`` and ``poll`` to the module (https://github.com/theforeman/foreman-ansible-modules/pull/1676)
+- convert2rhel role - install ``convert2rhel`` from ``cdn-public.redhat.com``, dropping the requirement of a custom CA cert
+
+Bugfixes
+--------
+
+- content_view_filter_rule - handle multiple rules for the same package but different architectures and versions correctly (https://bugzilla.redhat.com/show_bug.cgi?id=2189687)
+
+v3.14.0
+=======
+
+Bugfixes
+--------
+
+- content_view_publish role - correctly pass ``version`` not ``description`` to the module (https://bugzilla.redhat.com/show_bug.cgi?id=2234444)
+
+New Modules
+-----------
+
+- redhat.satellite.smart_class_parameter_override_value - Manage Smart Class Parameter Override Values
+
+v3.13.0
+=======
+
+Minor Changes
+-------------
+
+- compute_resource - add support for OpenStack
+- repositories role - allow disabling/removing of repositories by setting the ``state`` parameter
+
+Bugfixes
+--------
+
+- repository - don't fail when removing a content credential from a repository (https://bugzilla.redhat.com/show_bug.cgi?id=2224122)
+- smart_class_parameter - correctly allow setting ``override`` to ``false`` (https://github.com/theforeman/foreman-ansible-modules/issues/1644)
+
+New Modules
+-----------
+
+- redhat.satellite.wait_for_task - Wait for a task
+
+v3.12.0
+=======
+
+Minor Changes
+-------------
+
+- content_view_filter - add deb filter type
+- content_view_filter_rule - add spec for deb filter rules
+- locations role - New role to manage locations
+
+Bugfixes
+--------
+
+- convert2rhel role - Sync repos before CV publish (https://bugzilla.redhat.com/show_bug.cgi?id=2216907)
+
+v3.11.0
+=======
+
+Minor Changes
+-------------
+
+- content_view_promote role - also accept all parameters of the `content_view_version` module (https://github.com/theforeman/foreman-ansible-modules/issues/1591)
+- content_view_version - include information about the published version in the return value of the module
+- job-invocation - add ``recurrence purpose`` and ``description_format`` parameters
+- organizations role - accept ``parameters`` and ``ignore_types`` like the module does
+
+Bugfixes
+--------
+
+- compute_profile, host - properly support nested VMware clusters (https://bugzilla.redhat.com/show_bug.cgi?id=2211394)
+- content_credential - don't require ``content_type`` and ``content`` parameters when removing credentials (https://github.com/theforeman/foreman-ansible-modules/issues/1588)
+- content_credentials role - don't require ``content_type`` and ``content`` parameters when removing credentials
+- content_view_filter - don't fail when creating a modulemd filter (https://github.com/theforeman/foreman-ansible-modules/issues/1608, https://bugzilla.redhat.com/show_bug.cgi?id=2208557)
+- repositories role - don't log repository information when creating products (https://bugzilla.redhat.com/show_bug.cgi?id=2183357)
+
+v3.10.0
+=======
+
+Minor Changes
+-------------
+
+- content_export_library, content_export_repository, content_export_version - add ``format`` option to control the export format
+- content_view_filter - add support for creating modulemd filters
+- content_view_publish role - also accept a list of dicts as the ``content_views`` role for publishing (https://github.com/theforeman/foreman-ansible-modules/issues/1436)
+- setting - document how to obtain valid setting names (https://bugzilla.redhat.com/show_bug.cgi?id=2174367)
+
+Bugfixes
+--------
+
+- auth_sources_ldap role - don't assume ``account`` and ``account_password`` are set, they are documented as optional
+- auth_sources_ldap role, compute_resources role, repositories role - do not log loop data when it contains sensitive data (https://bugzilla.redhat.com/show_bug.cgi?id=2183357)
+
+v3.9.0
+======
+
+Bugfixes
+--------
+
+- content_export_* - increase task timeout to 12h as export tasks can be time intensive (https://bugzilla.redhat.com/show_bug.cgi?id=2162678)
+
+New Modules
+-----------
+
+- redhat.satellite.content_view_filter_info - Fetch information about a Content View Filter
+- redhat.satellite.content_view_filter_rule - Manage content view filter rules
+- redhat.satellite.content_view_filter_rule_info - Fetch information about a Content View Filter Rule
+- redhat.satellite.hostgroup_info - Get information about hostgroup(s)
+
+v3.8.0
+======
+
+Minor Changes
+-------------
+
+- job_template - add ``default`` option to the ``template_inputs`` parameter
+- location, organization - add ``ignore_types`` parameter to adjust automatic association of resources
+- redhat_manifest - Search by UUID on the server side if UUID is known. This is faster and allows fetching of manifest in big accounts (>1000 allocations).
+- redhat_manifest - return the UUID of the manifest so it can be reused later
+- redhat_manifest - set default ``quantity`` to 1 (https://github.com/theforeman/foreman-ansible-modules/pull/1499)
+
+Bugfixes
+--------
+
+- activation_key - properly fetch *all* repositories when managing content overrides (https://bugzilla.redhat.com/show_bug.cgi?id=2134605)
+- redhat_manifest - properly report http errors (https://github.com/theforeman/foreman-ansible-modules/issues/1497)
+- repository_sync - report an error instead of syncing the whole product when the repository could not be found
+
 v3.7.0
 ======
 
@@ -50,7 +204,6 @@ Minor Changes
 - setting - the ``foreman_setting`` return entry is deprecated and kept for backwards compatibility, please use ``entity`` as with any other module
 - smart_proxy - add ``inherit`` to possible values of ``download_policy`` (https://github.com/theforeman/foreman-ansible-modules/issues/1438)
 - smart_proxy - add ``streamed`` download policy
-- snapshot - add include_ram option when creating VMWare snapshot
 
 New Modules
 -----------
@@ -457,11 +610,8 @@ New Modules
 - redhat.satellite.role - Manage Roles
 - redhat.satellite.scap_content - Manage SCAP content
 - redhat.satellite.scap_tailoring_file - Manage SCAP Tailoring Files
-- redhat.satellite.scc_account - Manage SUSE Customer Center Accounts
-- redhat.satellite.scc_product - Subscribe SUSE Customer Center Account Products
 - redhat.satellite.setting - Manage Settings
 - redhat.satellite.smart_class_parameter - Manage Smart Class Parameters
-- redhat.satellite.snapshot - Manage Snapshots
 - redhat.satellite.subnet - Manage Subnets
 - redhat.satellite.subscription_manifest - Manage Subscription Manifests
 - redhat.satellite.sync_plan - Manage Sync Plans

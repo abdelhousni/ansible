@@ -16,6 +16,10 @@ DOCUMENTATION = '''
         - requests >= 1.1
     description:
         - Get inventory hosts from Foreman.
+        - Can use the Reports API (default) or the Hosts API to fetch information about the hosts.
+        - The Reports API is faster with many hosts.
+        - The Reports API requires the C(foreman_ansible) plugin to be installed on the Foreman server.
+        - Some options only work when using the Reports API.
         - Uses a YAML configuration file that ends with ``foreman.(yml|yaml)``.
     extends_documentation_fragment:
         - inventory_cache
@@ -23,12 +27,12 @@ DOCUMENTATION = '''
     options:
       plugin:
         description: token that ensures this is a source file for the C(foreman) plugin.
-        required: True
+        required: true
         choices: ['redhat.satellite.foreman']
       url:
         description:
           - URL of the Foreman server.
-        default: 'http://localhost:3000'
+        required: true
         env:
             - name: FOREMAN_SERVER
             - name: FOREMAN_SERVER_URL
@@ -36,21 +40,21 @@ DOCUMENTATION = '''
       user:
         description:
           - Username accessing the Foreman server.
-        required: True
+        required: true
         env:
             - name: FOREMAN_USER
             - name: FOREMAN_USERNAME
       password:
         description:
           - Password of the user accessing the Foreman server.
-        required: True
+        required: true
         env:
             - name: FOREMAN_PASSWORD
       validate_certs:
         description:
           - Whether or not to verify the TLS certificates of the Foreman server.
         type: boolean
-        default: True
+        default: true
         env:
             - name: FOREMAN_VALIDATE_CERTS
       group_prefix:
@@ -62,21 +66,21 @@ DOCUMENTATION = '''
       want_facts:
         description: Toggle, if True the plugin will retrieve host facts from the server
         type: boolean
-        default: False
+        default: false
       want_params:
         description: Toggle, if true the inventory will retrieve 'all_parameters' information as host vars
         type: boolean
-        default: False
+        default: false
       want_hostcollections:
         description: Toggle, if true the plugin will create Ansible groups for host collections
         type: boolean
-        default: False
+        default: false
       legacy_hostvars:
         description:
             - Toggle, if true the plugin will build legacy hostvars present in the foreman script
             - Places hostvars in a dictionary with keys `foreman`, `foreman_facts`, and `foreman_params`
         type: boolean
-        default: False
+        default: false
       host_filters:
         description: This can be used to restrict the list of returned host
         type: string
@@ -85,13 +89,13 @@ DOCUMENTATION = '''
         type: int
         default: 250
       use_reports_api:
-        description: Use Reporting API.
+        description: Use Reports API.
         type: boolean
-        default: True
+        default: true
       foreman:
         description:
           - Foreman server related configuration, deprecated.
-          - You can pass I(use_reports_api) in this dict to enable the Reporting API.
+          - You can pass I(use_reports_api) in this dict to enable the Reports API.
           - Only for backward compatibility.
       report:
         description:
@@ -108,41 +112,59 @@ DOCUMENTATION = '''
         type: int
         default: 600
       want_organization:
-        description: Toggle, if true the inventory will fetch organization the host belongs to and create groupings for the same.
+        description:
+          - Toggle, if true the inventory will fetch organization the host belongs to and create groupings for the same.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_location:
-        description: Toggle, if true the inventory will fetch location the host belongs to and create groupings for the same.
+        description:
+          - Toggle, if true the inventory will fetch location the host belongs to and create groupings for the same.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_ipv4:
-        description: Toggle, if true the inventory will fetch ipv4 address of the host.
+        description:
+          - Toggle, if true the inventory will fetch ipv4 address of the host.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_ipv6:
-        description: Toggle, if true the inventory will fetch ipv6 address of the host.
+        description:
+          - Toggle, if true the inventory will fetch ipv6 address of the host.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_host_group:
-        description: Toggle, if true the inventory will fetch host_groups and create groupings for the same.
+        description:
+          - Toggle, if true the inventory will fetch host_groups and create groupings for the same.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_subnet:
-        description: Toggle, if true the inventory will fetch subnet.
+        description:
+          - Toggle, if true the inventory will fetch subnet.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_subnet_v6:
-        description:  Toggle, if true the inventory will fetch ipv6 subnet.
+        description:
+          -  Toggle, if true the inventory will fetch ipv6 subnet.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_smart_proxies:
-        description: Toggle, if true the inventory will fetch smart proxy that the host is registered to.
+        description:
+          - Toggle, if true the inventory will fetch smart proxy that the host is registered to.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       want_content_facet_attributes:
-        description: Toggle, if true the inventory will fetch content view details that the host is tied to.
+        description:
+          - Toggle, if true the inventory will fetch content view details that the host is tied to.
+          - Only applies to inventories using the Reports API - attribute is ignored otherwise.
         type: boolean
-        default: True
+        default: true
       hostnames:
         description:
           - A list of templates in order of precedence to compose inventory_hostname.
@@ -196,7 +218,7 @@ class InventoryModule(BaseInventoryPlugin, Cacheable, Constructable):
     def __init__(self):
 
         super(InventoryModule, self).__init__()
-        self.MINIMUM_FOREMAN_VERSION_FOR_REPORTING_API = '1.24.0'
+        self.MINIMUM_FOREMAN_VERSION_FOR_REPORTS_API = '1.24.0'
         # from config
         self.foreman_url = None
 
@@ -377,7 +399,7 @@ class InventoryModule(BaseInventoryPlugin, Cacheable, Constructable):
             return False
         status_url = "%s/api/v2/status" % self.foreman_url
         result = self._get_json(status_url)
-        foreman_version = (LooseVersion(result.get('version')) >= LooseVersion(self.MINIMUM_FOREMAN_VERSION_FOR_REPORTING_API))
+        foreman_version = (LooseVersion(result.get('version')) >= LooseVersion(self.MINIMUM_FOREMAN_VERSION_FOR_REPORTS_API))
         return foreman_version
 
     def _post_request(self):

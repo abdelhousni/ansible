@@ -147,6 +147,11 @@ options:
         description:
           - The value contains sensitive information and should't be normally visible, useful e.g. for passwords
         type: bool
+      default:
+        description:
+          - Default value for user input
+        type: str
+        version_added: 3.8.0
 extends_documentation_fragment:
   - redhat.satellite.foreman
   - redhat.satellite.foreman.entity_state_with_defaults
@@ -171,9 +176,9 @@ EXAMPLES = '''
       - name: toDelete
         input_type: user
     locations:
-    - Gallifrey
+      - Gallifrey
     organizations:
-    - TARDIS INC
+      - TARDIS INC
 
 - name: "Create a Job Template from a file"
   redhat.satellite.job_template:
@@ -187,9 +192,9 @@ EXAMPLES = '''
         input_type: user
     state: present
     locations:
-    - Gallifrey
+      - Gallifrey
     organizations:
-    - TARDIS INC
+      - TARDIS INC
 
 - name: "remove a job template's template inputs"
   redhat.satellite.job_template:
@@ -200,9 +205,9 @@ EXAMPLES = '''
     template_inputs: []
     state: present
     locations:
-    - Gallifrey
+      - Gallifrey
     organizations:
-    - TARDIS INC
+      - TARDIS INC
 
 - name: "Delete a Job Template"
   redhat.satellite.job_template:
@@ -221,9 +226,9 @@ EXAMPLES = '''
     name: Wibbly Wobbly Template
     state: present
     locations:
-    - Gallifrey
+      - Gallifrey
     organizations:
-    - TARDIS INC
+      - TARDIS INC
 
 # Providing a name in this case wouldn't be very sensible.
 # Alternatively make use of with_filetree to parse recursively with filter.
@@ -235,11 +240,11 @@ EXAMPLES = '''
     file_name: "{{ item }}"
     state: present
     locations:
-    - SKARO
+      - SKARO
     organizations:
-    - DALEK INC
-    with_fileglob:
-     - "./arsenal_templates/*.erb"
+      - DALEK INC
+  with_fileglob:
+    - "./arsenal_templates/*.erb"
 
 # If the templates are stored locally and the ansible module is executed on a remote host
 - name: Ensure latest version of all your Job Templates
@@ -249,6 +254,7 @@ EXAMPLES = '''
     password: "changeme"
     state: present
     template: '{{ lookup("file", item.src) }}'
+    name: '{{ item.path }}'
   with_filetree: '/path/to/job/templates'
   when: item.state == 'file'
 
@@ -270,9 +276,9 @@ EXAMPLES = '''
     name: "*"
     state: present
     organizations:
-    - DALEK INC
-    - sky.net
-    - Doc Brown's garage
+      - DALEK INC
+      - sky.net
+      - Doc Brown's garage
 
 '''
 
@@ -331,6 +337,7 @@ template_input_foreman_spec = {
     ]),
     'resource_type': dict(),
     'hidden_value': dict(type='bool'),
+    'default': dict(),
 }
 
 
