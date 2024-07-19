@@ -14,7 +14,7 @@
       register: dupout
       changed_when: "'changed' in dupout.stdout"
       when: ansible_facts['distribution']  == "openSUSE Leap" and ansible_facts['distribution_major_version'] | int >= 15
-      ansible.builtin.command: /usr/bin/zypper --releasever={{ opensuse_version | default('15.4') }} dup -y
+      ansible.builtin.command: /usr/bin/zypper --releasever={{ opensuse_version | default('15.4') }} dup -y --force-resolution --replacefiles
 
     - name: Determine if reboot is necessary
       register: reboothint
