@@ -1,5 +1,7 @@
 - name: Ensure webservers are installed
-  hosts: servera
+  hosts: 
+    - serverb
+    - serverc
   become: true 
 
   tasks:
@@ -36,7 +38,12 @@
 
   tasks:
 
-      - name: Test webserver
+      - name: Test serverb
         ansible.builtin.uri:
-          url: http://servera.lab.example.com
+          url: http://serverb.lab.example.com
+          return_content: true
+
+      - name: Test serverc
+        ansible.builtin.uri:
+          url: http://serverc.lab.example.com
           return_content: true

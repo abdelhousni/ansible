@@ -1,7 +1,6 @@
 ---
 - name: Create our bedrock world!
   hosts: all
-  no_log: true
   gather_facts: false
   become: true
 
@@ -15,6 +14,7 @@
       loop: "{{ bedrockers }}"
       ansible.builtin.user:
         name: "{{ item['username'] }}"
-        state: present
+        state: "{{ userstate | default('present') }}"
         password: "{{ item['userpass'] | password_hash('sha512') }}"
         update_password: on_create
+

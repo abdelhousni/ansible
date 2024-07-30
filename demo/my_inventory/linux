@@ -1,24 +1,23 @@
 [webservers]
-servera
-serverc 
+server[b:d]
 
 [dbservers]
-serverb
-serverd
+server[e:f]
 
 [rhel9]
-server[a:d]
+server[a:f]
 
 [rhel:children]
 rhel9
 
 [dev]
-servera
-serverb
+server[a:b]
+
+[qa]
+server[c:d]
 
 [prod]
-serverc
-serverd
+server[e:f]
 
 [boston]
 servera
@@ -27,3 +26,7 @@ serverc
 [london]
 serverb
 serverd
+
+[sydney]
+servere
+serverf

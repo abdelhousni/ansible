@@ -5,25 +5,24 @@
 
   vars:
 
-    my_colour: pink
-      
-  vars_files:
+    my_colour: red
 
+  vars_files:
     - colours.yml
 
   tasks:
 
-    - name: Load variables from external file
-      ansible.builtin.include_vars:
-        file: extra_colours.yml
-
-    - name: Ensure the fact_controller learns
+    - name: Ensure fact controller learns
       ansible.builtin.set_fact:
-        my_colour: black
+        my_colour: green
+
+    - name: Ensure variables are included
+      ansible.builtin.include_vars:
+        file: include_colours.yml
 
     - name: Print the value of the variable my_colour
       vars:
-        my_colour: purple
+        my_colour: white
       ansible.builtin.debug:
-        msg: The value of the variable my_colour is {{ my_colour }}
+        msg: The value of the variable my_colour is {{ my_colour | default('clear') }}
 
