@@ -1,0 +1,62 @@
+- name: Ensure root can login via ssh
+  hosts: "{{ my_host | default('localhost') }}"
+  become: true
+  gather_facts: false
+  force_handlers: true
+
+  tasks:
+
+    - name: Ensure PermitRootLogin is set to yes
+      notify: Ensure sshd is restarted
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin no'
+        line: PermitRootLogin yes
+
+        #    - name: Ensure all currently notified handlers execute now
+        #      meta: flush_handlers
+      
+    - name: Ensure custom chrony.conf is installed
+      notify: Ensure ntp config
+      ansible.builtin.copy:
+        src: chrony.conf 
+        dest: /etc/chrony.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+
+        #   - name: Deliberately fail the playbook
+        #     ansible.builtin.fail:
+
+  handlers:
+
+    - name: Ensure sshd is restarted
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+
+    - name: Ensure chrony is restarted
+      listen: Ensure ntp config
+      ansible.builtin.service:
+        name: chronyd
+        state: restarted
+
+    - name: Capture current ntp servers
+      listen: Ensure ntp config
+      register: ntp_servers
+      changed_when: false
+      ansible.builtin.command: chronyc sources
+
+    - name: Validate ntp server
+      listen: Ensure ntp config
+      ansible.builtin.assert:
+        that:
+          - "'dodo.mcc.ac.uk' not in ntp_servers['stdout']"
+        success_msg: |
+          
+          HOORAY: ntp is configured correctly
+
+        fail_msg: |
+
+          OH NO: dodo.mcc.ac.uk is used as an ntp server

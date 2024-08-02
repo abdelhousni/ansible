@@ -1,0 +1,12 @@
+plugins/modules/tower_receive.py validate-modules:deprecation-mismatch
+plugins/modules/tower_send.py validate-modules:deprecation-mismatch
+plugins/modules/tower_workflow_template.py validate-modules:deprecation-mismatch
+plugins/modules/tower_receive.py validate-modules:missing-main-call
+plugins/modules/tower_send.py validate-modules:missing-main-call
+plugins/modules/tower_workflow_template.py validate-modules:missing-main-call
+plugins/modules/tower_credential.py pylint:ansible-deprecated-no-collection-name
+plugins/modules/tower_job_wait.py pylint:ansible-deprecated-no-collection-name
+plugins/modules/tower_notification_template.py pylint:ansible-deprecated-no-collection-name
+plugins/modules/tower_receive.py pylint:ansible-deprecated-no-collection-name
+plugins/modules/tower_send.py pylint:ansible-deprecated-no-collection-name
+plugins/modules/tower_workflow_template.py pylint:ansible-deprecated-no-collection-name

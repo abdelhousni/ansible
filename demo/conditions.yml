@@ -1,12 +1,13 @@
 - name: Conditionals demonstration
   hosts: servera
   gather_facts: true
-  become: true
+  become: false
 
   tasks:
 
-    - name: Verify that we are using a Red Hat based OS
+    - name: Tasks for Red Hat 
       when: "'RedHat' in ansible_facts['distribution']"
+      become: true
       block:
 
         - name: Ensure message is displayed
@@ -24,9 +25,9 @@
             state: started
             enabled: true
 
-
     - name: Tasks for SUSE
       when: "'SUSE' in ansible_facts['distribution']"
+      become: true
       block:
 
         - name: Ensure message is displayed

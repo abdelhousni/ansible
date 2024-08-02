@@ -1,0 +1,8 @@
+download_url: https://hub.lab.example.com/api/galaxy/v3/plugin/ansible/content/community/collections/artifacts/redhat_cop-ah_configuration-0.9.2.tar.gz
+format_version: 1.0.0
+name: ah_configuration
+namespace: redhat_cop
+server: https://hub.lab.example.com/api/galaxy/content/community/
+signatures: []
+version: 0.9.2
+version_url: /api/galaxy/content/community/v3/plugin/ansible/content/community/collections/index/redhat_cop/ah_configuration/versions/0.9.2/

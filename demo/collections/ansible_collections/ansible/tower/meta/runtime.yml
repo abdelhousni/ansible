@@ -1,0 +1,18 @@
+---
+requires_ansible: '>=2.9.10'
+plugin_routing:
+  modules:
+    tower_receive:
+      deprecation:
+        removal_date: 2021-06-17
+        warning_text: see plugin documentation for details
+    tower_send:
+      deprecation:
+        removal_date: 2021-06-17
+        warning_text: see plugin documentation for details
+    tower_workflow_template:
+      deprecation:
+        removal_date: 2021-06-17
+        warning_text: see plugin documentation for details
+    tower_notification:
+      redirect: tower_notification_template

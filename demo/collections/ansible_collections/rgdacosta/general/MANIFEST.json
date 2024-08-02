@@ -1,0 +1,36 @@
+{
+ "collection_info": {
+  "namespace": "rgdacosta",
+  "name": "general",
+  "version": "1.0.0",
+  "authors": [
+   "Ricardo da Costa <rdacosta@redhat.com>"
+  ],
+  "readme": "README.md",
+  "tags": [
+   "httpd",
+   "apache",
+   "apache2",
+   "nginx",
+   "webserver"
+  ],
+  "description": "Setup httpd or nginx",
+  "license": [
+   "GPL-2.0-or-later"
+  ],
+  "license_file": null,
+  "dependencies": {},
+  "repository": "https://gitlab.com/rgdacosta/ansible",
+  "documentation": "https://gitlab.com/rgdacosta/ansible",
+  "homepage": "http://example.com",
+  "issues": "http://example.com/issue/tracker"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "2c72f2acaa3b80b1356546092f7c3ec7e98b94329c89037bc20f84413c828b4b",
+  "format": 1
+ },
+ "format": 1
+}

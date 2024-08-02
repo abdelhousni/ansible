@@ -1,5 +1,5 @@
 - name: Consistent network data
-  hosts: servera
+  hosts: "{{ my_host | default('servera') }}"
   become: true
   gather_facts: false
 
@@ -8,7 +8,13 @@
 
   tasks:
 
+    #    - name: Ensure ipaddr filter is available
+    #      delegate_to: localhost
+    #      ansible.builtin.dnf:
+    #        name: python3-netaddr
+    #        state: present
+
     - name: Ensure /etc/hosts is correctly set
-      template:
+      ansible.builtin.template:
         dest: /etc/hosts
         src: hosts.j2

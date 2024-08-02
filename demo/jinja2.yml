@@ -1,0 +1,15 @@
+- name: Simple jinja2 example
+  hosts: "{{ my_host | default('servera') }}"
+  become: true
+  gather_facts: true
+
+  tasks:
+
+    - name: Template a file to /etc/foo.conf
+      ansible.builtin.template:
+        src: foo.j2
+        dest: /etc/foo.conf
+        owner: student
+        group: wheel
+        mode: '0644'
+

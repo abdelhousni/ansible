@@ -1,0 +1,25 @@
+- name: Manage users
+  hosts: "{{ my_host }}"
+  become: true
+  gather_facts: false
+  force_handlers: true
+
+  vars:
+    my_user:
+      - cheruku
+      - dhilip
+      - dymtro
+      - kundan
+      - prafful
+      - teja
+      - tony
+      - yoshita
+
+  tasks:
+
+    - name: Manage users
+      loop: "{{ my_user }}"
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: "{{ my_state | default('present') }}"
+

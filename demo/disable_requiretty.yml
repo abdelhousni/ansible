@@ -1,0 +1,15 @@
+- name: Disable requiretty to use pipelining
+  hosts: "{{ my_host | default('all') }}"
+  become: true
+  gather_facts: false
+
+  tasks:
+
+    - name: Ensure pipelining is disabled in sudoers config
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^Defaults.*!visiblepw$'
+        line: 'Defaults !requiretty'
+        validate: /usr/sbin/visudo -cf %s
+

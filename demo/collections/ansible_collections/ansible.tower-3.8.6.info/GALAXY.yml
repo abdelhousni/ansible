@@ -1,0 +1,45 @@
+download_url: https://hub.lab.example.com/api/galaxy/v3/plugin/ansible/content/rh-certified/collections/artifacts/ansible-tower-3.8.6.tar.gz
+format_version: 1.0.0
+name: tower
+namespace: ansible
+server: https://hub.lab.example.com/api/galaxy/content/rh-certified/
+signatures:
+- pubkey_fingerprint: 39B5D759361A97464C564A8FE1A4BD708A828AAD
+  pulp_created: '2022-12-19T16:05:01.410260Z'
+  signature: '-----BEGIN PGP SIGNATURE-----
+
+    Version: GnuPG v1
+
+
+    iQIVAwUAYyh+HeGkvXCKgoqtAQihERAAk04YszQ3wj6s4k3yQeB5YE5/F62VEN10
+
+    ZxxIKRrFX6L7HqmKHeaLuQhyyBL3A4HQQ+J9EA7sqyAnsuNI5alg/PBtd1ErFN/m
+
+    LvjooLqWU6Z8/nrDA2lg1xYHK/ptXwFsH0rYgTH7kpDedSqR9ZMtGG8wpLVlIm7Y
+
+    r6s1LKaMpnbA71CI3DiMpzMorzfFIFoqGoOenvSubWitvLkLZvkEOnCvPCRUfzhh
+
+    cUEvTpkkArXESKPRvE9PkBDkbChcnFksWDVRAT5PZPxcCE80qluOR/bkFXz9w852
+
+    n4smyNPe6rHyebcnygZ4CqOEnSjjf4m9jtggEGRrCY+tRmG2AS54x6CpDRIzDwhf
+
+    VU2hXemP7TD5djPxqAV0vjRfdY5/g/uzhg8wgKEDPCY/XVoT1kmG/E2nuXXHA240
+
+    f05043lLI3DjF0zN9SPF0ShwRB7rToiMqiuCE8IrMM0itmg16MNBXL4dtf1Pc7LI
+
+    3xvzwU8li95MJC+67T+qfgDVdiE/q5F6xKnk1BQsPyWHf6N0WK9uu4lSpJoB9Oq9
+
+    yQcOpTnL/XNCmnEU3XPDekl+Z5aub3z1brEuaiDlXqhODz39Dt0dKmfm0h3DC2JZ
+
+    gnCqgr5YpxYzAN/m3Ty0OOzxSEwCDe/NLdJ5WR+L06+FYnkBNvpnMTsLReKmJi81
+
+    HOV+78+HB+I=
+
+    =lpoG
+
+    -----END PGP SIGNATURE-----
+
+'
+  signing_service: null
+version: 3.8.6
+version_url: /api/galaxy/content/rh-certified/v3/plugin/ansible/content/rh-certified/collections/index/ansible/tower/versions/3.8.6/
