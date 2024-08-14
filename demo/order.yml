@@ -1,6 +1,6 @@
 - name: Demonstrate ordering
   hosts: all
-  order: reverse_sorted
+  order: inventory 
   become: false
   gather_facts: false
 

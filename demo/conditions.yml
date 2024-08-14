@@ -1,5 +1,5 @@
 - name: Conditionals demonstration
-  hosts: servera
+  hosts: "{{ my_host | mandatory('You must specify a host to target using -e my_host=hostname') }}" 
   gather_facts: true
   become: false
 
@@ -11,13 +11,14 @@
       block:
 
         - name: Ensure message is displayed
+          become: false
           ansible.builtin.debug:
             msg: We have matched RedHat to your distribution
 
         - name: Ensure httpd is installed
           ansible.builtin.dnf:
             name: httpd
-            state: latest
+            state: "{{ my_state | default('present') }}"
 
         - name: Ensure service is started
           ansible.builtin.service:
@@ -31,13 +32,14 @@
       block:
 
         - name: Ensure message is displayed
+          become: false
           ansible.builtin.debug:
             msg: We have matched SUSE to your distribution
 
         - name: Ensure apache is installed
           community.general.zypper:
             name: apache2
-            state: latest
+            state: "{{ my_state | default('present') }}"
 
         - name: Ensure service is started
           ansible.builtin.service:

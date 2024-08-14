@@ -14,3 +14,12 @@
       ansible.builtin.package:
         name: "{{ item }}"
         state: installed
+
+    - name: "Good: Ensure that packages are at defined state"
+      ansible.builtin.package:
+        name:
+          - bash
+          - tmux
+          - nmap
+          - ant
+        state: installed

@@ -1,0 +1,76 @@
+- name: Create users
+  hosts: "{{ my_host | default('servera') }}"
+  become: true
+  gather_facts: false
+
+  tasks:
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: fred 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: barney 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: wilma
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: betty 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: ali 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: virgil 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: trent 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: harvey 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: mo 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Ensure users are at expected state
+      ansible.builtin.user:
+        name: darwin 
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('redhat') | password_hash('sha512') }}"
+        update_password: on_create

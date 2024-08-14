@@ -6,16 +6,23 @@
 
     - name: Determine requested size 
       ansible.builtin.set_fact:
-        my_request: "{{ my_vm_disk_size | default('20') }} GB" 
+        my_request: "{{ my_vm_disk_size | default('20') }}"
+
+    - name: Transform requested size to bytes for comparison
+      ansible.builtin.set_fact:
+        my_request_bytes: "{{ my_request }} GB" 
+
+    - debug:
+        var: my_request_bytes
 
     - name: Ensure space available
       ansible.builtin.assert:
-        that: (ansible_facts['mounts'] | json_query('[?mount==`/`].size_available'))[0] | int > my_request | human_to_bytes  
+        that: (ansible_facts['mounts'] | json_query('[?mount==`/`].size_available'))[0] | int > my_request_bytes | human_to_bytes
         success_msg: |
           Hooray! You have enough space for your vm
 
-          You asked for {{ my_request }} and we have {{ (ansible_facts['mounts'] | json_query('[?mount == `/`].size_available'))[0] | human_readable }} available
+          You asked for {{ my_request }} GB and we have {{ (ansible_facts['mounts'] | json_query('[?mount == `/`].size_available'))[0] | int | human_readable }}
         fail_msg: |
           Bah! You don't have enough space for your vm
 
-          You asked for {{ my_request }} and we have {{ (ansible_facts['mounts'] | json_query('[?mount == `/`].size_available'))[0] | human_readable }} available
+          You asked for {{ my_request }} GB and we have {{ (ansible_facts['mounts'] | json_query('[?mount == `/`].size_available'))[0] | int | human_readable }}
