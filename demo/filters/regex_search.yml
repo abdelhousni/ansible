@@ -1,5 +1,5 @@
 - name: regex_search filter demonstration
-  hosts: "{{ my_host }}"
+  hosts: "{{ my_host | mandatory('Set my_host to target the inventory host') }}"
   gather_facts: false
   become: true
 
@@ -22,6 +22,6 @@
 
     - name: Ensure OpenShift client is deleted from /var/tmp
       ansible.builtin.file:
-        path: /var/tmp/{{ url_oc | regex_search('[a-z]+.*\\.tar\\.gz') }}
+        path: /var/tmp/{{ file }}
         state: absent
 

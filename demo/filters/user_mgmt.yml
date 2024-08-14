@@ -1,12 +1,12 @@
 - name: Manage users
-  hosts: "{{ my_host | mandatory('Please set my_hosts to indicate which hosts to target') }}"
+  hosts: "{{ my_host | mandatory('Please set my_host to indicate which hosts to target') }}"
   become: true
   gather_facts: false
 
   tasks:
 
     - name: Ensure user is at state
-      user:
+      ansible.builtin.user:
         name: "{{ my_user | mandatory('Please set my_user to indicate the user to manage') }}"
         state: "{{ my_state | default('present') }}"
         password: "{{ my_pass | default('redhat123') | password_hash('sha512') }}"
