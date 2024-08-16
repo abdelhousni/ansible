@@ -7,4 +7,4 @@
 
     - name: Ensure v*rc files are listed
       ansible.builtin.debug:
-        msg: "{{ query('fileglob', '/etc/v*rc') }}"
+        msg: "{{ lookup('fileglob', '/etc/v*rc') }}"

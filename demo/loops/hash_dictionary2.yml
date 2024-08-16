@@ -1,5 +1,5 @@
 - name: Create users in the appropriate groups
-  hosts: servera
+  hosts: "{{ myhost }}"
   become: true
   no_log: false
 

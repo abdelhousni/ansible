@@ -10,7 +10,7 @@
       delegate_to: servera
       delegate_facts: true
 
-    - name: Ensure fact is displayed from delegated host
+    - name: Ensure delegated host's fact is displayed
       ansible.builtin.debug:
         msg: "{{ hostvars['servera']['my_fact'] }}"
 
