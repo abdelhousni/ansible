@@ -1,0 +1,52 @@
+- name: Configure Linux systems to use a tuned profile
+  hosts: "{{ my_host }}"
+  become: true
+  gather_facts: true
+  force_handlers: true
+
+  tasks:
+
+    - name: Ensure tuned is running
+      tags:
+        - always
+      ansible.builtin.service:
+        name: tuned
+        state: started
+        enabled: true
+
+    - name: Determine current tuned profile
+      tags:
+        - always
+      register: current_profile
+      ansible.builtin.command: tuned-adm active
+
+    - name: Ensure current profile is displayed
+      tags:
+        - always
+      ansible.builtin.debug:
+        msg: "{{ inventory_host }}" currently uses the {{ current_profile['stdout'] }} profile"
+
+    - name: Ensure current profile is saved
+      ansible.builtin.copy:
+        path: /etc/tuned/saved_profile
+        content: The profile {{ current_profile['stdout'] }} was saved on {{ ansible_facts['date_time'] }}
+    - name: Set desired tuned profile
+      tags:
+        - switch
+      vars: "{{ profile | default('powersave') }}"
+      ansible.builtin.include_role:
+        name: tuned
+
+    - name: Determine new tuned profile
+      tags:
+        - switch
+      register: new_profile
+      ansible.builtin.command: tuned-adm active
+
+    - name: Ensure new profile is displayed
+      tags:
+        - always
+      ansible.builtin.debug:
+        msg: "{{ inventory_host }}" currently uses the {{ new_profile['stdout'] }} profile"
+
+

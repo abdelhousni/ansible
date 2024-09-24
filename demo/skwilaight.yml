@@ -1,0 +1,45 @@
+- name: Check for sqlite
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+
+    sqlite_version: 3.38.0
+    sqlite_url: https://www.sqlite.org/2022/sqlite-tools-linux-x86-3380000.zip
+
+  tasks:
+
+    - name: Block for sqlite related tasks
+      block:
+
+      - name: Ensure current sqlite version is captured in a variable called my_sqlite
+        register: my_sqlite
+        changed_when: false
+        failed_when: "sqlite_version not in my_sqlite.stdout" 
+        command: sqlite3 -version
+
+
+      rescue:
+
+        - name: Ensure message is displayed about current tasks
+          debug: 
+            msg: |
+              
+              It looks like we are not running sqlite {{ sqlite_version }} so we're going to install it now
+
+        - name: Ensure sqlite is downloaded
+          get_url:
+            url: "{{ sqlite_url }}"
+            dest: /var/tmp/sqlite-{{ sqlite_version }}.zip
+
+        - name: Ensure sqlite is unpacked
+          unarchive:
+            remote_src: true
+            src: /var/tmp/sqlite-{{ sqlite_version }}.zip
+            dest: /var/tmp
+
+        - name: Ensure downloaded file is absent
+          file:
+            path: /var/tmp/sqlite-{{ sqlite_version }}.zip
+            state: absent
