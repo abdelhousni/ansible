@@ -30,34 +30,50 @@
 
     - name: Ensure current profile is saved
       tags:
-        - switch
+        - set
       when: "my_profile not in current_profile['stdout']"
       ansible.builtin.copy:
         dest: /etc/tuned/saved_profile
-        content: "{{ current_profile['stdout'] }} was saved on {{ ansible_facts['date_time']['iso8601'] }}"
+        content: "{{ current_profile['stdout'] | regex_replace('Current active profile: ', '') }}"
+        owner: root
+        group: root
+        mode: 0644
           
     - name: Set desired tuned profile
       register: set_profile
       tags:
-        - switch
+        - set
       vars: 
         profile: "{{ my_profile | default('powersave') }}"
-      ansible.builtin.command: tuned-adm profile {{ my_profile }}
       when: "my_profile not in current_profile['stdout']"
-      changed_when: "'powersave' in set_profile['stdout']"
+      changed_when: "my_profile in set_profile['stdout']"
+      ansible.builtin.command: tuned-adm profile {{ my_profile }}
 
     - name: Determine new tuned profile
       tags:
-        - switch
+        - set
       register: new_profile
       changed_when: false
       ansible.builtin.command: tuned-adm active
+
+    - name: Ensure profile is retrieved from saved config
+      tags:
+        - revert
+      register: saved_profile
+      ansible.builtin.slurp:
+        src: /etc/tuned/saved_profile
+
+    - name: Ensure profile is set from saved config
+      tags:
+        - revert
+      when: "current_profile['stdout'] | regex_replace('Current active profile: ', '') != saved_profile | b64decode"
+      changed_when: "saved_profile | b64decode in new_profile['stdout']"
+      ansible.builtin.command: tuned-adm profile {{ saved_profile | b64decode }}
 
     - name: Ensure new profile is displayed
       tags:
         - always
       changed_when: false
       ansible.builtin.debug:
-        #        msg: "{{ inventory_hostname }} currently uses the {{ new_profile['stdout'] | regex_search(':.*$') | regex_replace('( :)') }} profile which was set on {{ ansible_facts['date_time']['iso8601'] }}"
         msg: "{{ inventory_hostname }} currently uses the {{ new_profile['stdout'] | regex_replace('Current active profile: ', '') }} profile which was set on {{ ansible_facts['date_time']['iso8601'] }}"
 
