@@ -2,78 +2,64 @@
   hosts: "{{ my_host }}"
   become: true
   gather_facts: true
-  force_handlers: true
+
+  vars:
+    profile: "{{ my_profile | default('powersave') }}"
 
   tasks:
-
     - name: Ensure tuned is running
-      tags:
-        - always
       ansible.builtin.service:
         name: tuned
         state: started
         enabled: true
 
     - name: Determine current tuned profile
-      tags:
-        - always
       register: current_profile
       changed_when: false
       ansible.builtin.command: tuned-adm active
+      failed_when: "'error' in current_profile.stderr"
 
     - name: Ensure current profile is displayed
-      tags:
-        - always
       changed_when: false
       ansible.builtin.debug:
-        msg: "{{ inventory_hostname }} currently uses the {{ current_profile['stdout'] }} profile"
+        msg: "{{ inventory_hostname }} currently uses the {{ current_profile['stdout'] | regex_replace('Current active profile: ', '') }} profile"
 
     - name: Ensure current profile is saved
-      tags:
-        - set
-      when: "my_profile not in current_profile['stdout']"
+      when: "profile not in current_profile['stdout']"
       ansible.builtin.copy:
         dest: /etc/tuned/saved_profile
         content: "{{ current_profile['stdout'] | regex_replace('Current active profile: ', '') }}"
         owner: root
         group: root
         mode: 0644
-          
-    - name: Set desired tuned profile
+
+    - name: Set desired tuned profile if not current
+      when: current_profile['stdout'] != "Current active profile: {{ profile }}"
+      ansible.builtin.command: tuned-adm profile {{ profile }}
       register: set_profile
-      tags:
-        - set
-      vars: 
-        profile: "{{ my_profile | default('powersave') }}"
-      when: "my_profile not in current_profile['stdout']"
-      changed_when: "my_profile in set_profile['stdout']"
-      ansible.builtin.command: tuned-adm profile {{ my_profile }}
+
+    - name: Ensure new profile is displayed
+      changed_when: false
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} now uses the {{ profile }} profile."
 
     - name: Determine new tuned profile
-      tags:
-        - set
       register: new_profile
       changed_when: false
       ansible.builtin.command: tuned-adm active
 
     - name: Ensure profile is retrieved from saved config
-      tags:
-        - revert
       register: saved_profile
       ansible.builtin.slurp:
         src: /etc/tuned/saved_profile
 
     - name: Ensure profile is set from saved config
-      tags:
-        - revert
-      when: "current_profile['stdout'] | regex_replace('Current active profile: ', '') != saved_profile | b64decode"
-      changed_when: "saved_profile | b64decode in new_profile['stdout']"
-      ansible.builtin.command: tuned-adm profile {{ saved_profile | b64decode }}
+      when: "current_profile['stdout'] | regex_replace('Current active profile: ', '') != saved_profile['content'] | b64decode"
+      ansible.builtin.command: tuned-adm profile {{ saved_profile['content'] | b64decode }}
 
-    - name: Ensure new profile is displayed
-      tags:
-        - always
+    - name: Display the final profile after setting from saved config
       changed_when: false
       ansible.builtin.debug:
         msg: "{{ inventory_hostname }} currently uses the {{ new_profile['stdout'] | regex_replace('Current active profile: ', '') }} profile which was set on {{ ansible_facts['date_time']['iso8601'] }}"
+
 
