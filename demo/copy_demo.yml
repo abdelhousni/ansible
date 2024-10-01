@@ -1,0 +1,28 @@
+- name: Demonstrate the use of the copy module
+  hosts: "{{ my_host | default('servera') }}"
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: Assert that needed variables are set
+      ansible.builtin.assert:
+        that: 
+          - my_source is defined
+          - my_dest is defined 
+        success_msg: |
+
+          The file to be copied is {{ my_source }} and will be copied to {{ my_dest }}
+
+        fail_msg: |
+
+          You have failed to set values for the variables my_file and my_dest
+
+    - name: Ensure {{ my_source }} is copied to {{ my_dest }} on {{ my_host }}
+      ansible.builtin.copy:
+        src: "{{ my_source }}"
+        dest: "{{ my_dest }}"
+        mode: 0644
+        owner: student
+        group: student
+
