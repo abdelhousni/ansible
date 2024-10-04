@@ -18,7 +18,6 @@
       delegate_to: localhost
       ansible.builtin.file:
         path: "{{ backup_store }}/{{ inventory_hostname }}"
-        owner: student
         state: directory
 
     - name: Ensure backup of {{ backup_target }} exists
@@ -30,6 +29,7 @@
         format: "{{ backup_format }}"
 
     - name: Ensure backup is stored on controller
+      delegate_to: localhost
       ansible.builtin.fetch:
         src: "{{ backup_file }}" 
         dest: "{{ backup_store }}/{{ inventory_hostname }}/"
