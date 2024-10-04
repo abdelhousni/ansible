@@ -21,12 +21,16 @@
         state: directory
 
     - name: Ensure backup of {{ backup_target }} exists
+      register: backup_status
       ansible.builtin.archive:
         path: "{{ backup_target }}"
         dest: "{{ backup_file }}" 
         #force_archive: true
         #remove: true
         format: "{{ backup_format }}"
+
+    - debug:
+        var: backup_status
 
     - name: Ensure backup is stored on controller
       delegate_to: localhost
