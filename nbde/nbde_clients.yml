@@ -1,0 +1,37 @@
+- name: Setup nbde clients
+  hosts: servera
+  become: true
+  gather_facts: false
+
+  vars:
+
+    nbde_client_bindings:
+      - device: /dev/vdb
+        encryption_password: secureMODE 
+        servers:
+          - http://serverb.lab.example.com
+          - http://serverc.lab.example.com
+          - http://serverd.lab.example.com
+        threshold: 2
+
+    securedevice: /dev/vdb
+    securevolume: securedata
+    securemount: /securedata
+
+  roles:
+    - rhel-system-roles.nbde_client
+
+  tasks:
+
+    - name: Ensure /etc/crypttab is configured
+      ansible.builtin.copy:
+        content: "{{ securevolume }} {{ securedevice }} none _netdev"
+        dest: /etc/crypttab
+
+    - name: Ensure /etc/fstab is configured
+      ansible.builtin.lineinfile:
+        line: "/dev/mapper/{{ securevolume }} {{ securemount }} ext4 _netdev 0 0"
+        path: /etc/fstab
+
+
+
