@@ -1,0 +1,15 @@
+- name: Manage postfix
+  hosts: "{{ my_host }}"
+  gather_facts: true
+  become: true
+
+  vars:
+    postfix_conf:
+      relayhost: [smtp.lab.example.com]
+      inet_interfaces: loopback-only
+      mynetworks: 127.0.0.0/8 [::1]/128
+      myorigin: lab.example.com
+      mydestination:
+
+  roles:
+    - rhel-system-roles.postfix
